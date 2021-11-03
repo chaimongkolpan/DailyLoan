@@ -13,11 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Repostory", "Dail
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Service", "DailyLoan.Service\DailyLoan.Service.csproj", "{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database Change", "Database Change", "{9B901B42-C752-4497-9DB5-B9E691710515}"
-	ProjectSection(SolutionItems) = preProject
-		CreateDB.sql = CreateDB.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
