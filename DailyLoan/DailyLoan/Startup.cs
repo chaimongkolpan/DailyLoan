@@ -1,13 +1,27 @@
+using DailyLoan.Model.Entities.DailyLoan;
+/*
+using DailyLoan.Repository;
+using DailyLoan.Repository.Interface;
+using DailyLoan.Repository.Interfaces;
+using DailyLoan.Service;
+using DailyLoan.Service.Interfaces;
+*/
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
+using Serilog.Events;
+
 
 namespace DailyLoan
 {
@@ -23,7 +37,20 @@ namespace DailyLoan
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddDbContext<DailyLoanContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DailyLoanConnection")));
+            
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(7200);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +59,7 @@ namespace DailyLoan
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("DevelopmentCors");
             }
             else
             {

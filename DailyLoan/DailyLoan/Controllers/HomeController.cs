@@ -1,11 +1,19 @@
-﻿using DailyLoan.Models;
+﻿using DailyLoan.Model;
+using DailyLoan.Models;
+/*using DailyLoan.Library;
+using DailyLoan.Library.Status;
+using DailyLoan.Model.Request.LogIn;
+using DailyLoan.Service.Interfaces;*/
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
 
 namespace DailyLoan.Controllers
 {
@@ -20,10 +28,10 @@ namespace DailyLoan.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("LogIn");
         }
 
-        public IActionResult Privacy()
+        public IActionResult LogIn()
         {
             return View();
         }

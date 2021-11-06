@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan", "DailyLoan\DailyLoan.csproj", "{B8DD69FE-0A70-48AC-A708-32A953A70788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyLoan", "DailyLoan\DailyLoan.csproj", "{B8DD69FE-0A70-48AC-A708-32A953A70788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Library", "DailyLoan.Library\DailyLoan.Library.csproj", "{93F1165E-4717-4C14-AC9E-D9D01FF16B41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyLoan.Library", "DailyLoan.Library\DailyLoan.Library.csproj", "{93F1165E-4717-4C14-AC9E-D9D01FF16B41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Model", "DailyLoan.Model\DailyLoan.Model.csproj", "{0D1A92F5-1D40-4E7F-A68C-447BBC698311}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyLoan.Model", "DailyLoan.Model\DailyLoan.Model.csproj", "{0D1A92F5-1D40-4E7F-A68C-447BBC698311}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Repostory", "DailyLoan.Repostory\DailyLoan.Repostory.csproj", "{BF92943A-DE40-4155-943C-E9D32F283A4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyLoan.Service", "DailyLoan.Service\DailyLoan.Service.csproj", "{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Service", "DailyLoan.Service\DailyLoan.Service.csproj", "{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyLoan.Repository", "DailyLoan.Repository\DailyLoan.Repository.csproj", "{2A183084-3A86-4C9D-B5BF-DF2ED55FEF51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{0D1A92F5-1D40-4E7F-A68C-447BBC698311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D1A92F5-1D40-4E7F-A68C-447BBC698311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D1A92F5-1D40-4E7F-A68C-447BBC698311}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF92943A-DE40-4155-943C-E9D32F283A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF92943A-DE40-4155-943C-E9D32F283A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF92943A-DE40-4155-943C-E9D32F283A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF92943A-DE40-4155-943C-E9D32F283A4C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EF96214-8054-4791-8DFB-4FA4E2BDD35F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A183084-3A86-4C9D-B5BF-DF2ED55FEF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A183084-3A86-4C9D-B5BF-DF2ED55FEF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A183084-3A86-4C9D-B5BF-DF2ED55FEF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A183084-3A86-4C9D-B5BF-DF2ED55FEF51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
