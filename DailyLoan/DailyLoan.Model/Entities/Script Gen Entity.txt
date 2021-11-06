@@ -1,0 +1,28 @@
+﻿Scaffold-DbContext -f "Server=BBOAT-PC\SQLEXPRESS;Database=DailyLoan;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities\DailyLoan
+
+Scaffold-DbContext -f "Server=DESKTOP-P8DRUUI;Database=DailyLoan;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities\DailyLoan
+
+
+// Use the constructor after generate context.
+
+private readonly string _connectionString;
+
+public DailyLoanContext(string connectionString)
+{
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        throw new Exception("ConnectionString can't be empty");
+    }
+
+    _connectionString = connectionString;
+}
+
+protected override void OnConfiguring(DbContextOptionsBuilder builder)
+{
+    if (!string.IsNullOrEmpty(_connectionString))
+    {
+        builder.UseSqlServer(_connectionString);
+		builder.EnableSensitiveDataLogging();
+        base.OnConfiguring(builder);
+    }
+}

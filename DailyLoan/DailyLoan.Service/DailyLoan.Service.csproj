@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,6 +6,12 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\DailyLoan.Library\DailyLoan.Library.csproj" />
+    <ProjectReference Include="..\DailyLoan.Model\DailyLoan.Model.csproj" />
+    <ProjectReference Include="..\DailyLoan.Repository\DailyLoan.Repository.csproj" />
   </ItemGroup>
 
 </Project>

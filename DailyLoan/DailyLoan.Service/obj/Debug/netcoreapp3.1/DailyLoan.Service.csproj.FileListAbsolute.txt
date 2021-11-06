@@ -1,0 +1,17 @@
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Service.deps.json
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Service.dll
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Service.pdb
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.csproj.AssemblyReference.cache
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.AssemblyInfoInputs.cache
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.AssemblyInfo.cs
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.csproj.CoreCompileInputs.cache
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.dll
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.pdb
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Library.dll
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Model.dll
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Repository.dll
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Library.pdb
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Model.pdb
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Repository.pdb
+C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.csproj.CopyComplete
