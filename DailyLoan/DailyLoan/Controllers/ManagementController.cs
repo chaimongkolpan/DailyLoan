@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using DailyLoan.Library;
 
 namespace DailyLoan.Controllers
 {
@@ -29,7 +30,27 @@ namespace DailyLoan.Controllers
         }
         public IActionResult Index()
         {
-            return Redirect("~/Management/User");
+            return View(ConstMessage.View_Index);
+        }
+        public ActionResult ConfigAction()
+        {
+            ViewBag.partialView = ConstMessage.View_MNM_Config;
+            return View(ConstMessage.View_Index);
+        }
+        public ActionResult ContractAction()
+        {
+            ViewBag.partialView = ConstMessage.View_MNM_Contract;
+            return View(ConstMessage.View_Index);
+        }
+        public ActionResult CustomerAction()
+        {
+            ViewBag.partialView = ConstMessage.View_MNM_Customer;
+            return View(ConstMessage.View_Index);
+        }
+        public ActionResult UserAction()
+        {
+            ViewBag.partialView = ConstMessage.View_MNM_User;
+            return View(ConstMessage.View_Index);
         }
     }
 }

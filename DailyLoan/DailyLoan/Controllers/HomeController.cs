@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using DailyLoan.Model.Request.Home;
+using DailyLoan.Library;
 
 namespace DailyLoan.Controllers
 {
@@ -40,6 +42,22 @@ namespace DailyLoan.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> LogInActionAsync(LogInRequest req)
+        {
+            return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Management);
+            //var result = await _loginService.LoginValidation(req.Username, req.Password);
+            //if (result != null)
+            //{
+            //    return View(ConstMessage.View_Index);
+            //}
+            //else
+            //{
+            //    ViewBag.NotValidUser = ConstMessage.Login_UserNamePasswordNotMatching;
+            //    return View(ConstMessage.View_Index);
+            //}
         }
     }
 }
