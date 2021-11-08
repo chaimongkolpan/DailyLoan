@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan\\DailyLoan.csproj": {}
+    "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.csproj": {}
   },
   "projects": {
-    "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+    "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj",
+        "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj",
         "projectName": "DailyLoan.Library",
-        "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj",
-        "packagesPath": "C:\\Users\\golf_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\obj\\",
+        "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj",
+        "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\golf_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BBoat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,24 +57,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
+    "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
+        "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
         "projectName": "DailyLoan.Model",
-        "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
-        "packagesPath": "C:\\Users\\golf_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\obj\\",
+        "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
+        "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\golf_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BBoat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -136,24 +136,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj": {
+    "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj",
+        "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj",
         "projectName": "DailyLoan.Repository",
-        "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj",
-        "packagesPath": "C:\\Users\\golf_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Repository\\obj\\",
+        "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj",
+        "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\golf_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BBoat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -167,11 +167,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
               },
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
               }
             }
           }
@@ -200,24 +200,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj": {
+    "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
+        "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
         "projectName": "DailyLoan.Service",
-        "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
-        "packagesPath": "C:\\Users\\golf_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Service\\obj\\",
+        "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
+        "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\golf_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BBoat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -231,14 +231,14 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
               },
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
               },
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj"
               }
             }
           }
@@ -267,24 +267,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan\\DailyLoan.csproj": {
+    "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan\\DailyLoan.csproj",
+        "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.csproj",
         "projectName": "DailyLoan",
-        "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan\\DailyLoan.csproj",
-        "packagesPath": "C:\\Users\\golf_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan\\obj\\",
+        "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.csproj",
+        "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\golf_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BBoat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -298,14 +298,14 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
               },
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
               },
-              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj": {
-                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj"
+              "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj": {
+                "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj"
               }
             }
           }
@@ -342,6 +342,10 @@
               "target": "Package",
               "version": "[3.1.20, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
             "Serilog": {
               "target": "Package",
               "version": "[2.10.0, )"
@@ -369,6 +373,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.18, 3.1.18]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -377,7 +387,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
