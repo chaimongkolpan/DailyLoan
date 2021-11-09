@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DailyLoan.Library.Status
 {
-    public class UserAccess
+    public class StatusUserAccess
     {
         public const int UserAccess_Superadmin = 1;
         public const int UserAccess_Admin = 2;

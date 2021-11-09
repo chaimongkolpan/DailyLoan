@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+ #nullable disable
 
 namespace DailyLoan.Model.Entities.DailyLoan
 {
@@ -19,30 +17,30 @@ namespace DailyLoan.Model.Entities.DailyLoan
         {
         }
 
-        public virtual DbSet<Config> Config { get; set; }
-        public virtual DbSet<Contract> Contract { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<CustomerLine> CustomerLine { get; set; }
-        public virtual DbSet<DailyCost> DailyCost { get; set; }
-        public virtual DbSet<House> House { get; set; }
-        public virtual DbSet<Notification> Notification { get; set; }
-        public virtual DbSet<NotificationType> NotificationType { get; set; }
-        public virtual DbSet<Request> Request { get; set; }
-        public virtual DbSet<RequestType> RequestType { get; set; }
-        public virtual DbSet<SpecialRate> SpecialRate { get; set; }
-        public virtual DbSet<StatusContract> StatusContract { get; set; }
-        public virtual DbSet<StatusCustomer> StatusCustomer { get; set; }
-        public virtual DbSet<StatusCustomerLine> StatusCustomerLine { get; set; }
-        public virtual DbSet<StatusHouse> StatusHouse { get; set; }
-        public virtual DbSet<StatusNotification> StatusNotification { get; set; }
-        public virtual DbSet<StatusRequest> StatusRequest { get; set; }
-        public virtual DbSet<StatusTransaction> StatusTransaction { get; set; }
-        public virtual DbSet<StatusUser> StatusUser { get; set; }
-        public virtual DbSet<Transaction> Transaction { get; set; }
-        public virtual DbSet<TransactionType> TransactionType { get; set; }
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserAccess> UserAccess { get; set; }
-        public virtual DbSet<UserPermission> UserPermission { get; set; }
+        public virtual DbSet<Config> Configs { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerLine> CustomerLines { get; set; }
+        public virtual DbSet<DailyCost> DailyCosts { get; set; }
+        public virtual DbSet<House> Houses { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<NotificationType> NotificationTypes { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<RequestType> RequestTypes { get; set; }
+        public virtual DbSet<SpecialRate> SpecialRates { get; set; }
+        public virtual DbSet<StatusContract> StatusContracts { get; set; }
+        public virtual DbSet<StatusCustomer> StatusCustomers { get; set; }
+        public virtual DbSet<StatusCustomerLine> StatusCustomerLines { get; set; }
+        public virtual DbSet<StatusHouse> StatusHouses { get; set; }
+        public virtual DbSet<StatusNotification> StatusNotifications { get; set; }
+        public virtual DbSet<StatusRequest> StatusRequests { get; set; }
+        public virtual DbSet<StatusTransaction> StatusTransactions { get; set; }
+        public virtual DbSet<StatusUser> StatusUsers { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserAccess> UserAccesses { get; set; }
+        public virtual DbSet<UserPermission> UserPermissions { get; set; }
 
 
         private readonly string _connectionString;
@@ -69,8 +67,12 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:Collation", "Thai_CI_AS");
+
             modelBuilder.Entity<Config>(entity =>
             {
+                entity.ToTable("Config");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -90,6 +92,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<Contract>(entity =>
             {
+                entity.ToTable("Contract");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.ApproverId).HasColumnName("ApproverID");
@@ -105,6 +109,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<Customer>(entity =>
             {
+                entity.ToTable("Customer");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(200);
@@ -135,6 +141,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<CustomerLine>(entity =>
             {
+                entity.ToTable("CustomerLine");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -150,6 +158,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<DailyCost>(entity =>
             {
+                entity.ToTable("DailyCost");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -175,6 +185,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<House>(entity =>
             {
+                entity.ToTable("House");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(500);
@@ -198,6 +210,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<Notification>(entity =>
             {
+                entity.ToTable("Notification");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -211,6 +225,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<NotificationType>(entity =>
             {
+                entity.ToTable("NotificationType");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .ValueGeneratedNever();
@@ -222,6 +238,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<Request>(entity =>
             {
+                entity.ToTable("Request");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.AgentId).HasColumnName("AgentID");
@@ -237,6 +255,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<RequestType>(entity =>
             {
+                entity.ToTable("RequestType");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .ValueGeneratedNever();
@@ -248,6 +268,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<SpecialRate>(entity =>
             {
+                entity.ToTable("SpecialRate");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -369,6 +391,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<Transaction>(entity =>
             {
+                entity.ToTable("Transaction");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.AgentId).HasColumnName("AgentID");
@@ -382,6 +406,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<TransactionType>(entity =>
             {
+                entity.ToTable("TransactionType");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .ValueGeneratedNever();
@@ -393,6 +419,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("User");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -422,6 +450,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
             modelBuilder.Entity<UserAccess>(entity =>
             {
+                entity.ToTable("UserAccess");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .ValueGeneratedNever();

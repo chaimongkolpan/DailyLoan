@@ -2,6 +2,31 @@
 
 Scaffold-DbContext -f "Server=DESKTOP-P8DRUUI;Database=DailyLoan;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities\DailyLoan
 
+// virtual context
+        public virtual DbSet<Config> Configs { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerLine> CustomerLines { get; set; }
+        public virtual DbSet<DailyCost> DailyCosts { get; set; }
+        public virtual DbSet<House> Houses { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<NotificationType> NotificationTypes { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<RequestType> RequestTypes { get; set; }
+        public virtual DbSet<SpecialRate> SpecialRates { get; set; }
+        public virtual DbSet<StatusContract> StatusContracts { get; set; }
+        public virtual DbSet<StatusCustomer> StatusCustomers { get; set; }
+        public virtual DbSet<StatusCustomerLine> StatusCustomerLines { get; set; }
+        public virtual DbSet<StatusHouse> StatusHouses { get; set; }
+        public virtual DbSet<StatusNotification> StatusNotifications { get; set; }
+        public virtual DbSet<StatusRequest> StatusRequests { get; set; }
+        public virtual DbSet<StatusTransaction> StatusTransactions { get; set; }
+        public virtual DbSet<StatusUser> StatusUsers { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserAccess> UserAccesss { get; set; }
+        public virtual DbSet<UserPermission> UserPermissions { get; set; }
 
 // Use the constructor after generate context.
 

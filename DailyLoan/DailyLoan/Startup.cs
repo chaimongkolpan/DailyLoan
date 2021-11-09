@@ -1,11 +1,9 @@
 using DailyLoan.Model.Entities.DailyLoan;
-/*
 using DailyLoan.Repository;
-using DailyLoan.Repository.Interface;
+using DailyLoan.Repository.Interfaces;
 using DailyLoan.Repository.Interfaces;
 using DailyLoan.Service;
 using DailyLoan.Service.Interfaces;
-*/
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,7 +38,23 @@ namespace DailyLoan
             
             services.AddDbContext<DailyLoanContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DailyLoanConnection")));
-            
+
+            #region DependencyInjectionConfig
+
+            // DependencyInjection Service
+            services.AddScoped<IManagementService, ManagementService>();
+            services.AddScoped<ILogInService, LogInService>();
+            services.AddScoped<IPayService, PayService>();
+            services.AddScoped<IOperationService, OperationService>();
+
+            // DependencyInjection Repository
+            services.AddScoped<IManagementRepo, ManagementRepo>();
+            services.AddScoped<ILogInRepo, LogInRepo>();
+            services.AddScoped<IPayRepo, PayRepo>();
+            services.AddScoped<IOperationRepo, OperationRepo>();
+
+            #endregion
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(7200);
