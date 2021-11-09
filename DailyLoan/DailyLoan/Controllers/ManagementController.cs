@@ -1,8 +1,9 @@
 ﻿using DailyLoan.Model;
-/*using DailyLoan.Library;
+using DailyLoan.Model.Entities.DailyLoan;
+using DailyLoan.Model.Request.Management;
+using DailyLoan.Library;
 using DailyLoan.Library.Status;
-using DailyLoan.Model.Request.LogIn;
-using DailyLoan.Service.Interfaces;*/
+using DailyLoan.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
@@ -11,21 +12,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-using DailyLoan.Library;
 
 namespace DailyLoan.Controllers
 {
     public class ManagementController : Controller
     {
-        //private readonly IMasterServices _masterService;
-        //private readonly ILoginServices _loginService;
-        //private readonly IProjectServices _projectService;
-        private IWebHostEnvironment Environment;
-        public ManagementController(IWebHostEnvironment _environment)
+        private readonly IManagementService _managementService;
+        private readonly IWebHostEnvironment Environment;
+        public ManagementController(IWebHostEnvironment _environment, 
+            IManagementService managementService)
         {
-            //_masterService = masterService;
-            //_loginService = loginService;
-            //_projectService = projectService;
+            _managementService = managementService;
             Environment = _environment;
         }
         public IActionResult Index()
@@ -47,8 +44,12 @@ namespace DailyLoan.Controllers
             ViewBag.partialView = ConstMessage.View_MNM_Customer;
             return View(ConstMessage.View_Index);
         }
-        public ActionResult UserAction()
+        public async Task<ActionResult> UserActionAsync()
         {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            List<ManagementUser> res = await _managementService.GetAllUser(Convert.ToInt32(UserId));
+            ViewBag.PageData = res;
             ViewBag.partialView = ConstMessage.View_MNM_User;
             return View(ConstMessage.View_Index);
         }
