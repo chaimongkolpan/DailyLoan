@@ -18,9 +18,22 @@ namespace DailyLoan.Service
         {
             _ManagementRepo = managementRepo;
         }
-        public async Task<List<ManagementUser>> GetAllUser(int uid)
+
+        public async Task<List<House>> GetAllHouse()
         {
-            return await _ManagementRepo.GetAllUser(_ManagementRepo.GetHouseIdByUserId(uid));
+            return await _ManagementRepo.GetAllHouse();
+        }
+        public async Task<List<CustomerLine>> GetAllCustomerLine(int uid)
+        {
+            return await _ManagementRepo.GetAllCustomerLine(_ManagementRepo.GetHouseIdByUserId(uid));
+        }
+        public bool UsernameIsExist(string username)
+        {
+            return _ManagementRepo.UsernameIsExist(username);
+        }
+        public async Task<List<ManagementUser>> GetAllUser(int uid, int ua)
+        {
+            return await _ManagementRepo.GetAllUser(_ManagementRepo.GetHouseIdByUserId(uid),ua);
         }
         public ManagementUser GetUser(int uid)
         {

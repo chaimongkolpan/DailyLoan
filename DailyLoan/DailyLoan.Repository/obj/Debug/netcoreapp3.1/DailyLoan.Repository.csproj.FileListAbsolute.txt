@@ -27,4 +27,3 @@ C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Repository\obj\Debug\netcorea
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Repository\obj\Debug\netcoreapp3.1\DailyLoan.Repository.csproj.CopyComplete
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Repository\obj\Debug\netcoreapp3.1\DailyLoan.Repository.dll
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Repository\obj\Debug\netcoreapp3.1\DailyLoan.Repository.pdb
-C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Repository\obj\Debug\netcoreapp3.1\DailyLoan.Repository.csproj.CopyComplete
