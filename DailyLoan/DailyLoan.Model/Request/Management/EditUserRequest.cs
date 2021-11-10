@@ -8,6 +8,7 @@ namespace DailyLoan.Model.Request.Management
     public class EditUserRequest : User
     {
         public bool isNew { get; set; }
+        public string ConfirmPassword { get; set; }
         public User ToUser(int uid)
         {
             User u = new User()
