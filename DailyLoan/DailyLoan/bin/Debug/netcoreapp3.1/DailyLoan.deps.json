@@ -2646,6 +2646,7 @@
       },
       "DailyLoan.Model/1.0.0": {
         "dependencies": {
+          "DailyLoan.Library": "1.0.0",
           "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.20"
         },

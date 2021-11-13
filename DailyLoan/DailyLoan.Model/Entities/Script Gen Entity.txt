@@ -2,6 +2,9 @@
 
 Scaffold-DbContext -f "Server=DESKTOP-P8DRUUI;Database=DailyLoan;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities\DailyLoan
 
+
+#nullable disable
+
 // virtual context
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Contract> Contracts { get; set; }
@@ -25,7 +28,7 @@ Scaffold-DbContext -f "Server=DESKTOP-P8DRUUI;Database=DailyLoan;Trusted_Connect
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserAccess> UserAccesss { get; set; }
+        public virtual DbSet<UserAccess> UserAccesses { get; set; }
         public virtual DbSet<UserPermission> UserPermissions { get; set; }
 
 // Use the constructor after generate context.
@@ -51,3 +54,38 @@ protected override void OnConfiguring(DbContextOptionsBuilder builder)
         base.OnConfiguring(builder);
     }
 }
+
+modelBuilder.HasAnnotation("Relational:Collation", "Thai_CI_AS");
+
+
+                entity.ToTable("Config");
+                
+                entity.ToTable("Contract");
+
+                entity.ToTable("Customer");
+                
+                entity.ToTable("CustomerLine");
+                
+                entity.ToTable("DailyCost");
+                
+                entity.ToTable("House");
+                
+                entity.ToTable("Notification");
+                
+                entity.ToTable("NotificationType");
+
+                entity.ToTable("Request");
+
+                entity.ToTable("RequestType");
+                
+                entity.ToTable("SpecialRate");
+                
+                entity.ToTable("Transaction");
+                
+                entity.ToTable("TransactionType");
+
+                entity.ToTable("User");
+                
+                entity.ToTable("UserAccess");
+
+                

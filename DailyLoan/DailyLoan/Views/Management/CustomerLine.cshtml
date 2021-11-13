@@ -1,0 +1,302 @@
+﻿@using DailyLoan.Library.Status
+<div class="row">
+    <div class="col-12">
+        <table id="table" class="table table-striped table-bordered" style="width:100%">
+            <thead style="width:100%">
+                <tr>
+                    <th>#</th>
+                    <th data-field="housename">ชื่อสาย</th>
+                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                    {
+                        <th>บ้าน</th>
+                    }
+                    <th>สถานะ</th>
+                    <th>หมายเหตุ</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="width:100%">
+                @if (ViewBag.PageData.Count > 0)
+                {
+                    foreach (var items in ViewBag.PageData)
+                    {
+                        <tr class='clickable-row'>
+                            <td scope="row">@items.Id</td>
+                            <td>@items.CustomerLineName</td>
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <td>@items.HouseText</td>
+                            }
+                            <td>@items.StatusText</td>
+                            <td>@items.Remark</td>
+                            <td>
+                                <button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-11 pt-2">
+        <input type="checkbox" id="isNew" name="isNew" value="true">
+        <label for="isNew">เพิ่มสายใหม่</label>
+    </div>
+    <div class="col-sm-11 pt-1">
+        <input type="radio" id="status1" name="status" value="1">
+        <label for="status1">ใช้งาน</label>
+        <input type="radio" id="status2" name="status" value="2">
+        <label for="status2">ไม่ใช้งาน</label>
+    </div>
+    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+    {
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group required-field">
+                        <label for="acc-name">เลือกบ้าน</label>
+                        <select class="form-control" name="house" id="house" style="height: 34px;" required>
+                            @foreach (var item in ViewBag.House)
+                            {
+                                <option value="@item.Id">@item.HouseName</option>
+                            }
+                        </select>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+    }
+    else
+    {
+        <input type="hidden" id="house" name="house" />
+    }
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group required-field">
+                    <label for="acc-name">ชื่อสาย</label>
+                    <input type="text" class="form-control" name="customerlinename" id="customerlinename" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">หมายเหตุ</label>
+                    <input type="text" class="form-control" name="remark" id="remark">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+</div>
+<div class="mb-1"></div>
+<input type="hidden" id="CustomerLineId" name="CustomerLineId" />
+<div class="required text-right">* Required Field</div>
+<label id="msg"></label>
+<div class="form-footer">
+    <div class="form-footer-right">
+        <button type="button" class="btn btn-danger" id="delete" style="display:none;">ลบ</button>
+        <button type="button" class="btn btn-primary" id="save">บันทึก</button>
+    </div>
+</div><!-- End .form-footer -->
+
+@if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+{
+
+    <script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+$(document).ready(function () {
+    $('#isNew').prop('checked', true);
+    $("#CustomerLineId").val("");
+    $('#table').DataTable({
+        "info": true,
+        "pageLength": 10,
+        "bLengthChange": false,
+        "initComplete": function () {
+            this.api().columns().every(function () {
+                var column = this;
+                if (column[0][0] == 2) {
+                    var select = $('<div class="dataTables_filter"><label>บ้าน:&nbsp;&nbsp;<select id="housesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label></div>')
+                        .appendTo($('#table_filter').parent().parent().children().first().empty());
+                    $('#housesearch').on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
+                    column.data().unique().sort().each(function (d, j) {
+                        $('#housesearch').append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            });
+        }
+    });
+
+    $('#isNew').click(function () {
+        if ($('#isNew').prop('checked')) {
+            $("#CustomerLineId").val("");
+            $('#delete').hide();
+        } else {
+            if ($("#CustomerLineId").val() != "") $('#delete').show();
+        }
+    });
+    $('#table tbody').on('click', '.btnClick', function () {
+        $('#delete').show();
+        $("#CustomerLineId").val($(this).closest('tr').find('td').eq(0).text());
+        $.ajax({
+            type: "GET",
+            url: root + "/GetCustomerLineDetail/" + $("#CustomerLineId").val(),
+            contentType: "application/json; charset=utf-8;",
+            dataType: "json",
+            success: function (data) {
+                if (data != undefined) {
+                    $("#isNew").prop('checked', false);
+                    $("#customerlinename").val(data.customerLineName);
+                    $("#house").val(data.houseId);
+                    $("#remark").val(data.remark);
+                    if (data.status == 1)
+                        $("#status1").prop('checked', true);
+                    else if (data.status == 2)
+                        $("#status2").prop('checked', true);
+                }
+            },
+            error: function (e) { $("#CustomerLineId").val("");console.log(e) }
+        });
+    });
+    $("#save").click(function () {
+        if ($("#CustomerLineId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#CustomerLineId").val() == '')) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("isNew", $("#isNew").prop('checked'));
+            formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+            formData.append("Id", $("#CustomerLineId").val());
+            formData.append("CustomerLineName", $("#customerlinename").val());
+            formData.append("HouseID", $("#house").val());
+            formData.append("Remark", $("#remark").val());
+            req.open("POST", '/EditCustomerLine');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        } else {
+            alert('กรุณาเลือกสาย หรือ ติ๊กที่เพิ่มสายใหม่');
+        }
+    });
+    $("#delete").click(function () {
+        if (confirm('คุณต้องการที่จะลบสายชื่อ ' + $("#customerlinename").val() + ' ใช่หรือไม่?')) {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteCustomerLine/' + $("#CustomerLineId").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
+    });
+});
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+$(document).ready(function () {
+    $('#isNew').prop('checked', true);
+    $("#CustomerLineId").val("");
+    $('#table').DataTable({
+        "info": true,
+        "pageLength": 10,
+        "bLengthChange": false
+    });
+
+    $('#isNew').click(function () {
+        if ($('#isNew').prop('checked')) {
+            $("#CustomerLineId").val("");
+            $('#delete').hide();
+        } else {
+            if ($("#CustomerLineId").val() != "") $('#delete').show();
+        }
+    });
+    $('#table tbody').on('click', '.btnClick', function () {
+        $('#delete').show();
+        $("#CustomerLineId").val($(this).closest('tr').find('td').eq(0).text());
+        $.ajax({
+            type: "GET",
+            url: root + "/GetCustomerLineDetail/" + $("#CustomerLineId").val(),
+            contentType: "application/json; charset=utf-8;",
+            dataType: "json",
+            success: function (data) {
+                if (data != undefined) {
+                    $("#isNew").prop('checked', false);
+                    $("#customerlinename").val(data.customerLineName);
+                    $("#house").val(data.houseId);
+                    $("#remark").val(data.remark);
+                    if (data.status == 1)
+                        $("#status1").prop('checked', true);
+                    else if (data.status == 2)
+                        $("#status2").prop('checked', true);
+                }
+            },
+            error: function (e) { $("#CustomerLineId").val("");console.log(e) }
+        });
+    });
+    $("#save").click(function () {
+        if ($("#CustomerLineId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#CustomerLineId").val() == '')) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("isNew", $("#isNew").prop('checked'));
+            formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+            formData.append("Id", $("#CustomerLineId").val());
+            formData.append("CustomerLineName", $("#customerlinename").val());
+            formData.append("HouseID", $("#house").val());
+            formData.append("Remark", $("#remark").val());
+            req.open("POST", '/EditCustomerLine');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        } else {
+            alert('กรุณาเลือกสาย หรือ ติ๊กที่เพิ่มสายใหม่');
+        }
+    });
+    $("#delete").click(function () {
+        if (confirm('คุณต้องการที่จะลบสายชื่อ ' + $("#customerlinename").val() + ' ใช่หรือไม่?')) {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteCustomerLine/' + $("#CustomerLineId").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
+    });
+});
+    </script>
+
+}

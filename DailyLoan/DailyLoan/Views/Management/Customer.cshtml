@@ -1,3 +1,489 @@
-﻿<div class="row col-12">
-    customer
+﻿@using DailyLoan.Library.Status
+<div class="row">
+    <div class="col-12">
+        <table id="table" class="table table-striped table-bordered" style="width:100%">
+            <thead style="width:100%">
+                <tr>
+                    <th>#</th>
+                    <th data-field="firstname">ชื่อ</th>
+                    <th data-field="lastname">นามสกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>สถานที่</th>
+                    <th>สถานะ</th>
+                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                    {
+                        <th>บ้าน</th>
+                    }
+                    <th>สาย</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="width:100%">
+                @if (ViewBag.PageData.Count > 0)
+                {
+                    foreach (var items in ViewBag.PageData)
+                    {
+                        <tr class='clickable-row'>
+                            <td scope="row">@items.Id</td>
+                            <td>@items.Firstname</td>
+                            <td>@items.Lastname</td>
+                            <td>@items.Nickname</td>
+                            <td>@items.ShortAddress</td>
+                            <td>@items.StatusText</td>
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <td>@items.HouseText</td>
+                            }
+                            <td>@items.CustomerLineText</td>
+                            <td>
+                                <button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+<div class="row">
+    <div class="col-sm-11 pt-2">
+        <input type="checkbox" id="isNew" name="isNew" value="true">
+        <label for="isNew">เพิ่มลูกค้าใหม่</label>
+    </div>
+    <div class="col-sm-11 pt-1">
+        <input type="radio" id="status1" name="status" value="1">
+        <label for="status1">ดี</label>
+        <input type="radio" id="status2" name="status" value="2">
+        <label for="status2">แย่</label>
+        <input type="radio" id="status3" name="status" value="3">
+        <label for="status3">เสีย</label>
+    </div>
+    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+    {
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">เลือกบ้าน</label>
+                        <select class="form-control" name="house" id="house" style="height: 34px;" required>
+                            @foreach (var item in ViewBag.House)
+                            {
+                                if (item.Id != 1)
+                                {
+                                    <option value="@item.Id">@item.HouseName</option>
+                                }
+                            }
+                        </select>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-6 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="acc-name">เลือกสาย</label>
+                        <select class="form-control" name="customerline" id="customerline" style="height: 34px;">
+                        </select>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+    }
+    else
+    {
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="acc-name">เลือกสาย</label>
+                        <select class="form-control" name="customerline" id="customerline" style="height: 34px;">
+                            @if (ViewBag.CustomerLine.Count() > 0)
+                            {
+                                @foreach (var item in ViewBag.CustomerLine)
+                                {
+                                    <option value="@item.Id">@item.CustomerLineName</option>
+                                }
+                            }
+                        </select>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+    }
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">ชื่อ</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">นามสกุล</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">ชื่อเล่น</label>
+                    <input type="text" class="form-control" name="nickname" id="nickname">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group required-field">
+                    <label for="acc-name">เลขบัตรประชาชน</label>
+                    <input type="text" class="form-control" name="idcard" id="idcard" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="acc-name">เบอร์ 1</label>
+                    <input type="text" class="form-control" name="phone1" id="phone1">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="acc-name">เบอร์ 2</label>
+                    <input type="text" class="form-control" name="phone2" id="phone2">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">ที่อยู่</label>
+                    <textarea rows="4" class="form-control" name="address" id="address" required></textarea>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">ที่อยู่ย่อ</label>
+                    <input type="text" class="form-control" name="shortaddress" id="shortaddress" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+</div>
+<div class="mb-1"></div>
+<input type="hidden" id="CustomerId" name="CustomerId" />
+<div class="required text-right">* Required Field</div>
+<label id="msg"></label>
+<div class="form-footer">
+    <div class="form-footer-right">
+        <button type="button" class="btn btn-danger" id="delete" style="display:none;">ลบ</button>
+        <button type="button" class="btn btn-primary" id="save">บันทึก</button>
+    </div>
+</div><!-- End .form-footer -->
+@if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+{
+    <script type="text/javascript">
+        var root = '@Url.Content("~/")';
+        root = (root == '/' ? "" : root);
+    $(document).ready(function () {
+        $('#isNew').prop('checked', true);
+        $("#CustomerId").val("");
+        $('#table').DataTable({
+            "info": true,
+            "pageLength": 10,
+            "bLengthChange": false,
+            "initComplete": function() {
+                this.api().columns().every(function () {
+                    var column = this;
+                    if (column[0][0] == 7) {
+                        var select = $('<label>&nbsp;&nbsp;&nbsp;&nbsp;สาย:&nbsp;&nbsp;<select id="cuslinesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label>')
+                            .appendTo($('#table_filter'));
+                        $('#cuslinesearch').on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                        });
+                        column.data().unique().sort().each(function (d, j) {
+                            $('#cuslinesearch').append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    }
+                    if (column[0][0] == 6) {
+                        var select = $('<div class="dataTables_filter"><label>บ้าน:&nbsp;&nbsp;<select id="housesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label></div>')
+                            .appendTo($('#table_filter').parent().parent().children().first().empty());
+                        $('#housesearch').on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                        });
+                        column.data().unique().sort().each(function (d, j) {
+                            $('#housesearch').append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    }
+                });
+            }
+        });
+        $('#house').on('change', function () {
+            $('#customerline').empty();
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        for (var it of data) {
+                            $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] +'</option>');
+                        }
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        if ($('#house').val() != 0 && $('#house').val() != 1) {
+            $('#customerline').empty();
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data1) {
+                    if (data1 != undefined) {
+                        for (var it of data1) {
+                            $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                        }
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        }
+        $('#isNew').click(function () {
+            if ($('#isNew').prop('checked')) {
+                $("#CustomerId").val("");
+                $('#delete').hide();
+            } else {
+                if ($("#CustomerId").val() != "") $('#delete').show();
+            }
+        });
+        $('#table tbody').on('click', '.btnClick', function () {
+            $('#delete').show();
+            $("#CustomerId").val($(this).closest('tr').find('td').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerDetail/" + $("#CustomerId").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#isNew").prop('checked', false);
+                        $("#house").val(data.houseId);
+                        $("#firstname").val(data.firstname);
+                        $("#lastname").val(data.lastname);
+                        $("#nickname").val(data.nickname);
+                        $("#phone1").val(data.phone1);
+                        $("#phone2").val(data.phone2);
+                        $("#idcard").val(data.idcard);
+                        $("#address").val(data.address);
+                        $("#shortaddress").val(data.shortAddress);
+                        if (data.status == 1)
+                            $("#status1").prop('checked', true);
+                        else if (data.status == 2)
+                            $("#status2").prop('checked', true);
+                        else if (data.status == 3)
+                            $("#status3").prop('checked', true);
+                        $('#customerline').empty();
+                        $.ajax({
+                            type: "GET",
+                            url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                            contentType: "application/json; charset=utf-8;",
+                            dataType: "json",
+                            success: function (data1) {
+                                if (data != undefined) {
+                                    for (var it of data1) {
+                                        $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                                    }
+                                    $("#customerline").val(data.customerLineId);
+                                }
+                            },
+                            error: function (e) { console.log(e) }
+                        });
+                    }
+                },
+                error: function (e) { $("#CustomerId").val("");console.log(e) }
+            });
+        });
+        $("#save").click(function () {
+            if ($("#CustomerId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#CustomerId").val() == '')) {
+                let req = new XMLHttpRequest();
+                let formData = new FormData();
+
+                formData.append("isNew", $("#isNew").prop('checked'));
+                formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+                formData.append("Id", $("#CustomerId").val());
+                formData.append("CustomerLineId", $("#customerline").val());
+                formData.append("Firstname", $("#firstname").val());
+                formData.append("Lastname", $("#lastname").val());
+                formData.append("Nickname", $("#nickname").val());
+                formData.append("Phone1", $("#phone1").val());
+                formData.append("Phone2", $("#phone2").val());
+                formData.append("Idcard", $("#idcard").val());
+                formData.append("Address", $("#address").val());
+                formData.append("ShortAddress", $("#shortaddress").val());
+                req.open("POST", '/EditCustomer');
+                req.send(formData);
+                req.onload = function () {
+                    if (req.readyState != 4 || req.status != 200) {
+                        $("#msg").text(req.responseText)
+                    } else {
+                        alert(req.responseText);
+                        location.reload();
+                    }
+                }
+            } else {
+                alert('กรุณาเลือกลูกค้า หรือ ติ๊กที่เพิ่มลูกค้าใหม่');
+            }
+        });
+        $("#delete").click(function () {
+            if (confirm('คุณต้องการที่จะลบลูกค้าชื่อ ' + $("#firstname").val() + ' ' + $("#lastname").val() + ' ใช่หรือไม่?')) {
+                let req = new XMLHttpRequest();
+                req.open("GET", '/DeleteCustomer/' + $("#CustomerId").val());
+                req.send();
+                req.onload = function () {
+                    if (req.readyState != 4 || req.status != 200) {
+                        $("#msg").text(req.responseText)
+                    } else {
+                        alert(req.responseText);
+                        location.reload();
+                    }
+                }
+            }
+        });
+    });
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        var root = '@Url.Content("~/")';
+        root = (root == '/' ? "" : root);
+    $(document).ready(function () {
+        $('#isNew').prop('checked', true);
+        $("#CustomerId").val("");
+        $('#table').DataTable({
+            "info": true,
+            "pageLength": 10,
+            "bLengthChange": false,
+            "initComplete": function() {
+                this.api().columns().every(function () {
+                    var column = this;
+                    if (column[0][0] == 6) {
+                        var select = $('<label>&nbsp;&nbsp;สาย:&nbsp;<select id="cuslinesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label>')
+                            .appendTo($('#table_filter'));
+                        $('#cuslinesearch').on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                        });
+                        column.data().unique().sort().each(function (d, j) {
+                            $('#cuslinesearch').append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    }
+                });
+            }
+        });
+        $('#isNew').click(function () {
+            if ($('#isNew').prop('checked')) {
+                $("#CustomerId").val("");
+                $('#delete').hide();
+            } else {
+                if ($("#CustomerId").val() != "") $('#delete').show();
+            }
+        });
+        $('#table tbody').on('click', '.btnClick', function () {
+            $('#delete').show();
+            $("#CustomerId").val($(this).closest('tr').find('td').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerDetail/" + $("#CustomerId").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#isNew").prop('checked', false);
+                        $("#firstname").val(data.firstname);
+                        $("#lastname").val(data.lastname);
+                        $("#nickname").val(data.nickname);
+                        $("#phone1").val(data.phone1);
+                        $("#phone2").val(data.phone2);
+                        $("#customerline").val(data.customerLineId);
+                        $("#idcard").val(data.idcard);
+                        $("#address").val(data.address);
+                        $("#shortaddress").val(data.shortAddress);
+                        if (data.status == 1)
+                            $("#status1").prop('checked', true);
+                        else if (data.status == 2)
+                            $("#status2").prop('checked', true);
+                        else if (data.status == 3)
+                            $("#status3").prop('checked', true);
+                    }
+                },
+                error: function (e) { $("#CustomerId").val("");console.log(e) }
+            });
+        });
+        $("#save").click(function () {
+            if ($("#CustomerId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#CustomerId").val() == '')) {
+                let req = new XMLHttpRequest();
+                let formData = new FormData();
+
+                formData.append("isNew", $("#isNew").prop('checked'));
+                formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+                formData.append("Id", $("#CustomerId").val());
+                formData.append("CustomerLineId", $("#customerline").val());
+                formData.append("Firstname", $("#firstname").val());
+                formData.append("Lastname", $("#lastname").val());
+                formData.append("Nickname", $("#nickname").val());
+                formData.append("Phone1", $("#phone1").val());
+                formData.append("Phone2", $("#phone2").val());
+                formData.append("Idcard", $("#idcard").val());
+                formData.append("Address", $("#address").val());
+                formData.append("ShortAddress", $("#shortaddress").val());
+                req.open("POST", '/EditCustomer');
+                req.send(formData);
+                req.onload = function () {
+                    if (req.readyState != 4 || req.status != 200) {
+                        $("#msg").text(req.responseText)
+                    } else {
+                        alert(req.responseText);
+                        location.reload();
+                    }
+                }
+            } else {
+                alert('กรุณาเลือกลูกค้า หรือ ติ๊กที่เพิ่มลูกค้าใหม่');
+            }
+        });
+        $("#delete").click(function () {
+            if (confirm('คุณต้องการที่จะลบลูกค้าชื่อ ' + $("#firstname").val() + ' ' + $("#lastname").val() + ' ใช่หรือไม่?')) {
+                let req = new XMLHttpRequest();
+                req.open("GET", '/DeleteCustomer/' + $("#CustomerId").val());
+                req.send();
+                req.onload = function () {
+                    if (req.readyState != 4 || req.status != 200) {
+                        $("#msg").text(req.responseText)
+                    } else {
+                        alert(req.responseText);
+                        location.reload();
+                    }
+                }
+            }
+        });
+    });
+    </script>
+}

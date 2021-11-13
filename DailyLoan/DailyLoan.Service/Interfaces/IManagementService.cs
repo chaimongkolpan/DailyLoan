@@ -10,12 +10,43 @@ namespace DailyLoan.Service.Interfaces
 {
     public interface IManagementService
     {
+        int GetHouseIdByUserId(int uid);
         Task<List<House>> GetAllHouse();
-        Task<List<CustomerLine>> GetAllCustomerLine(int uid);
+        Task<List<CustomerLine>> GetAllCustomerLine(int uid); 
+        Task<List<CustomerLine>> GetAllCustomerLineByHouseID(int hid); 
         bool UsernameIsExist(string username);
+        bool IdcardIsExist(string idcard);
+
+        #region User
         Task<List<ManagementUser>> GetAllUser(int uid, int ua);
         ManagementUser GetUser(int uid);
         Task<bool> EditUser(EditUserRequest req, int uid);
         Task<bool> DeleteUser(int uid);
+        #endregion
+        #region Customer
+        Task<List<ManagementCustomer>> GetAllCustomer(int uid, int ua);
+        ManagementCustomer GetCustomer(int cid);
+        Task<bool> EditCustomer(EditCustomerRequest req, int uid);
+        Task<bool> DeleteCustomer(int cid);
+        #endregion
+        #region House
+        Task<List<ManagementHouse>> GetAllHouseList();
+        ManagementHouse GetHouse(int hid);
+        Task<bool> EditHouse(EditHouseRequest req, int uid);
+        Task<bool> DeleteHouse(int hid);
+        #endregion
+        #region CustomerLine
+        Task<List<ManagementCustomerLine>> GetAllCustomerLineList(int uid, int useraccess);
+        ManagementCustomerLine GetCustomerLine(int clid);
+        Task<bool> EditCustomerLine(EditCustomerLineRequest req, int uid);
+        Task<bool> DeleteCustomerLine(int clid);
+        #endregion
+        #region Config
+        Task<ManagementConfig> GetConfig(int hid);
+        SpecialRate GetSpecialRate(int spid);
+        Task<bool> EditConfig(EditConfigRequest req, int uid);
+        Task<bool> EditSpecialRate(EditSpecialRateRequest req, int uid);
+        Task<bool> DeleteSpecialRate(int spid);
+        #endregion
     }
 }

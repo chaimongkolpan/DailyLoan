@@ -87,7 +87,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+                "projectPath": "C:\\Users\\golf_\\Documents\\GitHub\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

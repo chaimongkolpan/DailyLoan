@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
- #nullable disable
+#nullable disable
 
 namespace DailyLoan.Model.Entities.DailyLoan
 {
@@ -41,7 +41,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAccess> UserAccesses { get; set; }
         public virtual DbSet<UserPermission> UserPermissions { get; set; }
-
 
         private readonly string _connectionString;
 
@@ -215,6 +214,10 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CustomerLineId).HasColumnName("CustomerLineID");
+
+                entity.Property(e => e.HouseId).HasColumnName("HouseID");
 
                 entity.Property(e => e.Message).HasMaxLength(200);
 
@@ -471,8 +474,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CustomerLineId).HasColumnName("CustomerLineID");
-
-                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });
