@@ -1565,6 +1565,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "DailyLoan.Library": "1.0.0",
           "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.20"
         },
