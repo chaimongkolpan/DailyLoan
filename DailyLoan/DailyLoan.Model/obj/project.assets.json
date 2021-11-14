@@ -1578,6 +1578,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "DailyLoan.Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/DailyLoan.Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DailyLoan.Library.dll": {}
+        }
       }
     }
   },
@@ -5859,10 +5869,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "DailyLoan.Library/1.0.0": {
+      "type": "project",
+      "path": "../DailyLoan.Library/DailyLoan.Library.csproj",
+      "msbuildProject": "../DailyLoan.Library/DailyLoan.Library.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "DailyLoan.Library >= 1.0.0",
       "Microsoft.AspNetCore.Http.Extensions >= 2.2.0",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.20",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.20",
@@ -5899,7 +5915,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

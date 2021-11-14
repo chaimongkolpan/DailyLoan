@@ -1,0 +1,256 @@
+﻿<div class="row">
+    <div class="col-12">
+        <table id="table" class="table table-striped table-bordered" style="width:100%">
+            <thead style="width:100%">
+                <tr>
+                    <th>#</th>
+                    <th data-field="housename">ชื่อบ้าน</th>
+                    <th>จังหวัด</th>
+                    <th>อำเภอ</th>
+                    <th>ตำบล</th>
+                    <th>สถานะ</th>
+                    <th>หมายเหตุ</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="width:100%">
+                @if (ViewBag.PageData.Count > 0)
+                {
+                    foreach (var items in ViewBag.PageData)
+                    {
+                <tr class='clickable-row'>
+                    <td scope="row">@items.Id</td>
+                    <td>@items.HouseName</td>
+                    <td>@items.Province</td>
+                    <td>@items.District</td>
+                    <td>@items.SubDistrict</td>
+                    <td>@items.StatusText</td>
+                    <td>@items.Remark</td>
+                    <td>
+                        <button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>
+                    </td>
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-11 pt-2">
+        <input type="checkbox" id="isNew" name="isNew" value="true">
+        <label for="isNew">เพิ่มบ้านใหม่</label>
+    </div>
+    <div class="col-sm-11 pt-1">
+        <input type="radio" id="status1" name="status" value="1">
+        <label for="status1">ใช้งาน</label>
+        <input type="radio" id="status2" name="status" value="2">
+        <label for="status2">ไม่ใช้งาน</label>
+    </div>
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">เลือกสาย</label>
+                    <select class="form-control" name="customerline" id="customerline" style="height: 34px;">
+                        <option value="0">-</option>
+                    </select>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group required-field">
+                    <label for="acc-name">ชื่อบ้าน</label>
+                    <input type="text" class="form-control" name="housename" id="housename" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">ที่อยู่</label>
+                    <input type="text" class="form-control" name="address" id="address">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">จังหวัด</label>
+                    <input type="text" class="form-control" name="province" id="province">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">อำเภอ</label>
+                    <input type="text" class="form-control" name="district" id="district" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">ตำบล</label>
+                    <input type="text" class="form-control" name="subdistrict" id="subdistrict" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">หมายเหตุ</label>
+                    <input type="text" class="form-control" name="remark" id="remark">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+</div>
+<div class="mb-1"></div>
+<input type="hidden" id="HouseId" name="HouseId" />
+<div class="required text-right">* Required Field</div>
+<label id="msg"></label>
+<div class="form-footer">
+    <div class="form-footer-right">
+        <button type="button" class="btn btn-danger" id="delete" style="display:none;">ลบ</button>
+        <button type="button" class="btn btn-primary" id="save">บันทึก</button>
+    </div>
+</div><!-- End .form-footer -->
+
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+$(document).ready(function () {
+    $('#isNew').prop('checked', true);
+    $("#HouseId").val("");
+    $('#table').DataTable({
+        "info": true,
+        "pageLength": 10,
+        "bLengthChange": false
+    });
+
+    $('#house').on('change', function () {
+        $('<option value="0">-</option>').appendTo($('#customerline').empty());
+        $.ajax({
+            type: "GET",
+            url: root + "/GetCustomerLineAll/" + $("#house").val(),
+            contentType: "application/json; charset=utf-8;",
+            dataType: "json",
+            success: function (data) {
+                if (data != undefined) {
+                    for (var it of data) {
+                        $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] +'</option>');
+                    }
+                }
+            },
+            error: function (e) { console.log(e) }
+        });
+    });
+
+    $('#isNew').click(function () {
+        if ($('#isNew').prop('checked')) {
+            $("#HouseId").val("");
+            $('#delete').hide();
+        } else {
+            if ($("#HouseId").val() != "") $('#delete').show();
+        }
+    });
+    $('#table tbody').on('click', '.btnClick', function () {
+        $('#delete').show();
+        $("#HouseId").val($(this).closest('tr').find('td').eq(0).text());
+        $.ajax({
+            type: "GET",
+            url: root + "/GetHouseDetail/" + $("#HouseId").val(),
+            contentType: "application/json; charset=utf-8;",
+            dataType: "json",
+            success: function (data) {
+                if (data != undefined) {
+                    $("#isNew").prop('checked', false);
+                    $("#housename").val(data.houseName);
+                    $("#address").val(data.address);
+                    $("#province").val(data.province);
+                    $("#district").val(data.district);
+                    $("#subdistrict").val(data.subDistrict);
+                    $("#remark").val(data.remark);
+                    if (data.status == 1)
+                        $("#status1").prop('checked', true);
+                    else if (data.status == 2)
+                        $("#status2").prop('checked', true);
+                    /*
+                    $('<option value="0">-</option>').appendTo($('#customerline').empty());
+                    $.ajax({
+                        type: "GET",
+                        url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                        contentType: "application/json; charset=utf-8;",
+                        dataType: "json",
+                        success: function (data1) {
+                            if (data1 != undefined) {
+                                for (var it of data1) {
+                                    $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                                }
+                                $("#customerline").val(data.customerLineId);
+                            }
+                        },
+                        error: function (e) { console.log(e) }
+                    });
+                    */
+                }
+            },
+            error: function (e) { $("#HouseId").val("");console.log(e) }
+        });
+    });
+    $("#save").click(function () {
+        if ($("#HouseId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#HouseId").val() == '')) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("isNew", $("#isNew").prop('checked'));
+            formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+            formData.append("Id", $("#HouseId").val());
+            formData.append("HouseName", $("#housename").val());
+            formData.append("Address", $("#address").val());
+            formData.append("Province", $("#province").val());
+            formData.append("District", $("#district").val());
+            formData.append("SubDistrict", $("#subdistrict").val());
+            formData.append("Remark", $("#remark").val());
+            req.open("POST", '/EditHouse');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        } else {
+            alert('กรุณาเลือกบ้าน หรือ ติ๊กที่เพิ่มบ้านใหม่');
+        }
+    });
+    $("#delete").click(function () {
+        if (confirm('คุณต้องการที่จะลบบ้านชื่อ ' + $("#housename").val() + ' ใช่หรือไม่?')) {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteHouse/' + $("#HouseId").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
+    });
+});
+</script>

@@ -14,7 +14,6 @@ C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Library.pdb
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Model.pdb
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Repository.pdb
-C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Service\obj\Debug\netcoreapp3.1\DailyLoan.Service.csproj.CopyComplete
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Service.deps.json
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Service.dll
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Service\bin\Debug\netcoreapp3.1\DailyLoan.Service.pdb
