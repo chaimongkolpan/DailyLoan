@@ -32,12 +32,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row col-12 mt-1">
-                        <div class="col-md-4">
-                            <label for="inputEmail4">วันที่</label>
-                            <input type="text" class="form-control" id="datepicker">
-                        </div>
-                    </div>
                     <div class="row mt-2">
                         <div class="col text-end">
                             <button type="button" class="btn btn-primary">ค้นหา</button>
@@ -90,7 +84,6 @@
     root = (root == '/' ? "" : root);
     $(document).ready(function () {
         $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4',
             format: 'dd/mm/yyyy'
         });
     });
