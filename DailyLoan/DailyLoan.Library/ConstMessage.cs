@@ -21,6 +21,11 @@ namespace DailyLoan.Library
         public const string View_MNM_CustomerLine = "CustomerLine";
         public const string View_MNM_User = "User";
 
+        public const string View_PAY_Contract = "Contract";
+        public const string View_PAY_DailyReport = "DailyReport";
+        public const string View_PAY_History = "History";
+        public const string View_PAY_User = "User";
+
         public const string Message_InValidID = "เลขประประชาชนไม่ถูกต้อง";
         public const string Message_DonotHavePermission = "คุณไม่มีสิทธิ์";
         public const string Message_Successful = "สำเร็จ";
