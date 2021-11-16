@@ -405,3 +405,6 @@ C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razo
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\CustomerLine.cshtml.g.cs
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\House.cshtml.g.cs
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\ConfigAdmin.cshtml.g.cs
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\ConfigAdmin.cshtml.g.cs
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\CustomerLine.cshtml.g.cs
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\House.cshtml.g.cs

@@ -31,5 +31,14 @@ namespace DailyLoan.Controllers
         {
             return View();
         }
+        public IActionResult DailyCost()
+        {
+            return View();
+        }
+        public IActionResult DailyCostHistory()
+        {
+            return View();
+        }
+        
     }
 }

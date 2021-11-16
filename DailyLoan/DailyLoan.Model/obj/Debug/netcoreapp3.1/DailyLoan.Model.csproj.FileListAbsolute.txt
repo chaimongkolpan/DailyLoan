@@ -26,3 +26,6 @@ C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Model\obj\Debug\netcoreapp3.1
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Model\obj\Debug\netcoreapp3.1\DailyLoan.Model.genruntimeconfig.cache
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Model\bin\Debug\netcoreapp3.1\DailyLoan.Library.dll
 C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan.Model\bin\Debug\netcoreapp3.1\DailyLoan.Library.pdb
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Model\bin\Debug\netcoreapp3.1\DailyLoan.Library.dll
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Model\bin\Debug\netcoreapp3.1\DailyLoan.Library.pdb
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan.Model\obj\Debug\netcoreapp3.1\DailyLoan.Model.csproj.CopyComplete
