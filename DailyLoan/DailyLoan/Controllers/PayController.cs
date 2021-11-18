@@ -27,7 +27,12 @@ namespace DailyLoan.Controllers
             //_projectService = projectService;
             Environment = _environment;
         }
-        public IActionResult Index()
+
+        public IActionResult User()
+        {
+            return View();
+        }
+        public IActionResult Customer()
         {
             return View();
         }
