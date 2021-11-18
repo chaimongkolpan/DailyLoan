@@ -1,28 +1,28 @@
-﻿
-<div class="card-body bg-light p-3 rounded ">
+﻿<div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
         <input type="text" class="form-control" placeholder="ชื่อ">
         <input type="text" class="form-control" placeholder="นามสกุล">
+        <input type="text" class="form-control" placeholder="สถานที่">
         <button type="button" class="btn btn-info btn-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
             ค้นหา
         </button>
-        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#adduser">
+        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addcustomer">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
             </svg>
-            เพิ่มผู้ใช้งาน
+            เพิ่มลูกค้า
         </button>
-        <!-- The Modal -->
-        <div class="modal" id="adduser">
+        <!-- The Modal addcustomer -->
+        <div class="modal" id="addcustomer">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header" style="background-color:#ff9800;color:#000;">
-                        <h4 class="modal-title">เพิ่มข้อมูลผู้ใช้งาน</h4>
+                        <h4 class="modal-title">เพิ่มข้อมูลลูกค้า</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -47,51 +47,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อผู้ใช้งาน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อผู้ใช้งาน">
+                                            <label for="inputEmail4">ชื่อเล่น</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="sel1" class="form-label">สิทธิ์ผู้ใช้งาน</label>
-                                            <select class="form-select form-select-sm" id="sel1" name="sellist1">
-                                                <option>ผู้ดูแลระบบ</option>
-                                                <option>เสมียน</option>
-                                                <option>ผู้ตรวจสอบ</option>
-                                                <option>คนเก็บ</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">รหัสผ่าน</label>
-                                            <input type="password" class="form-control form-control-sm" id="inputEmail4" placeholder="รหัสผ่าน">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ยืนยันรหัสผ่าน</label>
-                                            <input type="password" class="form-control form-control-sm" id="inputEmail4" placeholder="ยืนยันรหัสผ่าน">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home" class="form-label">บ้าน</label>
-                                            <select class="form-select form-select-sm" id="home" name="sellist1">
-                                                <option>บ้าน1</option>
-                                                <option>บ้าน2</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home_detail" class="form-label">สาย</label>
-                                            <select class="form-select form-select-sm" id="home_detail" name="sellist1">
-                                                <option>สาย1</option>
-                                                <option>สาย2</option>
-                                            </select>
+                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน">
                                         </div>
                                     </div>
                                 </div>
@@ -107,6 +68,59 @@
                                             <label for="inputEmail4">เบอร์โทร 2</label>
                                             <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2">
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="home" class="form-label">จังหวัด</label>
+                                            <select class="form-select form-select-sm" id="home" name="sellist1">
+                                                <option>จังหวัด1</option>
+                                                <option>จังหวัด2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="home_detail" class="form-label">อำเภอ</label>
+                                            <select class="form-select form-select-sm" id="home_detail" name="sellist1">
+                                                <option>อำเภอ1</option>
+                                                <option>อำเภอ2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="home" class="form-label">ตำบล</label>
+                                            <select class="form-select form-select-sm" id="home" name="sellist1">
+                                                <option>ตำบล1</option>
+                                                <option>ตำบล2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">สถานที่</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col pb-3">
+                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
+                                            <form enctype="multipart/form-data">
+                                                <div class="file-loading">
+                                                    <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+                                                </div>
+
+                                            </form>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -122,14 +136,14 @@
                 </div>
             </div>
         </div>
-        <!-- The Modal viewuser -->
-        <div class="modal" id="viewuser">
+        <!-- The Modal viewcustomer -->
+        <div class="modal" id="viewcustomer">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header" style="background-color:#ff9800;color:#000;">
-                        <h4 class="modal-title">ข้อมูลผู้ใช้งาน</h4>
+                        <h4 class="modal-title">ข้อมูลลูกค้า</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -154,26 +168,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อผู้ใช้งาน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อผู้ใช้งาน">
+                                            <label for="inputEmail4">ชื่อเล่น</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">สิทธิ์ผู้ใช้งาน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">บ้าน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">สาย</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="">
+                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน">
                                         </div>
                                     </div>
                                 </div>
@@ -189,6 +189,55 @@
                                             <label for="inputEmail4">เบอร์โทร 2</label>
                                             <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2">
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">จังหวัด 1</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="จังหวัด 1">
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">อำเภอ 1</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="อำเภอ 1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">ตำบล 1</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำบล 1">
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">สถานที่</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">สถานะลูกค้า</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ดี">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col pb-3">
+                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
+                                            <img src="~/lib/images/user.png" width="80px" class="mx-auto d-block">
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -197,20 +246,21 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
                     </div>
 
                 </div>
             </div>
         </div>
-        <!-- The Modal edituser -->
-        <div class="modal" id="edituser">
+        <!-- The Modal editcustomer -->
+        <div class="modal" id="editcustomer">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header" style="background-color:#ff9800;color:#000;">
-                        <h4 class="modal-title">แก้ไขข้อมูลผู้ใช้งาน</h4>
+                        <h4 class="modal-title">แก้ไขข้อมูลลูกค้า</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -235,51 +285,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อผู้ใช้งาน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อผู้ใช้งาน">
+                                            <label for="inputEmail4">ชื่อเล่น</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="sel1" class="form-label">สิทธิ์ผู้ใช้งาน</label>
-                                            <select class="form-select form-select-sm" id="sel1" name="sellist1">
-                                                <option>ผู้ดูแลระบบ</option>
-                                                <option>เสมียน</option>
-                                                <option>ผู้ตรวจสอบ</option>
-                                                <option>คนเก็บ</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">รหัสผ่าน</label>
-                                            <input type="password" class="form-control form-control-sm" id="inputEmail4" placeholder="รหัสผ่าน">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ยืนยันรหัสผ่าน</label>
-                                            <input type="password" class="form-control form-control-sm" id="inputEmail4" placeholder="ยืนยันรหัสผ่าน">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home" class="form-label">บ้าน</label>
-                                            <select class="form-select form-select-sm" id="home" name="sellist1">
-                                                <option>บ้าน1</option>
-                                                <option>บ้าน2</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home_detail" class="form-label">สาย</label>
-                                            <select class="form-select form-select-sm" id="home_detail" name="sellist1">
-                                                <option>สาย1</option>
-                                                <option>สาย2</option>
-                                            </select>
+                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน">
                                         </div>
                                     </div>
                                 </div>
@@ -295,6 +306,59 @@
                                             <label for="inputEmail4">เบอร์โทร 2</label>
                                             <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2">
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="home" class="form-label">จังหวัด</label>
+                                            <select class="form-select form-select-sm" id="home" name="sellist1">
+                                                <option>จังหวัด1</option>
+                                                <option>จังหวัด2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="home_detail" class="form-label">อำเภอ</label>
+                                            <select class="form-select form-select-sm" id="home_detail" name="sellist1">
+                                                <option>อำเภอ1</option>
+                                                <option>อำเภอ2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="home" class="form-label">ตำบล</label>
+                                            <select class="form-select form-select-sm" id="home" name="sellist1">
+                                                <option>ตำบล1</option>
+                                                <option>ตำบล2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="inputEmail4">สถานที่</label>
+                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col pb-3">
+                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
+                                            <form enctype="multipart/form-data">
+                                                <div class="file-loading">
+                                                    <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+                                                </div>
+
+                                            </form>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -317,10 +381,9 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">ชื่อผู้ใช้งาน</th>
             <th scope="col">ชื่อ</th>
             <th scope="col">นามสกุล</th>
-            <th scope="col">สิทธิ์ผู้ใช้งาน</th>
+            <th scope="col">สถานที่</th>
             <th scope="col">บ้าน</th>
             <th scope="col">สาย</th>
             <th scope="col"></th>
@@ -329,14 +392,13 @@
     <tbody>
         <tr>
             <th scope="row">1</th>
-            <td>userA</td>
             <td>A</td>
             <td>B</td>
-            <td>Admin</td>
+            <td>สถานที่1</td>
             <td>บ้าน1</td>
             <td>สาย1</td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewuser">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewcustomer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
@@ -344,14 +406,15 @@
                     ดู
                 </button>
 
-                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#edituser">
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editcustomer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
                     </svg>
                     แก้ไข
                 </button>
-                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deluser">
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delcustomer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -362,8 +425,8 @@
         </tr>
     </tbody>
 </table>
-<!-- The Modal deleteuser -->
-<div class="modal" id="deluser">
+<!-- The Modal deletecustomer -->
+<div class="modal" id="delcustomer">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
 
@@ -376,7 +439,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form>
-                    <h5>คุณต้องการลบข้อมูลผู้ใช้งาน</h5>
+                    <h5>คุณต้องการลบข้อมูลลูกค้า</h5>
                 </form>
             </div>
 
@@ -399,3 +462,16 @@
         <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
     </ul>
 </nav>
+<script>
+
+    $("#file-0").fileinput({
+        theme: 'fas',
+        uploadUrl: '#'
+    }).on('filepreupload', function (event, data, previewId, index) {
+        alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
+    });
+
+
+
+
+</script>
