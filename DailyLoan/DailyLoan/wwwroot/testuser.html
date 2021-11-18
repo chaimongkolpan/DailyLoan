@@ -1,0 +1,341 @@
+@using DailyLoan.Library.Status
+<div class="row">
+    <div class="col-12">
+        <table id="table" class="table table-striped table-bordered" style="width:100%">
+            <thead style="width:100%">
+                <tr>
+                    <th>#</th>
+                    <th data-field="name">ชื่อ</th>
+                    <th data-field="name">นามสกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>สิทธิ์</th>
+                    <th>สถานะ</th>
+                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                    {
+                        <th>บ้าน</th>
+                    }
+                    <th>สาย</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="width:100%">
+                @if (ViewBag.PageData.Count > 0)
+                {
+                    foreach (var items in ViewBag.PageData)
+                    {
+                        <tr class='clickable-row'>
+                            <td scope="row">@items.Id</td>
+                            <td>@items.Firstname</td>
+                            <td>@items.Lastname</td>
+                            <td>@items.Nickname</td>
+                            <td>@items.AccessText</td>
+                            <td>@items.StatusText</td>
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <td>@items.HouseText</td>
+                            }
+                            <td>@items.CustomerLineText</td>
+                            <td>
+                                <button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-11 pt-2">
+        <input type="checkbox" id="isNew" name="isNew" value="true">
+        <label for="isNew">ผู้ใช้งานใหม่</label>
+    </div>
+    <div class="col-sm-11 pt-1">
+        <input type="radio" id="status1" name="status" value="1">
+        <label for="status1">ใช้งาน</label>
+        <input type="radio" id="status2" name="status" value="2">
+        <label for="status2">ไม่ใช้งาน</label>
+    </div>
+    <div class="col-sm-11 pt-1">
+        @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+        {
+            <input type="radio" id="access1" name="access" value="1">
+            <label for="access1">ผู้ดูแลระบบ</label>
+
+        }
+        <input type="radio" id="access2" name="access" value="2">
+        <label for="access2">เสมียน</label>
+        <input type="radio" id="access3" name="access" value="3">
+        <label for="access3">คนตรวจ</label>
+        <input type="radio" id="access4" name="access" value="4">
+        <label for="access4">คนเก็บ</label>
+    </div>
+    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+    {
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group required-field">
+                        <label for="acc-name">เลือกบ้าน</label>
+                        <select class="form-control" name="house" id="house" style="height: 34px;" required>
+                            @foreach (var item in ViewBag.House)
+                            {
+                                if (item.Id != 1)
+                                {
+                                    <option value="@item.Id">@item.HouseName</option>
+                                }
+                            }
+                        </select>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+    }
+    else
+    {
+        <input type="hidden" id="house" name="house" />
+    }
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group required-field">
+                    <label for="acc-name">ชื่อล็อกอิน</label>
+                    <input type="text" class="form-control" name="username" id="username" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">รหัสผ่าน</label>
+                    <input type="text" class="form-control" name="password" id="password" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">ยืนยันรหัสผ่าน</label>
+                    <input type="text" class="form-control" name="confirmpassword" id="confirmpassword" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">ชื่อ</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group required-field">
+                    <label for="acc-name">นามสกุล</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" required>
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="acc-name">ชื่อเล่น</label>
+                    <input type="text" class="form-control" name="nickname" id="nickname">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+    <div class="col-sm-11 pt-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="acc-name">เบอร์ 1</label>
+                    <input type="text" class="form-control" name="phone1" id="phone1">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="acc-name">เบอร์ 2</label>
+                    <input type="text" class="form-control" name="phone2" id="phone2">
+                </div><!-- End .form-group -->
+            </div><!-- End .col-md-8 -->
+        </div><!-- End .row -->
+    </div><!-- End .col-sm-11 -->
+</div>
+<div class="mb-1"></div>
+<input type="hidden" id="UserId" name="UserId" />
+<div class="required text-right">* Required Field</div>
+<label id="msg"></label>
+<div class="form-footer">
+    <div class="form-footer-right">
+        <button type="button" class="btn btn-danger" id="delete" style="display:none;">ลบ</button>
+        <button type="button" class="btn btn-primary" id="save">บันทึก</button>
+    </div>
+</div><!-- End .form-footer -->
+@if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+{
+    <script type="text/javascript">
+        function addFilter() {
+            this.api().columns().every(function () {
+                var column = this;
+                if (column[0][0] == 9) {
+                    var select = $('<label>&nbsp;&nbsp;&nbsp;&nbsp;สาย:&nbsp;&nbsp;<select id="cuslinesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label>')
+                        .appendTo($('#table_filter'));
+                    $('#cuslinesearch').on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
+                    column.data().unique().sort().each(function (d, j) {
+                        $('#cuslinesearch').append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+                if (column[0][0] == 8) {
+                    var select = $('<div class="dataTables_filter"><label>บ้าน:&nbsp;&nbsp;<select id="housesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label></div>')
+                        .appendTo($('#table_filter').parent().parent().children().first().empty());
+                    $('#housesearch').on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
+                    column.data().unique().sort().each(function (d, j) {
+                        $('#housesearch').append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            });
+        }
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        function addFilter() {
+            this.api().columns().every(function () {
+                var column = this;
+                if (column[0][0] == 8) {
+                    var select = $('<label>&nbsp;&nbsp;สาย:&nbsp;<select id="cuslinesearch" style="display:inline-block;width:80%;" class="form-control input-sm"><option value=""></option></select></label>')
+                        .appendTo($('#table_filter'));
+                    $('#cuslinesearch').on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
+                    column.data().unique().sort().each(function (d, j) {
+                        $('#cuslinesearch').append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            });
+        }
+    </script>
+}
+<script type="text/javascript">
+        var root = '@Url.Content("~/")';
+        root = (root == '/' ? "" : root);
+    $(document).ready(function () {
+        $('#isNew').prop('checked', true);
+        $("#UserId").val("");
+        $('#table').DataTable({
+            "info": true,
+            "pageLength": 10,
+            "bLengthChange": false,
+            "initComplete": addFilter
+        });
+        $('#isNew').click(function () {
+            if ($('#isNew').prop('checked')) {
+                $("#UserId").val("");
+                $('#delete').hide();
+            } else {
+                if($("#UserId").val() != "") $('#delete').show();
+            }
+        });
+        $('#table tbody').on('click', '.btnClick', function () {
+            $('#delete').show();
+            $("#UserId").val($(this).closest('tr').find('td').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetUserDetail/" + $("#UserId").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#isNew").prop('checked', false);
+                        $("#house").val(data.houseId);
+                        $("#username").val(data.username);
+                        $("#password").val(data.password);
+                        $("#confirmpassword").val(data.password);
+                        $("#firstname").val(data.firstname);
+                        $("#lastname").val(data.lastname);
+                        $("#nickname").val(data.nickname);
+                        $("#phone1").val(data.phone1);
+                        $("#phone2").val(data.phone2);
+                        if (data.status == 1)
+                            $("#status1").prop('checked', true);
+                        else if (data.status == 2)
+                            $("#status2").prop('checked', true);
+                        if (data.userAccess == 1)
+                            $("#access1").prop('checked', true);
+                        else if (data.userAccess == 2)
+                            $("#access2").prop('checked', true);
+                        else if (data.userAccess == 3)
+                            $("#access3").prop('checked', true);
+                        else if (data.userAccess == 4)
+                            $("#access4").prop('checked', true);
+                    }
+                },
+                error: function (e) { $("#UserId").val("");console.log(e) }
+            });
+        });
+        $("#save").click(function () {
+            if ($("#UserId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#UserId").val() == '')) {
+                let req = new XMLHttpRequest();
+                let formData = new FormData();
+
+                formData.append("isNew", $("#isNew").prop('checked'));
+                formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+                formData.append("UserAccess", $('input[name="access"]:checked').val() != undefined ? $('input[name="access"]:checked').val() : '');
+                formData.append("Id", $("#UserId").val());
+                formData.append("HouseId", $("#house").val());
+                formData.append("Username", $("#username").val());
+                formData.append("Password", $("#password").val());
+                formData.append("Confirmpassword", $("#confirmpassword").val());
+                formData.append("Firstname", $("#firstname").val());
+                formData.append("Lastname", $("#lastname").val());
+                formData.append("Nickname", $("#nickname").val());
+                formData.append("Phone1", $("#phone1").val());
+                formData.append("Phone2", $("#phone2").val());
+                req.open("POST", '/EditUser');
+                req.send(formData);
+                req.onload = function () {
+                    if (req.readyState != 4 || req.status != 200) {
+                        $("#msg").text(req.responseText)
+                    } else {
+                        alert(req.responseText);
+                        location.reload();
+                    }
+                }
+            } else {
+                alert('กรุณาเลือกผู้ใช้งาน หรือ ติ๊กที่เพิ่มผู้ใช้งานใหม่');
+            }
+        });
+        $("#delete").click(function () {
+            if (confirm('คุณต้องการที่จะลบผู้ใช้งานชื่อ ' + $("#username").val() + ' ใช่หรือไม่?')) {
+                let req = new XMLHttpRequest();
+                req.open("GET", '/DeleteUser/' + $("#UserId").val());
+                req.send();
+                req.onload = function () {
+                    if (req.readyState != 4 || req.status != 200) {
+                        $("#msg").text(req.responseText)
+                    } else {
+                        alert(req.responseText);
+                        location.reload();
+                    }
+                }
+            }
+        });
+    });
+</script>

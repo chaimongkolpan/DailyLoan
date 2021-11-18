@@ -1,0 +1,23 @@
+﻿<div class="container" style=" position: fixed; top: 30%;">
+    <form method="post" action="@Url.Action("LogInAction", "Home")">
+            <div class="row align-self-center">
+                <div class="col-lg-4 col-md-6">
+                    <input type="text" class="form-control" placeholder="User Name" name="username" required>
+                </div>
+            </div>
+            <div class="row align-self-center">
+                <div class="col-lg-4 col-md-6">
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-lg-4 col-md-6 align-self-start">
+                    <button type="submit" class="btn btn-primary">LOGIN</button>
+                    @if (@ViewBag.NotValidUser != null)
+                    {
+                        <label>@ViewBag.NotValidUser</label>
+                    }
+                </div>
+            </div>
+    </form>
+</div>

@@ -1,0 +1,498 @@
+﻿@using DailyLoan.Library
+@using DailyLoan.Library.Status
+@{ var init = new InitialConfig(); }
+<div class="row">
+    <div class="col-12">
+        <table id="tableh" class="table table-striped table-bordered" style="width:100%">
+            <thead style="width:100%">
+                <tr>
+                    <th>#</th>
+                    <th data-field="housename">ชื่อบ้าน</th>
+                    <th>จังหวัด</th>
+                    <th>อำเภอ</th>
+                    <th>ตำบล</th>
+                    <th>สถานะ</th>
+                    <th>หมายเหตุ</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="width:100%">
+                @if (ViewBag.House.Count > 0)
+                {
+                    foreach (var items in ViewBag.House)
+                    {
+                        <tr class='clickable-row'>
+                            <td scope="row">@items.Id</td>
+                            <td>@items.HouseName</td>
+                            <td>@items.Province</td>
+                            <td>@items.District</td>
+                            <td>@items.SubDistrict</td>
+                            <td>@items.StatusText</td>
+                            <td>@items.Remark</td>
+                            <td>
+                                <button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="editpane" name="editpane">
+    <div class="row">
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <h2>เรตราคา</h2>
+            </div>
+        </div>
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["CustomerRate"]</label>
+                        <input type="text" class="form-control" name="customerrate" id="customerrate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-4">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["AgentRate"]</label>
+                        <input type="text" class="form-control" name="agentrate" id="agentrate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-4">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["HouseRate"]</label>
+                        <input type="text" class="form-control" name="houserate" id="houserate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <h2>เงื่อนไขการตัด</h2>
+            </div>
+        </div>
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["MinCutDay"]</label>
+                        <input type="text" class="form-control" name="mincutday" id="mincutday" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["IncCutCriteria"]</label>
+                        <input type="text" class="form-control" name="inccutcriteria" id="inccutcriteria" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["DecCutPercen"]</label>
+                        <input type="text" class="form-control" name="deccutpercen" id="deccutpercen" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["DecCutCriteria"]</label>
+                        <input type="text" class="form-control" name="deccutcriteria" id="deccutcriteria" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <h2>เรตกำไร และ เงื่อนไขพิเศษ</h2>
+            </div>
+        </div>
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["TotalProfit"]</label>
+                        <input type="text" class="form-control" name="totalprofit" id="totalprofit" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["SpecialRateCriteria"]</label>
+                        <input type="text" class="form-control" name="specialratecriteria" id="specialratecriteria" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <h2>การแจ้งเตือน</h2>
+            </div>
+        </div>
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["NotPayAlert"]</label>
+                        <input type="text" class="form-control" name="notpayalert" id="notpayalert" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["PartialPayAlert"]</label>
+                        <input type="text" class="form-control" name="partialpayalert" id="partialpayalert" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+    </div>
+    <div class="mb-1"></div>
+    <input type="hidden" id="HouseId" name="HouseId" />
+    <div class="required text-right">* Required Field</div>
+    <label id="msg"></label>
+    <div class="form-footer">
+        <div class="form-footer-right">
+            <button type="button" class="btn btn-primary" id="save">บันทึก</button>
+        </div>
+    </div><!-- End .form-footer -->
+    <div class="row">
+        <div class="col-12">
+            <table id="table" class="table table-striped table-bordered" style="width:100%">
+                <thead style="width:100%">
+                    <tr>
+                        <th>#</th>
+                        <th>วันที่เริ่ม</th>
+                        <th>วันที่หมด</th>
+                        <th>เรตลูกค้า</th>
+                        <th>เรตค่าหัว</th>
+                        <th>เรตเข้าบ้าน</th>
+                        <th>จำนวนวันตัด</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="specialRate" style="width:100%">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-11 pt-2">
+            <input type="checkbox" id="isNew" name="isNew" checked="checked" value="true">
+            <label for="isNew">เพิ่มเรตพิเศษใหม่</label>
+        </div>
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">วันที่เริ่ม</label>
+                        <input type="text" class="form-control" name="startdate" id="startdate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-6">
+                    <div class="form-group required-field">
+                        <label for="acc-name">วันที่หมด</label>
+                        <input type="text" class="form-control" name="enddate" id="enddate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["CustomerRate"]</label>
+                        <input type="text" class="form-control" name="spcustomerrate" id="spcustomerrate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-4">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["AgentRate"]</label>
+                        <input type="text" class="form-control" name="spagentrate" id="spagentrate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+                <div class="col-md-4">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["HouseRate"]</label>
+                        <input type="text" class="form-control" name="sphouserate" id="sphouserate" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+        <div class="col-sm-11 pt-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group required-field">
+                        <label for="acc-name">@init.config_th["MinCutDay"]</label>
+                        <input type="text" class="form-control" name="spmincutday" id="spmincutday" required>
+                    </div><!-- End .form-group -->
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .col-sm-11 -->
+    </div>
+    <div class="mb-1"></div>
+    <input type="hidden" id="SpecialRateId" name="SpecialRateId" />
+    <div class="required text-right">* Required Field</div>
+    <label id="msg"></label>
+    <div class="form-footer">
+        <div class="form-footer-right">
+            <button type="button" class="btn btn-danger" id="spdelete" style="display:none;">ลบ</button>
+            <button type="button" class="btn btn-primary" id="spsave">บันทึก</button>
+        </div>
+    </div><!-- End .form-footer -->
+</div>
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+    function dateStr(dat) {
+        try {
+            var arr = dat.split('T');
+            var arr = arr[0].split('-');
+            if (arr.length == 3)
+                return arr[2] + '/' + arr[1] + '/' + arr[0];
+            else return null;
+
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
+    }
+$(document).ready(function () {
+    $('#isNew').prop('checked', true);
+    $("#editpane").hide();
+    $("#HouseId").val("");
+    $("#SpecialRateId").val("");
+    $('#tableh').DataTable({
+        "info": true,
+        "pageLength": 10,
+        "bLengthChange": false
+    });
+    $('#isNew').click(function () {
+        if ($('#isNew').prop('checked')) {
+            $("#SpecialRateId").val("");
+            $('#spdelete').hide();
+        } else {
+            if ($("#SpecialRateId").val() != "") $('#spdelete').show();
+        }
+    });
+    $('#tableh tbody').on('click', '.btnClick', function () {
+        $("#editpane").show();
+        $("#HouseId").val($(this).closest('tr').find('td').eq(0).text());
+        $.ajax({
+            type: "GET",
+            url: root + "/GetConfigDetail/" + $("#HouseId").val(),
+            contentType: "application/json; charset=utf-8;",
+            dataType: "json",
+            success: function (data) {
+                if (data != undefined) {
+                    $("#isNew").prop('checked', false);
+                    $("#customerrate").val(data.configs["CustomerRate"]);
+                    $("#agentrate").val(data.configs["AgentRate"]);
+                    $("#houserate").val(data.configs["HouseRate"]);
+                    $("#mincutday").val(data.configs["MinCutDay"]);
+                    $("#inccutcriteria").val(data.configs["IncCutCriteria"]);
+                    $("#deccutcriteria").val(data.configs["DecCutCriteria"]);
+                    $("#deccutpercen").val(data.configs["DecCutPercen"]);
+                    $("#specialratecriteria").val(data.configs["SpecialRateCriteria"]);
+                    $("#totalprofit").val(data.configs["TotalProfit"]);
+                    $("#notpayalert").val(data.configs["NotPayAlert"]);
+                    $("#partialpayalert").val(data.configs["PartialPayAlert"]);
+                    $("#specialRate").empty();
+                    for (var i = 0; i < data.specialRates.length; i++) {
+                        var sp = data.specialRates[i];
+                        var tmp = '<tr class="clickable-row">';
+                        tmp += '<td scope="row">'+sp.id+'</td>';
+                        tmp += '<td>' +dateStr(sp.startDate)+'</td>';
+                        tmp += '<td>' +dateStr(sp.endDate)+'</td>';
+                        tmp += '<td>'+sp.customerRate+'</td>';
+                        tmp += '<td>'+sp.agentRate+'</td>';
+                        tmp += '<td>'+sp.houseRate+'</td>';
+                        tmp += '<td>'+sp.minCutDay+'</td>';
+                        tmp += '<td>';
+                        tmp += '<button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>';
+                        tmp += '</td>';
+                        tmp += '</tr >';
+                        $(tmp).appendTo($("#specialRate"));
+                    }
+                }
+            },
+            error: function (e) { $("#HouseId").val("");console.log(e) }
+        });
+    });
+    $('#specialRate').on('click', '.btnClick', function () {
+        $('#spdelete').show();
+        $("#SpecialRateId").val($(this).closest('tr').find('td').eq(0).text());
+        $.ajax({
+            type: "GET",
+            url: root + "/GetSpecialRateDetail/" + $("#SpecialRateId").val(),
+            contentType: "application/json; charset=utf-8;",
+            dataType: "json",
+            success: function (data) {
+                if (data != undefined) {
+                    $("#isNew").prop('checked', false);
+                    $("#startdate").val(dateStr(data.startDate));
+                    $("#enddate").val(dateStr(data.endDate));
+                    $("#spcustomerrate").val(data.customerRate);
+                    $("#spagentrate").val(data.agentRate);
+                    $("#sphouserate").val(data.houseRate);
+                    $("#spmincutday").val(data.minCutDay);
+                }
+            },
+            error: function (e) { $("#HouseId").val(""); console.log(e) }
+        });
+    });
+    $("#save").click(function () {
+        if ($("#HouseId").val() != "") {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("HouseId", $("#HouseId").val());
+            formData.append("CustomerRate", $("#customerrate").val());
+            formData.append("AgentRate", $("#agentrate").val());
+            formData.append("HouseRate", $("#houserate").val());
+            formData.append("MinCutDay", $("#mincutday").val());
+            formData.append("IncCutCriteria", $("#inccutcriteria").val());
+            formData.append("DecCutCriteria", $("#deccutcriteria").val());
+            formData.append("DecCutPercen", $("#deccutpercen").val());
+            formData.append("SpecialRateCriteria", $("#specialratecriteria").val());
+            formData.append("TotalProfit", $("#totalprofit").val());
+            formData.append("NotPayAlert", $("#notpayalert").val());
+            formData.append("PartialPayAlert", $("#partialpayalert").val());
+            req.open("POST", '/EditConfig');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        } else {
+            alert('กรุณาเลือกบ้าน');
+        }
+    });
+    $("#spsave").click(function () {
+        if ($("#SpecialRateId").val() != "" && !$("#isNew").prop('checked') || ($("#isNew").prop('checked') && $("#SpecialRateId").val() == '')) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("isNew", $("#isNew").prop('checked'));
+            formData.append("Id", $("#SpecialRateId").val());
+            formData.append("HouseId", $("#HouseId").val());
+            formData.append("StartDate", $("#startdate").val());
+            formData.append("EndDate", $("#enddate").val());
+            formData.append("CustomerRate", $("#spcustomerrate").val());
+            formData.append("AgentRate", $("#spagentrate").val());
+            formData.append("HouseRate", $("#sphouserate").val());
+            formData.append("MinCutDay", $("#spmincutday").val());
+            req.open("POST", '/EditSpecialRate');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    $.ajax({
+                        type: "GET",
+                        url: root + "/GetConfigDetail/" + $("#HouseId").val(),
+                        contentType: "application/json; charset=utf-8;",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data != undefined) {
+                                $("#isNew").prop('checked', false);
+                                $("#customerrate").val(data.configs["CustomerRate"]);
+                                $("#agentrate").val(data.configs["AgentRate"]);
+                                $("#houserate").val(data.configs["HouseRate"]);
+                                $("#mincutday").val(data.configs["MinCutDay"]);
+                                $("#inccutcriteria").val(data.configs["IncCutCriteria"]);
+                                $("#deccutcriteria").val(data.configs["DecCutCriteria"]);
+                                $("#deccutpercen").val(data.configs["DecCutPercen"]);
+                                $("#specialratecriteria").val(data.configs["SpecialRateCriteria"]);
+                                $("#totalprofit").val(data.configs["TotalProfit"]);
+                                $("#notpayalert").val(data.configs["NotPayAlert"]);
+                                $("#partialpayalert").val(data.configs["PartialPayAlert"]);
+                                $("#specialRate").empty();
+                                for (var i = 0; i < data.specialRates.length; i++) {
+                                    var sp = data.specialRates[i];
+                                    var tmp = '<tr class="clickable-row">';
+                                    tmp += '<td scope="row">' + sp.id + '</td>';
+                                    tmp += '<td>' + dateStr(sp.startDate) + '</td>';
+                                    tmp += '<td>' + dateStr(sp.endDate) + '</td>';
+                                    tmp += '<td>' + sp.customerRate + '</td>';
+                                    tmp += '<td>' + sp.agentRate + '</td>';
+                                    tmp += '<td>' + sp.houseRate + '</td>';
+                                    tmp += '<td>' + sp.minCutDay + '</td>';
+                                    tmp += '<td>';
+                                    tmp += '<button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>';
+                                    tmp += '</td>';
+                                    tmp += '</tr >';
+                                    $(tmp).appendTo($("#specialRate"));
+                                }
+                            }
+                        },
+                        error: function (e) { $("#HouseId").val(""); console.log(e) }
+                    });
+                }
+            }
+        } else {
+            alert('กรุณาเลือกเรตพิเศษ หรือ ติ๊กที่เพิ่มเรตพิเศษใหม่');
+        }
+    });
+    $("#spdelete").click(function () {
+        if (confirm('คุณต้องการที่จะลบเรตพิเศษนี้ ใช่หรือไม่?')) {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteSpecialRate/' + $("#SpecialRateId").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    $.ajax({
+                        type: "GET",
+                        url: root + "/GetConfigDetail/" + $("#HouseId").val(),
+                        contentType: "application/json; charset=utf-8;",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data != undefined) {
+                                $("#isNew").prop('checked', false);
+                                $("#customerrate").val(data.configs["CustomerRate"]);
+                                $("#agentrate").val(data.configs["AgentRate"]);
+                                $("#houserate").val(data.configs["HouseRate"]);
+                                $("#mincutday").val(data.configs["MinCutDay"]);
+                                $("#inccutcriteria").val(data.configs["IncCutCriteria"]);
+                                $("#deccutcriteria").val(data.configs["DecCutCriteria"]);
+                                $("#deccutpercen").val(data.configs["DecCutPercen"]);
+                                $("#specialratecriteria").val(data.configs["SpecialRateCriteria"]);
+                                $("#totalprofit").val(data.configs["TotalProfit"]);
+                                $("#notpayalert").val(data.configs["NotPayAlert"]);
+                                $("#partialpayalert").val(data.configs["PartialPayAlert"]);
+                                $("#specialRate").empty();
+                                for (var i = 0; i < data.specialRates.length;i++) {
+                                    var sp = data.specialRates[i];
+                                    var tmp = '<tr class="clickable-row">';
+                                    tmp += '<td scope="row">' + sp.id + '</td>';
+                                    tmp += '<td>' + dateStr(sp.startDate) + '</td>';
+                                    tmp += '<td>' + dateStr(sp.endDate) + '</td>';
+                                    tmp += '<td>' + sp.customerRate + '</td>';
+                                    tmp += '<td>' + sp.agentRate + '</td>';
+                                    tmp += '<td>' + sp.houseRate + '</td>';
+                                    tmp += '<td>' + sp.minCutDay + '</td>';
+                                    tmp += '<td>';
+                                    tmp += '<button type="button" class="btn btnClick" style="padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;">select</button>';
+                                    tmp += '</td>';
+                                    tmp += '</tr >';
+                                    $(tmp).appendTo($("#specialRate"));
+                                }
+                            }
+                        },
+                        error: function (e) { $("#HouseId").val(""); console.log(e) }
+                    });
+                }
+            }
+        }
+    });
+});
+</script>
