@@ -22,6 +22,7 @@ namespace DailyLoan.Library
         public const string View_MNM_User = "User";
 
         public const string View_PAY_Contract = "Contract";
+        public const string View_PAY_Customer = "Customer";
         public const string View_PAY_DailyReport = "DailyReport";
         public const string View_PAY_History = "History";
         public const string View_PAY_User = "User";
