@@ -36,9 +36,5 @@ namespace DailyLoan.Controllers
         {
             return View();
         }
-         public IActionResult Contract()
-        {
-            return View();
-        }
     }
 }
