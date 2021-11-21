@@ -1,31 +1,32 @@
-﻿<div class="card-body bg-light p-3 rounded ">
+﻿@using DailyLoan.Library.Status
+
+<script src="~/lib/js/fileinput.js" type="text/javascript"></script>
+<script src="~/lib/js/fr.js" type="text/javascript"></script>
+<script src="~/lib/js/es.js" type="text/javascript"></script>
+<script src="~/lib/js/fas/theme.js" type="text/javascript"></script>
+<script src="~/lib/js/explorer-fas/theme.js" type="text/javascript"></script>
+<div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
         <input type="text" class="form-control" placeholder="ชื่อ">
         <input type="text" class="form-control" placeholder="นามสกุล">
         <input type="text" class="form-control" placeholder="สถานที่">
         <button type="button" class="btn btn-info btn-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
+            <i class="fa fa-search"></i>
             ค้นหา
         </button>
         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addcustomer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-            </svg>
+            <i class="fa fa-plus-circle"></i>
             เพิ่มลูกค้า
         </button>
         <!-- The Modal addcustomer -->
         <div class="modal" id="addcustomer">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <!-- Modal Header -->
                     <div class="modal-header" style="background-color:#ff9800;color:#000;">
                         <h4 class="modal-title">เพิ่มข้อมูลลูกค้า</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-
                     <!-- Modal body -->
                     <div class="modal-body">
                         <form>
@@ -33,26 +34,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อ</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อ">
+                                            <label for="addfirstname">ชื่อ</label>
+                                            <input type="text" class="form-control form-control-sm" id="addfirstname" placeholder="ชื่อ">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">นามสกุล</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="นามสกุล">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อเล่น</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน">
+                                            <label for="addlastname">นามสกุล</label>
+                                            <input type="text" class="form-control form-control-sm" id="addlastname" placeholder="นามสกุล">
                                         </div>
                                     </div>
                                 </div>
@@ -61,32 +48,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เบอร์โทร 1</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 1">
+                                            <label for="addnickname">ชื่อเล่น</label>
+                                            <input type="text" class="form-control form-control-sm" id="addnickname" placeholder="ชื่อเล่น">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เบอร์โทร 2</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home" class="form-label">จังหวัด</label>
-                                            <select class="form-select form-select-sm" id="home" name="sellist1">
-                                                <option>จังหวัด1</option>
-                                                <option>จังหวัด2</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home_detail" class="form-label">อำเภอ</label>
-                                            <select class="form-select form-select-sm" id="home_detail" name="sellist1">
-                                                <option>อำเภอ1</option>
-                                                <option>อำเภอ2</option>
-                                            </select>
+                                            <label for="addidcard">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control form-control-sm" id="addidcard" placeholder="เลขบัตรประจำตัวประชาชน">
                                         </div>
                                     </div>
                                 </div>
@@ -95,15 +62,90 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="home" class="form-label">ตำบล</label>
-                                            <select class="form-select form-select-sm" id="home" name="sellist1">
-                                                <option>ตำบล1</option>
-                                                <option>ตำบล2</option>
-                                            </select>
+                                            <label for="addphone1">เบอร์โทร 1</label>
+                                            <input type="text" class="form-control form-control-sm" id="addphone1" placeholder="เบอร์โทร 1">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">สถานที่</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่">
+                                            <label for="addphone2">เบอร์โทร 2</label>
+                                            <input type="text" class="form-control form-control-sm" id="addphone2" placeholder="เบอร์โทร 2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <div class="form-row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-6 pb-3">
+                                                <label for="addhouse" class="form-label">บ้าน</label>
+                                                <select class="form-select form-select-sm" id="addhouse" name="addhouse">
+                                                    @foreach (var item in ViewBag.House)
+                                                    {
+                                                        <option value="@item.Id">@item.HouseName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 pb-3">
+                                                <label for="addcustomerline" class="form-label">สาย</label>
+                                                <select class="form-select form-select-sm" id="addcustomerline" name="addcustomerline">
+                                                    <option value="0">-</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                            {
+                                <div class="form-row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-6 pb-3">
+                                                <label for="addcustomerline" class="form-label">สาย</label>
+                                                <select class="form-select form-select-sm" id="addcustomerline" name="addcustomerline">
+                                                    <option value="0">-</option>
+                                                    @if (ViewBag.CustomerLine.Count() > 0)
+                                                    {
+                                                        @foreach (var item in ViewBag.CustomerLine)
+                                                        {
+                                                            <option value="@item.Id">@item.CustomerLineName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" id="addcustomerline" name="addcustomerline" />
+                            }
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="addaddress">สถานที่</label>
+                                            <input type="text" class="form-control form-control-sm" id="addaddress" placeholder="สถานที่">
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="addshortaddress">สถานที่ย่อ</label>
+                                            <input type="text" class="form-control form-control-sm" id="addshortaddress" placeholder="สถานที่">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <input type="radio" id="addstatus1" name="addstatus" value="1">
+                                            <label for="addstatus1">ดี</label>
+                                            <input type="radio" id="addstatus2" name="addstatus" value="2">
+                                            <label for="addstatus2">แย่</label>
+                                            <input type="radio" id="addstatus3" name="addstatus" value="3">
+                                            <label for="addstatus3">เสีย</label>
                                         </div>
                                     </div>
                                 </div>
@@ -115,9 +157,8 @@
                                             <label for="inputEmail4">รูปบัตรประชาชน</label>
                                             <form enctype="multipart/form-data">
                                                 <div class="file-loading">
-                                                    <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+                                                    <input id="file-0" class="file" type="file" multiple data-min-file-count="1">
                                                 </div>
-
                                             </form>
                                         </div>
 
@@ -126,10 +167,9 @@
                             </div>
                         </form>
                     </div>
-
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+                        <button type="button" class="btn btn-success" onclick="saveadd();" data-bs-dismiss="modal">บันทึก</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
                     </div>
 
@@ -140,13 +180,11 @@
         <div class="modal" id="viewcustomer">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <!-- Modal Header -->
                     <div class="modal-header" style="background-color:#ff9800;color:#000;">
                         <h4 class="modal-title">ข้อมูลลูกค้า</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-
                     <!-- Modal body -->
                     <div class="modal-body">
                         <form>
@@ -154,26 +192,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อ</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อ">
+                                            <label for="viewfirstname">ชื่อ</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewfirstname" placeholder="ชื่อ" readonly>
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">นามสกุล</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="นามสกุล">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อเล่น</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน">
+                                            <label for="viewlastname">นามสกุล</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewlastname" placeholder="นามสกุล" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -182,26 +206,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เบอร์โทร 1</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 1">
+                                            <label for="viewnickname">ชื่อเล่น</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewnickname" placeholder="ชื่อเล่น" readonly>
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เบอร์โทร 2</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">จังหวัด 1</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="จังหวัด 1">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">อำเภอ 1</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="อำเภอ 1">
+                                            <label for="viewidcard">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -210,12 +220,56 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ตำบล 1</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำบล 1">
+                                            <label for="viewphone1">เบอร์โทร 1</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewphone1" placeholder="เบอร์โทร 1" readonly>
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">สถานที่</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่">
+                                            <label for="viewphone2">เบอร์โทร 2</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewphone2" placeholder="เบอร์โทร 2" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <div class="form-row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-6 pb-3">
+                                                <label for="viewhouse">บ้าน</label>
+                                                <input type="text" class="form-control form-control-sm" id="viewhouse" placeholder="" readonly>
+                                            </div>
+                                            <div class="col-md-6 pb-3">
+                                                <label for="viewcustomerline">สาย</label>
+                                                <input type="text" class="form-control form-control-sm" id="viewcustomerline" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                            {
+                                <div class="form-row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-6 pb-3">
+                                                <label for="viewcustomerline">สาย</label>
+                                                <input type="text" class="form-control form-control-sm" id="viewcustomerline" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="viewaddress">สถานที่</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewaddress" placeholder="สถานที่" readonly>
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="viewshortaddress">สถานที่ย่อ</label>
+                                            <input type="text" class="form-control form-control-sm" id="viewshortaddress" placeholder="สถานที่" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -224,8 +278,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">สถานะลูกค้า</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ดี">
+                                            <input type="radio" id="viewstatus1" name="viewstatus" value="1" disabled>
+                                            <label for="viewstatus1">ดี</label>
+                                            <input type="radio" id="viewstatus2" name="viewstatus" value="2" disabled>
+                                            <label for="viewstatus2">แย่</label>
+                                            <input type="radio" id="viewstatus3" name="viewstatus" value="3" disabled>
+                                            <label for="viewstatus3">เสีย</label>
                                         </div>
                                     </div>
                                 </div>
@@ -235,18 +293,15 @@
                                     <div class="row">
                                         <div class="col pb-3">
                                             <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                            <img src="~/lib/images/user.png" width="80px" class="mx-auto d-block">
+                                            <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
                     </div>
 
@@ -257,13 +312,11 @@
         <div class="modal" id="editcustomer">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <!-- Modal Header -->
                     <div class="modal-header" style="background-color:#ff9800;color:#000;">
                         <h4 class="modal-title">แก้ไขข้อมูลลูกค้า</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-
                     <!-- Modal body -->
                     <div class="modal-body">
                         <form>
@@ -271,26 +324,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อ</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อ">
+                                            <label for="firstname">ชื่อ</label>
+                                            <input type="text" class="form-control form-control-sm" id="firstname" placeholder="ชื่อ">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">นามสกุล</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="นามสกุล">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">ชื่อเล่น</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น">
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน">
+                                            <label for="lastname">นามสกุล</label>
+                                            <input type="text" class="form-control form-control-sm" id="lastname" placeholder="นามสกุล">
                                         </div>
                                     </div>
                                 </div>
@@ -299,32 +338,12 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เบอร์โทร 1</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 1">
+                                            <label for="nickname">ชื่อเล่น</label>
+                                            <input type="text" class="form-control form-control-sm" id="nickname" placeholder="ชื่อเล่น">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">เบอร์โทร 2</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home" class="form-label">จังหวัด</label>
-                                            <select class="form-select form-select-sm" id="home" name="sellist1">
-                                                <option>จังหวัด1</option>
-                                                <option>จังหวัด2</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 pb-3">
-                                            <label for="home_detail" class="form-label">อำเภอ</label>
-                                            <select class="form-select form-select-sm" id="home_detail" name="sellist1">
-                                                <option>อำเภอ1</option>
-                                                <option>อำเภอ2</option>
-                                            </select>
+                                            <label for="idcard">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control form-control-sm" id="idcard" placeholder="เลขบัตรประจำตัวประชาชน">
                                         </div>
                                     </div>
                                 </div>
@@ -333,15 +352,90 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <label for="home" class="form-label">ตำบล</label>
-                                            <select class="form-select form-select-sm" id="home" name="sellist1">
-                                                <option>ตำบล1</option>
-                                                <option>ตำบล2</option>
-                                            </select>
+                                            <label for="phone1">เบอร์โทร 1</label>
+                                            <input type="text" class="form-control form-control-sm" id="phone1" placeholder="เบอร์โทร 1">
                                         </div>
                                         <div class="col-md-6 pb-3">
-                                            <label for="inputEmail4">สถานที่</label>
-                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่">
+                                            <label for="phone2">เบอร์โทร 2</label>
+                                            <input type="text" class="form-control form-control-sm" id="phone2" placeholder="เบอร์โทร 2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <div class="form-row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-6 pb-3">
+                                                <label for="house" class="form-label">บ้าน</label>
+                                                <select class="form-select form-select-sm" id="house" name="house">
+                                                    @foreach (var item in ViewBag.House)
+                                                    {
+                                                        <option value="@item.Id">@item.HouseName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 pb-3">
+                                                <label for="customerline" class="form-label">สาย</label>
+                                                <select class="form-select form-select-sm" id="customerline" name="customerline">
+                                                    <option value="0">-</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                            {
+                                <div class="form-row">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-6 pb-3">
+                                                <label for="customerline" class="form-label">สาย</label>
+                                                <select class="form-select form-select-sm" id="customerline" name="customerline">
+                                                    <option value="0">-</option>
+                                                    @if (ViewBag.CustomerLine.Count() > 0)
+                                                    {
+                                                        @foreach (var item in ViewBag.CustomerLine)
+                                                        {
+                                                            <option value="@item.Id">@item.CustomerLineName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" id="customerline" name="customerline" />
+                            }
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <label for="address">สถานที่</label>
+                                            <input type="text" class="form-control form-control-sm" id="address" placeholder="สถานที่">
+                                        </div>
+                                        <div class="col-md-6 pb-3">
+                                            <label for="shortaddress">สถานที่ย่อ</label>
+                                            <input type="text" class="form-control form-control-sm" id="shortaddress" placeholder="สถานที่">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <input type="radio" id="status1" name="status" value="1">
+                                            <label for="status1">ดี</label>
+                                            <input type="radio" id="status2" name="status" value="2">
+                                            <label for="status2">แย่</label>
+                                            <input type="radio" id="status3" name="status" value="3">
+                                            <label for="status3">เสีย</label>
                                         </div>
                                     </div>
                                 </div>
@@ -350,24 +444,22 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col pb-3">
-                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
+                                            <label for="idcardpic">รูปบัตรประชาชน</label>
                                             <form enctype="multipart/form-data">
                                                 <div class="file-loading">
-                                                    <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+                                                    <input id="file-1" class="file" type="file" multiple data-min-file-count="1">
                                                 </div>
-
                                             </form>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-
+                    <input type="hidden" id="editid" />
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+                        <button type="button" class="btn btn-success" onclick="save();" data-bs-dismiss="modal">บันทึก</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
                     </div>
 
@@ -377,78 +469,84 @@
         <!--end -->
     </div>
 </div>
-<table class="table table-hover" style="text-align: center; vertical-align: middle;">
+<table id="table" class="table table-hover" style="text-align: center; vertical-align: middle;">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">ชื่อ</th>
             <th scope="col">นามสกุล</th>
             <th scope="col">สถานที่</th>
-            <th scope="col">บ้าน</th>
-            <th scope="col">สาย</th>
+            <th scope="col">สถานะ</th>
+            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+            {
+                <th scope="col">บ้าน</th>
+            }
+            @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            {
+                <th scope="col">สาย</th>
+            }
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>A</td>
-            <td>B</td>
-            <td>สถานที่1</td>
-            <td>บ้าน1</td>
-            <td>สาย1</td>
-            <td>
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewcustomer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-                    </svg>
-                    ดู
-                </button>
-
-                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editcustomer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
-                    </svg>
-                    แก้ไข
-                </button>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delcustomer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                    </svg>
-                    ลบ
-                </button>
-            </td>
-        </tr>
+        @if (ViewBag.PageData.Count > 0)
+        {
+            foreach (var items in ViewBag.PageData)
+            {
+                <tr class='clickable-row'>
+                    <th scope="row">@items.Id</th>
+                    <td>@items.Firstname</td>
+                    <td>@items.Lastname</td>
+                    <td>@items.ShortAddress</td>
+                    <td>@items.StatusText</td>
+                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                    {
+                        <td>@items.HouseText</td>
+                    }
+                    @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                    {
+                        <td>@items.CustomerLineText</td>
+                    }
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewcustomer">
+                            <i class="fa fa-eye"></i>
+                            ดู
+                        </button>
+                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editcustomer">
+                            <i class="fa fa-pen-square"></i>
+                            แก้ไข
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delcustomer">
+                            <i class="fa fa-trash-alt"></i>
+                            ลบ
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
 <!-- The Modal deletecustomer -->
 <div class="modal" id="delcustomer">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header" style="background-color:red;color:#fff;">
                 <h4 class="modal-title">ลบข้อมูล</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <form>
-                    <h5>คุณต้องการลบข้อมูลลูกค้า</h5>
+                    <h5>คุณต้องการลบข้อมูลลูกค้า <span id="deletename"></span> ใช่หรือไม่?</h5>
                 </form>
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
+                <button type="button" id="delete" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
-
+            <input type="hidden" id="deleteid" />
         </div>
     </div>
 </div>
@@ -462,16 +560,250 @@
         <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
     </ul>
 </nav>
-<script>
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    var useraccess = '@ViewBag.UserAccess';
+    var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
+    var admin = '@StatusUserAccess.UserAccess_Admin';
+    root = (root == '/' ? "" : root);
+    function save() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
 
+        formData.append("isNew", false);
+        formData.append("HouseId", $("#house").val());
+        formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+        formData.append("Id", $("#editid").val());
+        formData.append("CustomerLineId", $("#customerline").val());
+        formData.append("Firstname", $("#firstname").val());
+        formData.append("Lastname", $("#lastname").val());
+        formData.append("Nickname", $("#nickname").val());
+        formData.append("Phone1", $("#phone1").val());
+        formData.append("Phone2", $("#phone2").val());
+        formData.append("Idcard", $("#idcard").val());
+        formData.append("Address", $("#address").val());
+        formData.append("ShortAddress", $("#shortaddress").val());
+        req.open("POST", '/EditCustomer');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function saveadd() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("isNew", true);
+        formData.append("HouseId", 0);
+        formData.append("Status", $('input[name="addstatus"]:checked').val() != undefined ? $('input[name="addstatus"]:checked').val() : '');
+        formData.append("Id", 0);
+        formData.append("CustomerLineId", $("#addcustomerline").val());
+        formData.append("Firstname", $("#addfirstname").val());
+        formData.append("Lastname", $("#addlastname").val());
+        formData.append("Nickname", $("#addnickname").val());
+        formData.append("Phone1", $("#addphone1").val());
+        formData.append("Phone2", $("#addphone2").val());
+        formData.append("Idcard", $("#addidcard").val());
+        formData.append("Address", $("#addaddress").val());
+        formData.append("ShortAddress", $("#addshortaddress").val());
+        req.open("POST", '/EditCustomer');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    $(document).ready(function () {
+        /** /
+        $('#table').DataTable({
+            "info": true,
+            "pageLength": 10,
+            "bLengthChange": false,
+            "initComplete": function() {
+
+            }
+        });
+        /**/
+        if (useraccess == superadmin) {
+            $('#house').on('change', function () {
+                $('<option value="0">-</option>').appendTo($('#customerline').empty());
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != undefined) {
+                            for (var it of data) {
+                                $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            });
+            if ($('#house').val() != 0 && $('#house').val() != 1) {
+                $('#customerline').empty();
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data1) {
+                        if (data1 != undefined) {
+                            for (var it of data1) {
+                                $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            }
+            $('#addhouse').on('change', function () {
+                $('<option value="0">-</option>').appendTo($('#addcustomerline').empty());
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#addhouse").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != undefined) {
+                            for (var it of data) {
+                                $('#addcustomerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            });
+            if ($('#addhouse').val() != 0 && $('#addhouse').val() != 1) {
+                $('#addcustomerline').empty();
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#addhouse").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data1) {
+                        if (data1 != undefined) {
+                            for (var it of data1) {
+                                $('#addcustomerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            }
+        }
+        $('table tbody').on('click', '.btn-view', function () {
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#viewhouse").val(data.houseText);
+                        $("#viewidcard").val(data.idcard);
+                        $("#viewfirstname").val(data.firstname);
+                        $("#viewlastname").val(data.lastname);
+                        $("#viewnickname").val(data.nickname);
+                        $("#viewphone1").val(data.phone1);
+                        $("#viewphone2").val(data.phone2);
+                        $("#viewaddress").val(data.address);
+                        if (data.status == 1)
+                            $("#viewstatus1").prop('checked', true);
+                        else if (data.status == 2)
+                            $("#viewstatus2").prop('checked', true);
+                        else if (data.status == 3)
+                            $("#viewstatus3").prop('checked', true);
+                        $("#viewcustomerline").val(data.customerLineText);
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('table tbody').on('click', '.btn-edit', function () {
+            $("#editid").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#idcard").val(data.idcard);
+                        $("#firstname").val(data.firstname);
+                        $("#lastname").val(data.lastname);
+                        $("#nickname").val(data.nickname);
+                        $("#phone1").val(data.phone1);
+                        $("#phone2").val(data.phone2);
+                        $("#address").val(data.address);
+                        $("#shortaddress").val(data.shortAddress);
+                        if (data.status == 1)
+                            $("#status1").prop('checked', true);
+                        else if (data.status == 2)
+                            $("#status2").prop('checked', true);
+                        else if (data.status == 3)
+                            $("#status3").prop('checked', true);
+                        $("#house").val(data.houseId);
+                        $('<option value="0">-</option>').appendTo($('#customerline').empty());
+                        $.ajax({
+                            type: "GET",
+                            url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                            contentType: "application/json; charset=utf-8;",
+                            dataType: "json",
+                            success: function (data1) {
+                                if (data1 != undefined) {
+                                    for (var it of data1) {
+                                        $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                                    }
+                                    $("#customerline").val(data.customerLineId);
+                                }
+                            },
+                            error: function (e) { console.log(e) }
+                        });
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('table tbody').on('click', '.btn-delete', function () {
+            $("#deleteid").val($(this).closest('tr').find('th').eq(0).text());
+            $("#deletename").html($(this).closest('tr').find('td').eq(0).text() + ' '+$(this).closest('tr').find('td').eq(1).text());
+        });
+        $("#delete").click(function () {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteCustomer/' + $("#deleteid").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        });
+    });
     $("#file-0").fileinput({
         theme: 'fas',
         uploadUrl: '#'
     }).on('filepreupload', function (event, data, previewId, index) {
         alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
     });
-
-
-
-
+    $("#file-1").fileinput({
+        theme: 'fas',
+        uploadUrl: '#'
+    }).on('filepreupload', function (event, data, previewId, index) {
+        alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
+    });
 </script>
