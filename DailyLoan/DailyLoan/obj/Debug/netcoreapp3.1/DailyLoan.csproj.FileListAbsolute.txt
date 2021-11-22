@@ -234,7 +234,6 @@ C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\Customer.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\User.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Operation\DailyCost.cshtml.g.cs
-C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Operation\History.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Operation\Notification.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Pay\Contract.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Pay\DailyReport.cshtml.g.cs
@@ -408,3 +407,4 @@ C:\Users\golf_\Documents\GitHub\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razo
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\ConfigAdmin.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\CustomerLine.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\House.cshtml.g.cs
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Operation\DailyCostHistory.cshtml.g.cs
