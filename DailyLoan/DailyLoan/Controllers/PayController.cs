@@ -19,25 +19,29 @@ namespace DailyLoan.Controllers
     {
 
         private readonly IManagementService _managementService;
+        private readonly IPayService _payService;
         private IWebHostEnvironment Environment;
         public PayController(IWebHostEnvironment _environment,
-            IManagementService managementService)
+            IManagementService managementService,
+            IPayService payService)
         {
             Environment = _environment;
             _managementService = managementService;
+            _payService = payService;
         }
 
         public IActionResult UserAction()
         {
             return View();
         }
+
         #region Customer
         public async Task<ActionResult> CustomerActionAsync()
         {
             //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
             var UserId = "1";
             var UserAccess = "1";
-            List<ManagementCustomer> res = await _managementService.GetAllCustomer(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+            List<ManagementCustomer> res = await _payService.GetAllCustomer(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
             ViewBag.UserId = UserId;
             ViewBag.UserAccess = UserAccess;
             if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
@@ -51,7 +55,7 @@ namespace DailyLoan.Controllers
         [Route("GetCustomerDetail/{cid}")]
         public ActionResult GetCustomerDetail(int cid)
         {
-            return Ok(_managementService.GetCustomer(cid));
+            return Ok(_payService.GetCustomer(cid));
         }
         [HttpGet]
         [Route("DeleteCustomer/{cid}")]
@@ -60,7 +64,7 @@ namespace DailyLoan.Controllers
             var UserAccess = "1";
             if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
             {
-                if (await _managementService.DeleteCustomer(cid))
+                if (await _payService.DeleteCustomer(cid))
                 {
                     return Ok(ConstMessage.Message_Successful);
                 }
@@ -83,7 +87,7 @@ namespace DailyLoan.Controllers
                 bool isExist = _managementService.IdcardIsExist(req.Idcard);
                 if ((!isExist && req.isNew) || (isExist && !req.isNew))
                 {
-                    if (await _managementService.EditCustomer(req, Convert.ToInt32(UserId)))
+                    if (await _payService.EditCustomer(req, Convert.ToInt32(UserId)))
                     {
                         return Ok(ConstMessage.Message_Successful);
                     }
@@ -92,6 +96,25 @@ namespace DailyLoan.Controllers
                 else return BadRequest(ConstMessage.Message_UsernameIsExist);
             }
         }
+        #endregion
+        #region Contract
+
+        public async Task<ActionResult> ContractActionAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            var UserAccess = "1";
+            List<ManagementContract> res = await _payService.GetAllContract(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+            ViewBag.UserId = UserId;
+            ViewBag.UserAccess = UserAccess;
+            if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                ViewBag.House = await _managementService.GetAllHouse();
+            ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
+            ViewBag.PageData = res;
+            ViewBag.partialView = ConstMessage.View_MNM_Contract;
+            return View(ConstMessage.View_Index);
+        }
+
         #endregion
     }
 }

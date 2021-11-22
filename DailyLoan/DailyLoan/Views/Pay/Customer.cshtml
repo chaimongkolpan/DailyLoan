@@ -493,35 +493,39 @@
         {
             foreach (var items in ViewBag.PageData)
             {
-                <tr class='clickable-row'>
-                    <th scope="row">@items.Id</th>
-                    <td>@items.Firstname</td>
-                    <td>@items.Lastname</td>
-                    <td>@items.ShortAddress</td>
-                    <td>@items.StatusText</td>
-                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-                    {
-                        <td>@items.HouseText</td>
-                    }
-                    @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
-                    {
-                        <td>@items.CustomerLineText</td>
-                    }
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewcustomer">
-                            <i class="fa fa-eye"></i>
-                            ดู
-                        </button>
-                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editcustomer">
-                            <i class="fa fa-pen-square"></i>
-                            แก้ไข
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delcustomer">
-                            <i class="fa fa-trash-alt"></i>
-                            ลบ
-                        </button>
-                    </td>
-                </tr>
+        <tr class='clickable-row'>
+            <th scope="row">@items.Id</th>
+            <td>@items.Firstname</td>
+            <td>@items.Lastname</td>
+            <td>@items.ShortAddress</td>
+            <td>@items.StatusText</td>
+            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+            {
+                <td>@items.HouseText</td>
+            }
+            @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            {
+                <td>@items.CustomerLineText</td>
+            }
+            <td>
+                <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewcustomer">
+                    <i class="fa fa-eye"></i>
+                    ดู
+                </button>
+                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editcustomer">
+                    <i class="fa fa-pen-square"></i>
+                    แก้ไข
+                </button>
+
+                @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delcustomer">
+                        <i class="fa fa-trash-alt"></i>
+                        ลบ
+                    </button>
+                }
+            </td>
+        </tr>
             }
         }
     </tbody>
