@@ -242,7 +242,6 @@ C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Pay\User.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
-C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutAgent.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
@@ -408,3 +407,4 @@ C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\CustomerLine.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Management\House.cshtml.g.cs
 C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Operation\DailyCostHistory.cshtml.g.cs
+C:\Project\DailyLoan\DailyLoan\DailyLoan\DailyLoan\obj\Debug\netcoreapp3.1\Razor\Views\Pay\Customer.cshtml.g.cs
