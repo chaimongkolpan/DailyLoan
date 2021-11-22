@@ -23,12 +23,6 @@ namespace DailyLoan.Service.Interfaces
         Task<bool> EditUser(EditUserRequest req, int uid);
         Task<bool> DeleteUser(int uid);
         #endregion
-        #region Customer
-        Task<List<ManagementCustomer>> GetAllCustomer(int uid, int ua);
-        ManagementCustomer GetCustomer(int cid);
-        Task<bool> EditCustomer(EditCustomerRequest req, int uid);
-        Task<bool> DeleteCustomer(int cid);
-        #endregion
         #region House
         Task<List<ManagementHouse>> GetAllHouseList();
         ManagementHouse GetHouse(int hid);

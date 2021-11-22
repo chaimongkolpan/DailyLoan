@@ -97,6 +97,10 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
                 entity.Property(e => e.ApproverId).HasColumnName("ApproverID");
 
+                entity.Property(e => e.ContractId)
+                    .HasColumnName("ContractID")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");

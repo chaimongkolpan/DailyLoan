@@ -67,24 +67,7 @@ namespace DailyLoan.Service
             return await _ManagementRepo.DeleteUser(uid);
         }
         #endregion
-        #region Customer
-        public async Task<List<ManagementCustomer>> GetAllCustomer(int uid, int ua)
-        {
-            return await _ManagementRepo.GetAllCustomer(uid, ua);
-        }
-        public ManagementCustomer GetCustomer(int cid)
-        {
-            return _ManagementRepo.GetCustomer(cid);
-        }
-        public async Task<bool> EditCustomer(EditCustomerRequest req, int uid)
-        {
-            return await _ManagementRepo.EditCustomer(req.ToCustomer(uid));
-        }
-        public async Task<bool> DeleteCustomer(int cid)
-        {
-            return await _ManagementRepo.DeleteCustomer(cid);
-        }
-        #endregion
+       
         #region House
         public async Task<List<ManagementHouse>> GetAllHouseList()
         {
