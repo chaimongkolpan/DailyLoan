@@ -33,8 +33,12 @@ namespace DailyLoan.Model
     {
         public string StatusText { get; set; }
         public string HouseText { get; set; }
+        public int HouseId { get; set; }
         public string CustomerLineText { get; set; }
-        public string CustomerName { get; set; }
+        public int CustomerLineId { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string ShortAddress { get; set; }
         public string GuaruntorName { get; set; }
         public string ApproverName { get; set; }
     }

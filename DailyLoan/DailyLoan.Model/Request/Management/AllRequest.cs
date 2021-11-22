@@ -91,6 +91,39 @@ namespace DailyLoan.Model.Request.Management
             return u;
         }
     }
+    public class EditContractRequest : Contract
+    {
+        public bool isNew { get; set; }
+        public Contract ToContract(int uid)
+        {
+            Contract u = new Contract()
+            {
+                Id = this.Id,
+                ContractId = this.ContractId,
+                CustomerId = this.CustomerId,
+                GuarantorId = this.GuarantorId,
+                ApproverId = this.ApproverId,
+                TotalAmount = this.TotalAmount,
+                TotalPay = this.TotalPay,
+                Status = this.Status,
+                SpecialRateCount = this.SpecialRateCount,
+                CutCount = this.CutCount,
+            };
+            if (this.isNew)
+            {
+                u.CreateBy = uid;
+                u.CreateDate = DateTime.Now;
+            }
+            else
+            {
+                u.CreateBy = this.CreateBy;
+                u.CreateDate = this.CreateDate;
+                u.UpdateBy = uid;
+                u.UpdateDate = DateTime.Now;
+            }
+            return u;
+        }
+    }
     public class EditHouseRequest : House
     {
         public bool isNew { get; set; }

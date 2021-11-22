@@ -1,1 +1,11 @@
-﻿
+﻿@using DailyLoan.Library.Status
+
+@switch (ViewBag.partialView)
+{
+    case "Customer":
+        <partial name="Customer.cshtml" />
+        break;
+    case "Contract":
+        <partial name="Contract.cshtml" />
+        break;
+}

@@ -1,43 +1,25 @@
 ﻿@using DailyLoan.Library.Status
-<div class="container">
-    <div class="row">
-        <aside class="col-lg-3">
-            <h5 class="widget-title">Admin Management</h5>
-            <ul class="list">
-                <li><a asp-area="" asp-controller="Management" asp-action="UserAction">User Management</a></li>
-                <li><a asp-area="" asp-controller="Management" asp-action="CustomerAction">Customer Management</a></li>
-                <li><a asp-area="" asp-controller="Management" asp-action="ContractAction">Contract Management</a></li>
-                <li><a asp-area="" asp-controller="Management" asp-action="HouseAction">House Management</a></li>
-                <li><a asp-area="" asp-controller="Management" asp-action="CustomerLineAction">Customer Line Management</a></li>
-                <li><a asp-area="" asp-controller="Management" asp-action="ConfigAction">Config Management</a></li>
-            </ul>
-        </aside>
-        <div class="col-lg-9">
-            <h5>Edit Information</h5>
 
-            @{ switch (ViewBag.partialView)
-                {
-                    case "Config":
-                        if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-                        {
-                            <partial name="Config.cshtml" />
-                        }
-                        else
-                        {
-                            <partial name="ConfigAdmin.cshtml" />
-                        }
-                        break;
-                    case "Contract":
-                        <partial name="Contract.cshtml" /> break;
-                    case "Customer":
-                        <partial name="Customer.cshtml" /> break;
-                    case "House":
-                        <partial name="House.cshtml" /> break;
-                    case "CustomerLine":
-                        <partial name="CustomerLine.cshtml" /> break;
-                    case "User":
-                        <partial name="User.cshtml" /> break;
-                } }
-        </div>
-    </div>
-</div>
+@switch (ViewBag.partialView)
+{
+    case "Config":
+        if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+        {
+            <partial name="Config.cshtml" />
+        }
+        else
+        {
+            <partial name="ConfigAdmin.cshtml" />
+        }
+        break;
+    case "Contract":
+        <partial name="Contract.cshtml" /> break;
+    case "Customer":
+        <partial name="Customer.cshtml" /> break;
+    case "House":
+        <partial name="House.cshtml" /> break;
+    case "CustomerLine":
+        <partial name="CustomerLine.cshtml" /> break;
+    case "User":
+        <partial name="User.cshtml" /> break;
+}
