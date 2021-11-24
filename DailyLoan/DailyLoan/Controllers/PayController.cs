@@ -148,9 +148,9 @@ namespace DailyLoan.Controllers
         }
         [HttpPost]
         [Route("SearchCustomer")]
-        public ActionResult SearchCustomer(ContractSearchRequest req)
+        public async Task<ActionResult> SearchCustomer(ContractSearchRequest req)
         {
-            var rtn = _payService.SearchCustomer(req);
+            var rtn = await _payService.SearchCustomer(req);
             if (rtn != null)
             {
                 return Ok(rtn);
