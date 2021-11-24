@@ -12,6 +12,9 @@ namespace DailyLoan.Repository.Interfaces
         #region getvalue
         int GetHouseIdByUserId(int uid);
         int GetCustomerLineIdByUserId(int uid);
+        string GetIdcardByCustomerId(int cid);
+        ManagementCustomer SearchCustomer(string idcard, string name);
+        bool isExistContract(int cid);
         #endregion
 
         #region Customer

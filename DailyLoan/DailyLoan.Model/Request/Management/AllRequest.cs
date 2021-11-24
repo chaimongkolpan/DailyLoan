@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DailyLoan.Model.Entities.DailyLoan;
+using DailyLoan.Library.Status;
 
 namespace DailyLoan.Model.Request.Management
 {
@@ -94,28 +95,34 @@ namespace DailyLoan.Model.Request.Management
     public class EditContractRequest : Contract
     {
         public bool isNew { get; set; }
-        public Contract ToContract(int uid)
+        public Contract ToContract(int uid,string idcard)
         {
             Contract u = new Contract()
             {
                 Id = this.Id,
-                ContractId = this.ContractId,
                 CustomerId = this.CustomerId,
                 GuarantorId = this.GuarantorId,
-                ApproverId = this.ApproverId,
-                TotalAmount = this.TotalAmount,
-                TotalPay = this.TotalPay,
-                Status = this.Status,
-                SpecialRateCount = this.SpecialRateCount,
-                CutCount = this.CutCount,
+                TotalAmount = this.TotalAmount
             };
             if (this.isNew)
             {
                 u.CreateBy = uid;
                 u.CreateDate = DateTime.Now;
+                u.Status = ContractStatus.StatusContract_WaitConfirm;
+                u.TotalPay = 0;
+                u.SpecialRateCount = 0;
+                u.CutCount = 0;
+                u.ContractId = idcard + "-" + DateTime.Now.ToString("yyyyMMdd"); 
+                u.ApproverId = uid;
             }
             else
             {
+                u.Status = this.Status;
+                u.TotalPay = this.TotalPay;
+                u.SpecialRateCount = this.SpecialRateCount;
+                u.CutCount = this.CutCount;
+                u.ContractId = this.ContractId;
+                u.ApproverId = this.ApproverId;
                 u.CreateBy = this.CreateBy;
                 u.CreateDate = this.CreateDate;
                 u.UpdateBy = uid;
@@ -232,5 +239,10 @@ namespace DailyLoan.Model.Request.Management
         public string TotalProfit { get; set; }
         public string NotPayAlert { get; set; }
         public string PartialPayAlert { get; set; }
+    }
+    public class ContractSearchRequest
+    {
+        public string Idcard { get; set; }
+        public string Name { get; set; }
     }
 }
