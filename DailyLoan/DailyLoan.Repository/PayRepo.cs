@@ -10,39 +10,44 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using DailyLoan.Model.Resoinse.Pay;
+using DailyLoan.Model.AppSettings;
 
 namespace DailyLoan.Repository
 {
     public class PayRepo : IPayRepo
     {
         private readonly DailyLoanContext _DailyLoanContext;
-        public PayRepo(DailyLoanContext dailyLoanContext)
+        private readonly AppsettingModel _appsettingModel;
+        public PayRepo(DailyLoanContext dailyLoanContext,
+            AppsettingModel appsettingModel)
         {
             _DailyLoanContext = dailyLoanContext;
+            _appsettingModel = appsettingModel;
         }
         #region getValue
         public int GetHouseIdByUserId(int uid)
         {
-            return (_DailyLoanContext.Users.Where(x => x.Id == uid).FirstOrDefault().HouseId);
+            return (_DailyLoanContext.User.Where(x => x.Id == uid).FirstOrDefault().HouseId);
         }
         public int GetCustomerLineIdByUserId(int uid)
         {
-            var rtn = _DailyLoanContext.UserPermissions.Where(x => x.UserId == uid).FirstOrDefault();
+            var rtn = _DailyLoanContext.UserPermission.Where(x => x.UserId == uid).FirstOrDefault();
             return (rtn == null ? 0 : rtn.CustomerLineId);
         }
         public string GetIdcardByCustomerId(int cid)
         {
-            var rtn = _DailyLoanContext.Customers.Where(x => x.Id == cid).FirstOrDefault();
+            var rtn = _DailyLoanContext.Customer.Where(x => x.Id == cid).FirstOrDefault();
             return rtn.Idcard;
         }
         public async Task<List<ManagementCustomer>> SearchCustomer(string idcard,string name)
         {
             if (String.IsNullOrEmpty(idcard)) idcard = "";
             if (String.IsNullOrEmpty(name)) name = "";
-            List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customers
-                                      join us in _DailyLoanContext.StatusCustomers on c.Status equals us.Id
-                                      join cl in _DailyLoanContext.CustomerLines on c.CustomerLineId equals cl.Id
-                                      join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
+            List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customer
+                                      join us in _DailyLoanContext.StatusCustomer on c.Status equals us.Id
+                                      join cl in _DailyLoanContext.CustomerLine on c.CustomerLineId equals cl.Id
+                                      join h in _DailyLoanContext.House on cl.HouseId equals h.Id
                                       where c.Idcard.Contains(idcard) || c.Firstname.Contains(name) || c.Lastname.Contains(name) || c.Nickname.Contains(name)
                                       select new ManagementCustomer()
                                       {
@@ -70,17 +75,17 @@ namespace DailyLoan.Repository
         }
         public bool isExistContract(int cid)
         {
-            var rtn = _DailyLoanContext.Contracts.Where(x => x.CustomerId == cid&&x.Status != ContractStatus.StatusContract_Closed).FirstOrDefault();
+            var rtn = _DailyLoanContext.Contract.Where(x => x.CustomerId == cid&&x.Status != ContractStatus.StatusContract_Closed).FirstOrDefault();
             return (rtn != null);
         }
         #endregion
         #region Customer
         public async Task<List<ManagementCustomer>> GetAllCustomer(int uid, int useraccess)
         {
-            List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customers
-                                                  join us in _DailyLoanContext.StatusCustomers on c.Status equals us.Id
-                                                  join cl in _DailyLoanContext.CustomerLines on c.CustomerLineId equals cl.Id
-                                                  join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
+            List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customer
+                                                  join us in _DailyLoanContext.StatusCustomer on c.Status equals us.Id
+                                                  join cl in _DailyLoanContext.CustomerLine on c.CustomerLineId equals cl.Id
+                                                  join h in _DailyLoanContext.House on cl.HouseId equals h.Id
                                                   select new ManagementCustomer()
                                                   {
                                                       Id = c.Id,
@@ -111,10 +116,10 @@ namespace DailyLoan.Repository
         }
         public ManagementCustomer GetCustomer(int cid)
         {
-            ManagementCustomer rtn = (from c in _DailyLoanContext.Customers
-                                      join us in _DailyLoanContext.StatusCustomers on c.Status equals us.Id
-                                      join cl in _DailyLoanContext.CustomerLines on c.CustomerLineId equals cl.Id
-                                      join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
+            ManagementCustomer rtn = (from c in _DailyLoanContext.Customer
+                                      join us in _DailyLoanContext.StatusCustomer on c.Status equals us.Id
+                                      join cl in _DailyLoanContext.CustomerLine on c.CustomerLineId equals cl.Id
+                                      join h in _DailyLoanContext.House on cl.HouseId equals h.Id
                                       where c.Id == cid
                                       select new ManagementCustomer()
                                       {
@@ -143,10 +148,10 @@ namespace DailyLoan.Repository
         public async Task<bool> EditCustomer(Customer req)
         {
             if (req.Id == 0)
-                _DailyLoanContext.Customers.Add(req);
+                _DailyLoanContext.Customer.Add(req);
             else
             {
-                var cus = await _DailyLoanContext.Customers.FindAsync(req.Id);
+                var cus = await _DailyLoanContext.Customer.FindAsync(req.Id);
                 if (cus == null)
                 {
                     return await Task.FromResult(false);
@@ -168,16 +173,16 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> DeleteCustomer(int cid)
         {
-            _DailyLoanContext.Customers.Remove(_DailyLoanContext.Customers.Where(x => x.Id == cid).FirstOrDefault());
+            _DailyLoanContext.Customer.Remove(_DailyLoanContext.Customer.Where(x => x.Id == cid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
         #endregion
         #region Contract
         public async Task<List<ManagementContract>> GetAllContract(int uid, int useraccess)
         {
-            List<ManagementContract> rtn = await (from c in _DailyLoanContext.Contracts
-                                                  join cu in _DailyLoanContext.Users on c.ApproverId equals cu.Id
-                                                  join us in _DailyLoanContext.StatusContracts on c.Status equals us.Id
+            List<ManagementContract> rtn = await (from c in _DailyLoanContext.Contract
+                                                  join cu in _DailyLoanContext.User on c.ApproverId equals cu.Id
+                                                  join us in _DailyLoanContext.StatusContract on c.Status equals us.Id
                                                   select new ManagementContract()
                                                   {
                                                       Id = c.Id,
@@ -210,9 +215,9 @@ namespace DailyLoan.Repository
         }
         public ManagementContract GetContract(int cid)
         {
-            ManagementContract rtn = (from c in _DailyLoanContext.Contracts
-                                                 join cu in _DailyLoanContext.Users on c.ApproverId equals cu.Id
-                                                 join us in _DailyLoanContext.StatusContracts on c.Status equals us.Id
+            ManagementContract rtn = (from c in _DailyLoanContext.Contract
+                                                 join cu in _DailyLoanContext.User on c.ApproverId equals cu.Id
+                                                 join us in _DailyLoanContext.StatusContract on c.Status equals us.Id
                                                    where c.Id == cid
                                                  select new ManagementContract()
                                                  {
@@ -240,10 +245,10 @@ namespace DailyLoan.Repository
         public async Task<bool> EditContract(Contract req)
         {
             if (req.Id == 0)
-                _DailyLoanContext.Contracts.Add(req);
+                _DailyLoanContext.Contract.Add(req);
             else
             {
-                var cus = await _DailyLoanContext.Contracts.FindAsync(req.Id);
+                var cus = await _DailyLoanContext.Contract.FindAsync(req.Id);
                 if (cus == null)
                 {
                     return await Task.FromResult(false);
@@ -265,8 +270,35 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> DeleteContract(int cid)
         {
-            _DailyLoanContext.Contracts.Remove(_DailyLoanContext.Contracts.Where(x => x.Id == cid).FirstOrDefault());
+            _DailyLoanContext.Contract.Remove(_DailyLoanContext.Contract.Where(x => x.Id == cid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
+        }
+        #endregion 
+        #region DailyReport
+        public async Task<DailyReportResponse> GetDailyReport(int uid, DateTime date)
+        {
+            var result = new DailyReportResponse();
+            var data = await (from tran in _DailyLoanContext.Transaction.Where(x => x.CreateDate.Date == date.Date && x.AgentId == uid)
+                                select tran ).ToListAsync();
+
+            var collect = await (from con in _DailyLoanContext.Contract
+                                 join cus in _DailyLoanContext.Customer on con.CustomerId equals cus.Id
+                                 where cus.CustomerLineId == uid
+                                 select cus).ToListAsync();
+            if(data != null)
+            {
+                double bounty = (double)data.Where(x => x.Type == TransactionType_Status.Bounty).Select(x => x.Amount).Sum();
+                result = new DailyReportResponse()
+                {
+                    bounty = bounty,
+                    allowance = bounty >= _appsettingModel.Allowance ? 0 : (_appsettingModel.Allowance - bounty),
+                    collect = data.Where(x => x.Type == TransactionType_Status.Pay).Select(x => x.Amount).Sum(),
+                    mustcollect = collect.Select(x => x.DailyCollect).Sum()
+                };
+            }
+           
+
+            return result;
         }
         #endregion
     }

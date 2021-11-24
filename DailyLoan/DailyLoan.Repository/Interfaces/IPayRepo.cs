@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using DailyLoan.Model.Resoinse.Pay;
 
 namespace DailyLoan.Repository.Interfaces
 {
@@ -29,6 +30,11 @@ namespace DailyLoan.Repository.Interfaces
         ManagementContract GetContract(int cid);
         Task<bool> EditContract(Contract req);
         Task<bool> DeleteContract(int cid);
+        #endregion
+
+
+        #region DailyReport
+        Task<DailyReportResponse> GetDailyReport(int uid, DateTime date);
         #endregion
     }
 }
