@@ -22,9 +22,9 @@ namespace DailyLoan.Service
         {
             return _PayRepo.GetHouseIdByUserId(uid);
         }
-        public ManagementCustomer SearchCustomer(ContractSearchRequest req)
+        public async Task<List<ManagementCustomer>> SearchCustomer(ContractSearchRequest req)
         {
-            return _PayRepo.SearchCustomer(req.Idcard,req.Name);
+            return await _PayRepo.SearchCustomer(req.Idcard,req.Name);
         }
         public bool isExistContract(int cid)
         {
