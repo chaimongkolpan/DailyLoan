@@ -22,6 +22,14 @@ namespace DailyLoan.Service
         {
             return _PayRepo.GetHouseIdByUserId(uid);
         }
+        public async Task<List<ManagementCustomer>> SearchCustomer(ContractSearchRequest req)
+        {
+            return await _PayRepo.SearchCustomer(req.Idcard,req.Name);
+        }
+        public bool isExistContract(int cid)
+        {
+            return _PayRepo.isExistContract(cid);
+        }
         #region Customer
         public async Task<List<ManagementCustomer>> GetAllCustomer(int uid, int ua)
         {
@@ -51,7 +59,7 @@ namespace DailyLoan.Service
         }
         public async Task<bool> EditContract(EditContractRequest req, int uid)
         {
-            return await _PayRepo.EditContract(req.ToContract(uid));
+            return await _PayRepo.EditContract(req.ToContract(uid,_PayRepo.GetIdcardByCustomerId(req.CustomerId)));
         }
         public async Task<bool> DeleteContract(int cid)
         {

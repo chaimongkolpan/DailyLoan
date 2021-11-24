@@ -98,7 +98,6 @@ namespace DailyLoan.Controllers
         }
         #endregion
         #region Contract
-
         public async Task<ActionResult> ContractActionAsync()
         {
             //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
@@ -114,7 +113,68 @@ namespace DailyLoan.Controllers
             ViewBag.partialView = ConstMessage.View_MNM_Contract;
             return View(ConstMessage.View_Index);
         }
+        [HttpGet]
+        [Route("GetContractDetail/{cid}")]
+        public ActionResult GetContractDetail(int cid)
+        {
+            return Ok(_payService.GetContract(cid));
+        }
+        [HttpGet]
+        [Route("DeleteContract/{cid}")]
+        public async Task<ActionResult> DeleteContract(int cid)
+        {
+            var UserAccess = "1";
+            if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            {
+                if (await _payService.DeleteContract(cid))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+            else return BadRequest(ConstMessage.Message_DonotHavePermission);
+        }
+        [HttpPost]
+        [Route("EditContract")]
+        public async Task<ActionResult> EditContract(EditContractRequest req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            if (await _payService.EditContract(req, Convert.ToInt32(UserId)))
+            {
+                return Ok(ConstMessage.Message_Successful);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        [HttpPost]
+        [Route("SearchCustomer")]
+        public async Task<ActionResult> SearchCustomer(ContractSearchRequest req)
+        {
+            var rtn = await _payService.SearchCustomer(req);
+            if (rtn != null)
+            {
+                return Ok(rtn);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        [HttpPost]
+        [Route("AddContract")]
+        public async Task<ActionResult> AddContract(EditContractRequest req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1ถ5";
+            bool isExist = _payService.isExistContract(req.CustomerId);
+            if (!isExist && req.isNew)
+            {
+                if (await _payService.EditContract(req, Convert.ToInt32(UserId)))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+            else return BadRequest(ConstMessage.Message_UsernameIsExist);
 
+        }
         #endregion
     }
 }

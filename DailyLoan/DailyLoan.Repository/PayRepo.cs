@@ -30,6 +30,49 @@ namespace DailyLoan.Repository
             var rtn = _DailyLoanContext.UserPermissions.Where(x => x.UserId == uid).FirstOrDefault();
             return (rtn == null ? 0 : rtn.CustomerLineId);
         }
+        public string GetIdcardByCustomerId(int cid)
+        {
+            var rtn = _DailyLoanContext.Customers.Where(x => x.Id == cid).FirstOrDefault();
+            return rtn.Idcard;
+        }
+        public async Task<List<ManagementCustomer>> SearchCustomer(string idcard,string name)
+        {
+            if (String.IsNullOrEmpty(idcard)) idcard = "";
+            if (String.IsNullOrEmpty(name)) name = "";
+            List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customers
+                                      join us in _DailyLoanContext.StatusCustomers on c.Status equals us.Id
+                                      join cl in _DailyLoanContext.CustomerLines on c.CustomerLineId equals cl.Id
+                                      join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
+                                      where c.Idcard.Contains(idcard) || c.Firstname.Contains(name) || c.Lastname.Contains(name) || c.Nickname.Contains(name)
+                                      select new ManagementCustomer()
+                                      {
+                                          Id = c.Id,
+                                          Firstname = c.Firstname,
+                                          Lastname = c.Lastname,
+                                          Nickname = c.Nickname,
+                                          Phone1 = c.Phone1,
+                                          Phone2 = c.Phone2,
+                                          Status = c.Status,
+                                          Idcard = c.Idcard,
+                                          Address = c.Address,
+                                          ShortAddress = c.ShortAddress,
+                                          CustomerLineId = c.CustomerLineId,
+                                          CreateBy = c.CreateBy,
+                                          CreateDate = c.CreateDate,
+                                          UpdateBy = c.UpdateBy,
+                                          UpdateDate = c.UpdateDate,
+                                          StatusText = us.Status,
+                                          HouseId = h.Id,
+                                          HouseText = h.HouseName,
+                                          CustomerLineText = cl.CustomerLineName
+                                      }).ToListAsync();
+            return rtn;
+        }
+        public bool isExistContract(int cid)
+        {
+            var rtn = _DailyLoanContext.Contracts.Where(x => x.CustomerId == cid&&x.Status != ContractStatus.StatusContract_Closed).FirstOrDefault();
+            return (rtn != null);
+        }
         #endregion
         #region Customer
         public async Task<List<ManagementCustomer>> GetAllCustomer(int uid, int useraccess)
@@ -133,12 +176,8 @@ namespace DailyLoan.Repository
         public async Task<List<ManagementContract>> GetAllContract(int uid, int useraccess)
         {
             List<ManagementContract> rtn = await (from c in _DailyLoanContext.Contracts
-                                                  join cc in _DailyLoanContext.Customers on c.CustomerId equals cc.Id
-                                                  join cg in _DailyLoanContext.Customers on c.GuarantorId equals cg.Id
                                                   join cu in _DailyLoanContext.Users on c.ApproverId equals cu.Id
                                                   join us in _DailyLoanContext.StatusContracts on c.Status equals us.Id
-                                                  join cl in _DailyLoanContext.CustomerLines on cc.CustomerLineId equals cl.Id
-                                                  join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
                                                   select new ManagementContract()
                                                   {
                                                       Id = c.Id,
@@ -156,31 +195,24 @@ namespace DailyLoan.Repository
                                                       UpdateBy = c.UpdateBy,
                                                       UpdateDate = c.UpdateDate,
                                                       StatusText = us.Status,
-                                                      HouseId = h.Id,
-                                                      HouseText = h.HouseName,
-                                                      CustomerLineText = cl.CustomerLineName,
-                                                      CustomerLineId = cl.Id,
-                                                      Firstname = cc.Firstname,
-                                                      Lastname = cc.Lastname,
-                                                      ShortAddress = cc.ShortAddress,
-                                                      GuaruntorName = cg.Firstname + " " + cg.Lastname,
                                                       ApproverName = cu.Firstname + " " + cu.Lastname
                                                   }).ToListAsync();
             if (useraccess == StatusUserAccess.UserAccess_Admin || useraccess == StatusUserAccess.UserAccess_Audit)
-                rtn = rtn.Where(x => x.HouseId == GetHouseIdByUserId(uid)).ToList();
+                rtn = rtn.Where(x => x.Customer.HouseId == GetHouseIdByUserId(uid)).ToList();
             else if (useraccess == StatusUserAccess.UserAccess_Agent)
-                rtn = rtn.Where(x => x.CustomerLineId == GetCustomerLineIdByUserId(uid)).ToList();
+                rtn = rtn.Where(x => x.Customer.CustomerLineId == GetCustomerLineIdByUserId(uid)).ToList();
+            for(int i = 0;i < rtn.Count();i++)
+            {
+                rtn[i].Guaruntor = GetCustomer(rtn[i].GuarantorId);
+                rtn[i].Customer = GetCustomer(rtn[i].CustomerId);
+            }
             return rtn;
         }
         public ManagementContract GetContract(int cid)
         {
             ManagementContract rtn = (from c in _DailyLoanContext.Contracts
-                                                 join cc in _DailyLoanContext.Customers on c.CustomerId equals cc.Id
-                                                 join cg in _DailyLoanContext.Customers on c.GuarantorId equals cg.Id
                                                  join cu in _DailyLoanContext.Users on c.ApproverId equals cu.Id
                                                  join us in _DailyLoanContext.StatusContracts on c.Status equals us.Id
-                                                 join cl in _DailyLoanContext.CustomerLines on cc.CustomerLineId equals cl.Id
-                                                 join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
                                                    where c.Id == cid
                                                  select new ManagementContract()
                                                  {
@@ -199,16 +231,10 @@ namespace DailyLoan.Repository
                                                      UpdateBy = c.UpdateBy,
                                                      UpdateDate = c.UpdateDate,
                                                      StatusText = us.Status,
-                                                     HouseId = h.Id,
-                                                     HouseText = h.HouseName,
-                                                     CustomerLineText = cl.CustomerLineName,
-                                                     CustomerLineId = cl.Id,
-                                                     Firstname = cc.Firstname,
-                                                     Lastname = cc.Lastname,
-                                                     ShortAddress = cc.ShortAddress,
-                                                     GuaruntorName = cg.Firstname + " " + cg.Lastname,
-                                                     ApproverName = cu.Firstname + " " + cu.Lastname
+                                                     ApproverName = cu.Firstname + " " + cu.Lastname,
                                                  }).FirstOrDefault();
+            rtn.Guaruntor = GetCustomer(rtn.GuarantorId);
+            rtn.Customer = GetCustomer(rtn.CustomerId);
             return rtn;
         }
         public async Task<bool> EditContract(Contract req)
@@ -223,15 +249,15 @@ namespace DailyLoan.Repository
                     return await Task.FromResult(false);
                 }
 
-                cus.ContractId = req.ContractId;
+                //cus.ContractId = req.ContractId;
                 cus.CustomerId = req.CustomerId;
                 cus.GuarantorId = req.GuarantorId;
-                cus.ApproverId = req.ApproverId;
+                //cus.ApproverId = req.ApproverId;
                 cus.TotalAmount = req.TotalAmount;
-                cus.TotalPay = req.TotalPay;
-                cus.Status = req.Status;
-                cus.SpecialRateCount = req.SpecialRateCount;
-                cus.CutCount = req.CutCount;
+                //cus.TotalPay = req.TotalPay;
+                //cus.Status = req.Status;
+                //cus.SpecialRateCount = req.SpecialRateCount;
+                //cus.CutCount = req.CutCount;
                 cus.UpdateBy = req.UpdateBy;
                 cus.UpdateDate = req.UpdateDate;
             }
