@@ -35,6 +35,169 @@ namespace DailyLoan.Controllers
             return View();
         }
 
+        #region system_setting
+        public async Task<ActionResult> setting_systemAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            var UserAccess = "1";
+            ViewBag.UserId = UserId;
+            ViewBag.UserAccess = UserAccess;
+            if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+            {
+                ViewBag.House = await _managementService.GetAllHouseList();
+            }
+            else
+            {
+                int hid = _managementService.GetHouseIdByUserId(Convert.ToInt32(UserId));
+                ViewBag.House = hid;
+                ViewBag.PageData = await _managementService.GetConfig(hid);
+            }
+            ViewBag.partialView = ConstMessage.View_PAY_setting_system;
+            return View(ConstMessage.View_Index);
+        }
+        [HttpGet]
+        [Route("GetConfigDetail/{hid}")]
+        public async Task<ActionResult> GetConfigDetail(int hid)
+        {
+            return Ok(await _managementService.GetConfig(hid));
+        }
+        [HttpGet]
+        [Route("GetSpecialRateDetail/{spid}")]
+        public ActionResult GetSpecialRateDetail(int spid)
+        {
+            return Ok(_managementService.GetSpecialRate(spid));
+        }
+        [HttpGet]
+        [Route("DeleteSpecialRate/{spid}")]
+        public async Task<ActionResult> DeleteSpecialRate(int spid)
+        {
+            var UserAccess = "1";
+            if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            {
+                if (await _managementService.DeleteSpecialRate(spid))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+            else return BadRequest(ConstMessage.Message_DonotHavePermission);
+        }
+        [HttpPost]
+        [Route("EditConfig")]
+        public async Task<ActionResult> EditConfig(EditConfigRequest req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            if (await _managementService.EditConfig(req, Convert.ToInt32(UserId)))
+            {
+                return Ok(ConstMessage.Message_Successful);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        [HttpPost]
+        [Route("EditSpecialRate")]
+        public async Task<ActionResult> EditSpecialRate(EditSpecialRateRequest req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            if (await _managementService.EditSpecialRate(req, Convert.ToInt32(UserId)))
+            {
+                return Ok(ConstMessage.Message_Successful);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        #endregion
+        #region setting_home
+        public async Task<ActionResult> HouseActionAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            List<ManagementHouse> res = await _managementService.GetAllHouseList();
+            ViewBag.PageData = res;
+            ViewBag.partialView = ConstMessage.View_MNM_House;
+            return View(ConstMessage.View_Index);
+        }
+        [HttpGet]
+        [Route("GetHouseDetail/{hid}")]
+        public ActionResult GetHouseDetail(int hid)
+        {
+            return Ok(_managementService.GetHouse(hid));
+        }
+        [HttpGet]
+        [Route("DeleteHouse/{hid}")]
+        public async Task<ActionResult> DeleteHouse(int hid)
+        {
+            var UserAccess = "1";
+            if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+            {
+                if (await _managementService.DeleteHouse(hid))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+            else return BadRequest(ConstMessage.Message_DonotHavePermission);
+        }
+        [HttpPost]
+        [Route("EditHouse")]
+        public async Task<ActionResult> EditHouse(EditHouseRequest req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            if (await _managementService.EditHouse(req, Convert.ToInt32(UserId)))
+            {
+                return Ok(ConstMessage.Message_Successful);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        public async Task<ActionResult> CustomerLineActionAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            var UserAccess = "1";
+            List<ManagementCustomerLine> res = await _managementService.GetAllCustomerLineList(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+            ViewBag.UserId = UserId;
+            ViewBag.UserAccess = UserAccess;
+            if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                ViewBag.House = await _managementService.GetAllHouse();
+            ViewBag.PageData = res;
+            ViewBag.partialView = ConstMessage.View_MNM_CustomerLine;
+            return View(ConstMessage.View_Index);
+        }
+        [HttpGet]
+        [Route("GetCustomerLineDetail/{clid}")]
+        public ActionResult GetCustomerLineDetail(int clid)
+        {
+            return Ok(_managementService.GetCustomerLine(clid));
+        }
+        [HttpGet]
+        [Route("DeleteCustomerLine/{clid}")]
+        public async Task<ActionResult> DeleteCustomerLine(int clid)
+        {
+            var UserAccess = "1";
+            if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            {
+                if (await _managementService.DeleteCustomerLine(clid))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+            else return BadRequest(ConstMessage.Message_DonotHavePermission);
+        }
+        [HttpPost]
+        [Route("EditCustomerLine")]
+        public async Task<ActionResult> EditCustomerLine(EditCustomerLineRequest req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            if (await _managementService.EditCustomerLine(req, Convert.ToInt32(UserId)))
+            {
+                return Ok(ConstMessage.Message_Successful);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        #endregion
         #region Customer
         public async Task<ActionResult> CustomerActionAsync()
         {
@@ -48,7 +211,7 @@ namespace DailyLoan.Controllers
                 ViewBag.House = await _managementService.GetAllHouse();
             ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
             ViewBag.PageData = res;
-            ViewBag.partialView = ConstMessage.View_MNM_Customer;
+            ViewBag.partialView = ConstMessage.View_PAY_Customer;
             return View(ConstMessage.View_Index);
         }
         [HttpGet]
