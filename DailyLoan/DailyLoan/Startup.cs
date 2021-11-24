@@ -19,7 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
 using Serilog.Events;
-
+using DailyLoan.Model.AppSettings;
 
 namespace DailyLoan
 {
@@ -39,6 +39,9 @@ namespace DailyLoan
             services.AddDbContext<DailyLoanContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DailyLoanConnection")));
 
+
+            services.Configure<AppsettingModel>(Configuration.GetSection("AppsettingModel"));
+            
             #region DependencyInjectionConfig
 
             // DependencyInjection Service

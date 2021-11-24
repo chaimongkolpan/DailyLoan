@@ -11,7 +11,7 @@ namespace DailyLoan.Model.Entities.DailyLoan
     {
         public int Id { get; set; }
         public int ContractId { get; set; }
-        public int AgentId { get; set; }
+        public int CustomerLineId { get; set; }
         public double? Amount { get; set; }
         public int Type { get; set; }
         public string Remark { get; set; }

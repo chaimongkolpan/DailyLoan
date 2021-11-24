@@ -24,5 +24,7 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public DateTime CreateDate { get; set; }
         public int? UpdateBy { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public double? DailyCollect { get; set; }
+        public double? Installment { get; set; }
     }
 }
