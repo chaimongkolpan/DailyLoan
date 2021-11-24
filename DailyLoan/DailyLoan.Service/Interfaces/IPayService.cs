@@ -10,7 +10,7 @@ namespace DailyLoan.Service.Interfaces
     public interface IPayService
     {
         int GetHouseIdByUserId(int uid);
-        ManagementCustomer SearchCustomer(ContractSearchRequest req);
+        Task<List<ManagementCustomer>> SearchCustomer(ContractSearchRequest req);
         bool isExistContract(int cid);
         #region Customer
         Task<List<ManagementCustomer>> GetAllCustomer(int uid, int ua);
