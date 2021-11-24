@@ -42,8 +42,6 @@ namespace DailyLoan.Repository
         }
         public async Task<List<ManagementCustomer>> SearchCustomer(string idcard,string name)
         {
-            if (String.IsNullOrEmpty(idcard)) idcard = "";
-            if (String.IsNullOrEmpty(name)) name = "";
             List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customer
                                       join us in _DailyLoanContext.StatusCustomer on c.Status equals us.Id
                                       join cl in _DailyLoanContext.CustomerLine on c.CustomerLineId equals cl.Id
@@ -71,6 +69,8 @@ namespace DailyLoan.Repository
                                           HouseText = h.HouseName,
                                           CustomerLineText = cl.CustomerLineName
                                       }).ToListAsync();
+            if (!String.IsNullOrEmpty(idcard)) rtn = rtn.Where(x => x.Idcard.Contains(idcard)).ToList();
+            if (!String.IsNullOrEmpty(name)) rtn = rtn.Where(x => x.Firstname.Contains(name)|| x.Lastname.Contains(name)|| x.Nickname.Contains(name)).ToList();
             return rtn;
         }
         public bool isExistContract(int cid)
