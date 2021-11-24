@@ -64,7 +64,10 @@
                             <a class="nav-link" asp-controller="Pay" asp-action="Contractor">สัญญากู้</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"asp-controller="Pay" asp-action="History">ประวัติ</a>
+                            <a class="nav-link" asp-controller="Pay" asp-action="Collector">เก็บเงิน</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Pay" asp-action="History">ประวัติ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">สรุปรายวัน</a>
@@ -81,7 +84,7 @@
                     <form class="d-flex">
 
 
-                        <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill " style="width:75px">
+                        <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill " style="width:75px" asp-controller="Pay" asp-action="Warn">
                             แจ้งเตือน
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 4
