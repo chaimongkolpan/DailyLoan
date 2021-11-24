@@ -70,14 +70,14 @@
                             <a class="nav-link" asp-controller="Pay" asp-action="History">ประวัติ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">สรุปรายวัน</a>
+                            <a class="nav-link" asp-controller="Pay" asp-action="DailyReport">สรุปรายวัน</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdownsetting" data-bs-toggle="dropdown" aria-expanded="false">ตั้งค่า</a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownsetting">
-                                <li><a class="dropdown-item" href="#">บ้าน</a></li>
-                                <li><a class="dropdown-item" href="#">ประจำวัน</a></li>
-                                <li><a class="dropdown-item" href="#">ระบบ</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_home">บ้าน</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_daily">ประจำวัน</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_system">ระบบ</a></li>
                             </ul>
                         </li>
                     </ul>
