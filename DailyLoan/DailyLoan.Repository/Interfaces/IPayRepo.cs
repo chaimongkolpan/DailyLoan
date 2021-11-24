@@ -1,4 +1,5 @@
 ﻿using DailyLoan.Model.Entities.DailyLoan;
+using DailyLoan.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,5 +9,23 @@ namespace DailyLoan.Repository.Interfaces
 {
     public interface IPayRepo
     {
+        #region getvalue
+        int GetHouseIdByUserId(int uid);
+        int GetCustomerLineIdByUserId(int uid);
+        #endregion
+
+        #region Customer
+        Task<List<ManagementCustomer>> GetAllCustomer(int uid, int useraccess);
+        ManagementCustomer GetCustomer(int cid);
+        Task<bool> EditCustomer(Customer req);
+        Task<bool> DeleteCustomer(int cid);
+        #endregion
+
+        #region Contract
+        Task<List<ManagementContract>> GetAllContract(int uid, int useraccess);
+        ManagementContract GetContract(int cid);
+        Task<bool> EditContract(Contract req);
+        Task<bool> DeleteContract(int cid);
+        #endregion
     }
 }

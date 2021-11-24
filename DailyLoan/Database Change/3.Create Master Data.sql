@@ -1,7 +1,7 @@
 ﻿USE [DailyLoan]
 GO
 
-INSERT INTO [UserAccess] (ID,UserAccess) VALUES (1,'SuperAdmin'),(2,'Admin'),(3,'Auditor'),(4,'Agent');
+INSERT INTO [UserAccess] (ID,UserAccess) VALUES (1,'ผู้ดูแลระบบ'),(2,'เสมียน'),(3,'คนตรวจ'),(4,'คนเก็บ');
 INSERT INTO [Status_User] (ID,Status) VALUES (1,'ใช้งาน'),(2,'ไม่ใช้งาน');
 INSERT INTO [Status_House] (ID,Status) VALUES (1,'ใช้งาน'),(2,'ไม่ใช้งาน');
 INSERT INTO [Status_CustomerLine] (ID,Status) VALUES (1,'ใช้งาน'),(2,'ไม่ใช้งาน');
