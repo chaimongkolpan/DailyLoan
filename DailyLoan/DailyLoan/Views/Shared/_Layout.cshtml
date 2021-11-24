@@ -64,24 +64,27 @@
                             <a class="nav-link" asp-controller="Pay" asp-action="ContractAction">สัญญากู้</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"asp-controller="Pay" asp-action="History">ประวัติ</a>
+                            <a class="nav-link" asp-controller="Pay" asp-action="Collector">เก็บเงิน</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">สรุปรายวัน</a>
+                            <a class="nav-link" asp-controller="Pay" asp-action="History">ประวัติ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Pay" asp-action="DailyReport">สรุปรายวัน</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdownsetting" data-bs-toggle="dropdown" aria-expanded="false">ตั้งค่า</a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownsetting">
-                                <li><a class="dropdown-item" href="#">บ้าน</a></li>
-                                <li><a class="dropdown-item" href="#">ประจำวัน</a></li>
-                                <li><a class="dropdown-item" href="#">ระบบ</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_home">บ้าน</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_daily">ประจำวัน</a></li>
+                                <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_system">ระบบ</a></li>
                             </ul>
                         </li>
                     </ul>
                     <form class="d-flex">
 
 
-                        <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill " style="width:75px">
+                        <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill " style="width:75px" asp-controller="Pay" asp-action="Warn">
                             แจ้งเตือน
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 4
