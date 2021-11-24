@@ -5860,11 +5860,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
+      "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
       "projectName": "DailyLoan.Service",
-      "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
+      "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Service\\DailyLoan.Service.csproj",
       "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
-      "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Service\\obj\\",
+      "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5884,14 +5884,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
-              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
             },
-            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
-              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
+            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj": {
+              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj"
             },
-            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj": {
-              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj"
+            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj": {
+              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Repository\\DailyLoan.Repository.csproj"
             }
           }
         }

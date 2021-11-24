@@ -5892,11 +5892,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
+      "projectUniqueName": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
       "projectName": "DailyLoan.Model",
-      "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
+      "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Model\\DailyLoan.Model.csproj",
       "packagesPath": "C:\\Users\\BBoat\\.nuget\\packages\\",
-      "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Model\\obj\\",
+      "outputPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Model\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5916,8 +5916,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
-              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
+            "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj": {
+              "projectPath": "C:\\Project\\DailyLoan\\DailyLoan\\DailyLoan.Library\\DailyLoan.Library.csproj"
             }
           }
         }
