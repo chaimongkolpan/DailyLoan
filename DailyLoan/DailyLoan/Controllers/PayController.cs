@@ -34,7 +34,18 @@ namespace DailyLoan.Controllers
         {
             return View();
         }
-
+        public ActionResult Collector()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            ViewBag.partialView = ConstMessage.View_PAY_Collector;
+            return View(ConstMessage.View_Index);
+        }
+        public ActionResult Warn()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            ViewBag.partialView = ConstMessage.View_PAY_Warn;
+            return View(ConstMessage.View_Index);
+        }
         #region system_setting
         public async Task<ActionResult> setting_systemAsync()
         {
@@ -109,12 +120,24 @@ namespace DailyLoan.Controllers
         }
         #endregion
         #region setting_home
-        public async Task<ActionResult> HouseActionAsync()
+        public ActionResult setting_daily()
         {
             //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            ViewBag.partialView = ConstMessage.View_PAY_setting_daily;
+            return View(ConstMessage.View_Index);
+        }
+        public async Task<ActionResult> setting_homeAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            var UserAccess = "1";
             List<ManagementHouse> res = await _managementService.GetAllHouseList();
-            ViewBag.PageData = res;
-            ViewBag.partialView = ConstMessage.View_MNM_House;
+            List<ManagementCustomerLine> res1 = await _managementService.GetAllCustomerLineList(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+            ViewBag.UserId = UserId;
+            ViewBag.UserAccess = UserAccess;
+            ViewBag.House = res;
+            ViewBag.PageData = res1;
+            ViewBag.partialView = ConstMessage.View_PAY_setting_home;
             return View(ConstMessage.View_Index);
         }
         [HttpGet]

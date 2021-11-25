@@ -18,12 +18,12 @@ namespace DailyLoan.Repository
     public class PayRepo : IPayRepo
     {
         private readonly DailyLoanContext _DailyLoanContext;
-        private readonly AppsettingModel _appsettingModel;
-        public PayRepo(DailyLoanContext dailyLoanContext,
-            AppsettingModel appsettingModel)
+        //private readonly AppsettingModel _appsettingModel;
+        public PayRepo(DailyLoanContext dailyLoanContext)//,
+            //AppsettingModel appsettingModel)
         {
             _DailyLoanContext = dailyLoanContext;
-            _appsettingModel = appsettingModel;
+            //_appsettingModel = appsettingModel;
         }
         #region getValue
         public int GetHouseIdByUserId(int uid)
@@ -278,7 +278,7 @@ namespace DailyLoan.Repository
         public async Task<DailyReportResponse> GetDailyReport(int uid, DateTime date)
         {
             var result = new DailyReportResponse();
-            var data = await (from tran in _DailyLoanContext.Transaction.Where(x => x.CreateDate.Date == date.Date && x.AgentId == uid)
+            var data = await (from tran in _DailyLoanContext.Transaction.Where(x => x.CreateDate.Date == date.Date && x.CustomerLineId == uid)
                                 select tran ).ToListAsync();
 
             var collect = await (from con in _DailyLoanContext.Contract
@@ -291,7 +291,8 @@ namespace DailyLoan.Repository
                 result = new DailyReportResponse()
                 {
                     bounty = bounty,
-                    allowance = bounty >= _appsettingModel.Allowance ? 0 : (_appsettingModel.Allowance - bounty),
+                    //allowance = bounty >= AppsettingModel.Allowance ? 0 : (AppsettingModel.Allowance - bounty),
+                    allowance = bounty >= 200 ? 0 : (200 - bounty),
                     collect = data.Where(x => x.Type == TransactionType_Status.Pay).Select(x => x.Amount).Sum(),
                     mustcollect = collect.Select(x => x.DailyCollect).Sum()
                 };
