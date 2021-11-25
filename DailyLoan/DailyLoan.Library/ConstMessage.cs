@@ -26,6 +26,11 @@ namespace DailyLoan.Library
         public const string View_PAY_DailyReport = "DailyReport";
         public const string View_PAY_History = "History";
         public const string View_PAY_User = "User";
+        public const string View_PAY_Collector = "Collector";
+        public const string View_PAY_setting_home = "setting_home";
+        public const string View_PAY_setting_daily = "setting_daily";
+        public const string View_PAY_setting_system = "setting_system";
+        public const string View_PAY_Warn = "Warn";
 
         public const string Message_InValidID = "เลขประประชาชนไม่ถูกต้อง";
         public const string Message_DonotHavePermission = "คุณไม่มีสิทธิ์";

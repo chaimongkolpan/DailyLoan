@@ -10,6 +10,15 @@ namespace DailyLoan.Model.Entities.DailyLoan
 {
     public partial class DailyLoanContext : DbContext
     {
+        public DailyLoanContext()
+        {
+        }
+
+        public DailyLoanContext(DbContextOptions<DailyLoanContext> options)
+            : base(options)
+        {
+        }
+
         private readonly string _connectionString;
 
         public DailyLoanContext(string connectionString)
