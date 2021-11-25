@@ -81,20 +81,21 @@
                     </ul>
                     <form class="d-flex">
 
-
-                        <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill " style="width:75px" asp-controller="Pay" asp-action="Warn">
-                            แจ้งเตือน
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                4
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                        </button>
+                        <a asp-controller="Pay" asp-action="Warn">
+                            <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill " style="width:75px" asp-controller="Pay" asp-action="Warn">
+                                แจ้งเตือน
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    4
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                            </button>
+                        </a>
                         <div class="dropdown" style="padding-left:1em ">
                             <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <strong>admin</strong>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="LogIn">Sign out</a></li>
                             </ul>
                         </div>
                     </form>

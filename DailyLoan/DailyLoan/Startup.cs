@@ -40,7 +40,7 @@ namespace DailyLoan
                     options.UseSqlServer(Configuration.GetConnectionString("DailyLoanConnection")));
 
 
-            services.Configure<AppsettingModel>(Configuration.GetSection("AppsettingModel"));
+            //services.Configure<AppsettingModel>(Configuration.GetSection("AppsettingModel"));
             
             #region DependencyInjectionConfig
 
