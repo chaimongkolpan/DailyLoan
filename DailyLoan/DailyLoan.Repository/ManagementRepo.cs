@@ -24,51 +24,51 @@ namespace DailyLoan.Repository
         #region getvalue
         public int GetHouseIdByUserId(int uid)
         {
-            return (_DailyLoanContext.Users.Where(x => x.Id==uid).FirstOrDefault().HouseId);
+            return (_DailyLoanContext.User.Where(x => x.Id==uid).FirstOrDefault().HouseId);
         }
         public int GetCustomerLineIdByUserId(int uid)
         {
-            var rtn = _DailyLoanContext.UserPermissions.Where(x => x.UserId == uid).FirstOrDefault();
+            var rtn = _DailyLoanContext.UserPermission.Where(x => x.UserId == uid).FirstOrDefault();
             return (rtn==null?0:rtn.CustomerLineId);
         }
         public string GetHouseNameByHouseId(int hid)
         {
-            return _DailyLoanContext.Houses.Where(x => x.Id == hid).FirstOrDefault().HouseName;
+            return _DailyLoanContext.House.Where(x => x.Id == hid).FirstOrDefault().HouseName;
         }
         #endregion
 
         public async Task<List<House>> GetAllHouse()
         {
-            return await _DailyLoanContext.Houses.ToListAsync();
+            return await _DailyLoanContext.House.ToListAsync();
         }
         public async Task<List<CustomerLine>> GetAllCustomerLine(int uid)
         {
-            List<CustomerLine> rtn = await _DailyLoanContext.CustomerLines.Where(x =>x.HouseId== GetHouseIdByUserId(uid)).ToListAsync();
+            List<CustomerLine> rtn = await _DailyLoanContext.CustomerLine.Where(x =>x.HouseId== GetHouseIdByUserId(uid)).ToListAsync();
             if (rtn == null) rtn = new List<CustomerLine>();
             return rtn;
         }
         public async Task<List<CustomerLine>> GetAllCustomerLineByHouseID(int hid)
         {
-            List<CustomerLine> rtn = await _DailyLoanContext.CustomerLines.Where(x => x.HouseId == hid).ToListAsync();
+            List<CustomerLine> rtn = await _DailyLoanContext.CustomerLine.Where(x => x.HouseId == hid).ToListAsync();
             if (rtn == null) rtn = new List<CustomerLine>();
             return rtn;
         }
         public bool UsernameIsExist(string username)
         {
-            return _DailyLoanContext.Users.Where(x => x.Username == username).FirstOrDefault() != null;
+            return _DailyLoanContext.User.Where(x => x.Username == username).FirstOrDefault() != null;
         }
         public bool IdcardIsExist(string idcard)
         {
-            return _DailyLoanContext.Customers.Where(x => x.Idcard == idcard).FirstOrDefault() != null;
+            return _DailyLoanContext.Customer.Where(x => x.Idcard == idcard).FirstOrDefault() != null;
         }
 
         #region User
         public async Task<List<ManagementUser>> GetAllUser(int uid,int useraccess)
         {
-            List<ManagementUser> rtn = await (from u in _DailyLoanContext.Users
-                                  join us in _DailyLoanContext.StatusUsers on u.Status equals us.Id
-                                  join ua in _DailyLoanContext.UserAccesses on u.UserAccess equals ua.Id
-                                  join h in _DailyLoanContext.Houses on u.HouseId equals h.Id
+            List<ManagementUser> rtn = await (from u in _DailyLoanContext.User
+                                  join us in _DailyLoanContext.StatusUser on u.Status equals us.Id
+                                  join ua in _DailyLoanContext.UserAccess on u.UserAccess equals ua.Id
+                                  join h in _DailyLoanContext.House on u.HouseId equals h.Id
                                   select new ManagementUser()
                                   {
                                       Id = u.Id,
@@ -98,17 +98,17 @@ namespace DailyLoan.Repository
                 if (rtn[i].CustomerLineId == 0) rtn[i].CustomerLineText = "-";
                 else
                 {
-                    rtn[i].CustomerLineText = _DailyLoanContext.CustomerLines.Where(x => x.Id == rtn[i].CustomerLineId).FirstOrDefault().CustomerLineName;
+                    rtn[i].CustomerLineText = _DailyLoanContext.CustomerLine.Where(x => x.Id == rtn[i].CustomerLineId).FirstOrDefault().CustomerLineName;
                 }
             }
             return rtn;
         }
         public ManagementUser GetUser(int uid)
         {
-            ManagementUser rtn = (from u in _DailyLoanContext.Users
-                                  join us in _DailyLoanContext.StatusUsers on u.Status equals us.Id
-                                  join ua in _DailyLoanContext.UserAccesses on u.UserAccess equals ua.Id
-                                join h in _DailyLoanContext.Houses on u.HouseId equals h.Id
+            ManagementUser rtn = (from u in _DailyLoanContext.User
+                                  join us in _DailyLoanContext.StatusUser on u.Status equals us.Id
+                                  join ua in _DailyLoanContext.UserAccess on u.UserAccess equals ua.Id
+                                join h in _DailyLoanContext.House on u.HouseId equals h.Id
                                 where u.Id == uid
                        select new ManagementUser()
                        {
@@ -138,17 +138,17 @@ namespace DailyLoan.Repository
             }
             else
             {
-                rtn.CustomerLineText = _DailyLoanContext.CustomerLines.Where(x => x.Id == rtn.CustomerLineId).FirstOrDefault().CustomerLineName;
+                rtn.CustomerLineText = _DailyLoanContext.CustomerLine.Where(x => x.Id == rtn.CustomerLineId).FirstOrDefault().CustomerLineName;
             }
             return rtn;
         }
         public async Task<int> EditUser(User req)
         {
             if (req.Id == 0)
-                _DailyLoanContext.Users.Add(req);
+                _DailyLoanContext.User.Add(req);
             else
             {
-                var user = await _DailyLoanContext.Users.FindAsync(req.Id);
+                var user = await _DailyLoanContext.User.FindAsync(req.Id);
                 if (user == null)
                 {
                     return await Task.FromResult(0);
@@ -171,9 +171,9 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> EditUserCustomerLine(List<int> data)
         {
-            UserPermission up = _DailyLoanContext.UserPermissions.Where(x => x.UserId==data[0]).FirstOrDefault();
+            UserPermission up = _DailyLoanContext.UserPermission.Where(x => x.UserId==data[0]).FirstOrDefault();
             if(up != null)
-                _DailyLoanContext.UserPermissions.Remove(up);
+                _DailyLoanContext.UserPermission.Remove(up);
             UserPermission newup = new UserPermission() 
             { 
                 UserId = data[0],
@@ -181,20 +181,20 @@ namespace DailyLoan.Repository
                 CreateBy = data[2],
                 CreateDate = DateTime.Now
             };
-            _DailyLoanContext.UserPermissions.Add(newup);
+            _DailyLoanContext.UserPermission.Add(newup);
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
         public async Task<bool> DeleteUser(int uid)
         {
-            _DailyLoanContext.Users.Remove(_DailyLoanContext.Users.Where(x => x.Id==uid).FirstOrDefault());
+            _DailyLoanContext.User.Remove(_DailyLoanContext.User.Where(x => x.Id==uid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
         #endregion
         #region House
         public async Task<List<ManagementHouse>> GetAllHouseList()
         {
-            List<ManagementHouse> rtn = await (from h in _DailyLoanContext.Houses
-                                               join us in _DailyLoanContext.StatusHouses on h.Status equals us.Id
+            List<ManagementHouse> rtn = await (from h in _DailyLoanContext.House
+                                               join us in _DailyLoanContext.StatusHouse on h.Status equals us.Id
                                                   select new ManagementHouse()
                                                   {
                                                       Id = h.Id,
@@ -215,8 +215,8 @@ namespace DailyLoan.Repository
         }
         public ManagementHouse GetHouse(int hid)
         {
-            ManagementHouse rtn = (from h in _DailyLoanContext.Houses
-                                   join us in _DailyLoanContext.StatusHouses on h.Status equals us.Id
+            ManagementHouse rtn = (from h in _DailyLoanContext.House
+                                   join us in _DailyLoanContext.StatusHouse on h.Status equals us.Id
                                    where h.Id == hid
                                       select new ManagementHouse()
                                       {
@@ -241,12 +241,12 @@ namespace DailyLoan.Repository
             bool isAdd = false,isDone = false;
             if (req.Id == 0)
             {
-                _DailyLoanContext.Houses.Add(req);
+                _DailyLoanContext.House.Add(req);
                 isAdd = true;
             }
             else
             {
-                var house = await _DailyLoanContext.Houses.FindAsync(req.Id);
+                var house = await _DailyLoanContext.House.FindAsync(req.Id);
                 if (house == null)
                 {
                     return await Task.FromResult(false);
@@ -277,24 +277,24 @@ namespace DailyLoan.Repository
                         CreateDate = req.CreateDate
                     });
                 }
-                await _DailyLoanContext.Configs.AddRangeAsync(configs);
+                await _DailyLoanContext.Config.AddRangeAsync(configs);
                 isDone = (await _DailyLoanContext.SaveChangesAsync()) > 0;
             }
             return isDone;
         }
         public async Task<bool> DeleteHouse(int hid)
         {
-            _DailyLoanContext.Houses.Remove(_DailyLoanContext.Houses.Where(x => x.Id == hid).FirstOrDefault());
-            _DailyLoanContext.Configs.RemoveRange(await _DailyLoanContext.Configs.Where(x => x.HouseId == hid).ToListAsync());
+            _DailyLoanContext.House.Remove(_DailyLoanContext.House.Where(x => x.Id == hid).FirstOrDefault());
+            _DailyLoanContext.Config.RemoveRange(await _DailyLoanContext.Config.Where(x => x.HouseId == hid).ToListAsync());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
         #endregion
         #region CustomerLine
         public async Task<List<ManagementCustomerLine>> GetAllCustomerLineList(int uid, int useraccess)
         {
-            List<ManagementCustomerLine> rtn = await (from cl in _DailyLoanContext.CustomerLines
-                                                      join us in _DailyLoanContext.StatusHouses on cl.Status equals us.Id
-                                                      join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
+            List<ManagementCustomerLine> rtn = await (from cl in _DailyLoanContext.CustomerLine
+                                                      join us in _DailyLoanContext.StatusHouse on cl.Status equals us.Id
+                                                      join h in _DailyLoanContext.House on cl.HouseId equals h.Id
                                                select new ManagementCustomerLine()
                                                {
                                                    Id = cl.Id,
@@ -315,9 +315,9 @@ namespace DailyLoan.Repository
         }
         public ManagementCustomerLine GetCustomerLine(int clid)
         {
-            ManagementCustomerLine rtn = (from cl in _DailyLoanContext.CustomerLines
-                                          join us in _DailyLoanContext.StatusHouses on cl.Status equals us.Id
-                                          join h in _DailyLoanContext.Houses on cl.HouseId equals h.Id
+            ManagementCustomerLine rtn = (from cl in _DailyLoanContext.CustomerLine
+                                          join us in _DailyLoanContext.StatusHouse on cl.Status equals us.Id
+                                          join h in _DailyLoanContext.House on cl.HouseId equals h.Id
                                           where cl.Id == clid
                                    select new ManagementCustomerLine()
                                    {
@@ -338,10 +338,10 @@ namespace DailyLoan.Repository
         public async Task<bool> EditCustomerLine(CustomerLine req)
         {
             if (req.Id == 0)
-                _DailyLoanContext.CustomerLines.Add(req);
+                _DailyLoanContext.CustomerLine.Add(req);
             else
             {
-                var house = await _DailyLoanContext.CustomerLines.FindAsync(req.Id);
+                var house = await _DailyLoanContext.CustomerLine.FindAsync(req.Id);
                 if (house == null)
                 {
                     return await Task.FromResult(false);
@@ -357,17 +357,17 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> DeleteCustomerLine(int clid)
         {
-            _DailyLoanContext.CustomerLines.Remove(_DailyLoanContext.CustomerLines.Where(x => x.Id == clid).FirstOrDefault());
+            _DailyLoanContext.CustomerLine.Remove(_DailyLoanContext.CustomerLine.Where(x => x.Id == clid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
         #endregion
         #region Config
         public async Task<ManagementConfig> GetConfig(int hid)
         {
-            List<Config> conf = await _DailyLoanContext.Configs.Where(x => x.HouseId == hid).ToListAsync();
+            List<Config> conf = await _DailyLoanContext.Config.Where(x => x.HouseId == hid).ToListAsync();
             ManagementConfig rtn = new ManagementConfig();
             rtn.Configs = new Dictionary<string, string>();
-            rtn.SpecialRates = await _DailyLoanContext.SpecialRates.Where(x => x.HouseId == hid).ToListAsync();
+            rtn.SpecialRates = await _DailyLoanContext.SpecialRate.Where(x => x.HouseId == hid).ToListAsync();
             for(int i = 0;i < conf.Count(); i++)
             {
                 rtn.Configs.Add(conf[i].Name, conf[i].Value);
@@ -376,11 +376,11 @@ namespace DailyLoan.Repository
         }
         public SpecialRate GetSpecialRate(int spid)
         {
-            return _DailyLoanContext.SpecialRates.Where(x => x.Id == spid).FirstOrDefault();
+            return _DailyLoanContext.SpecialRate.Where(x => x.Id == spid).FirstOrDefault();
         }
         public async Task<bool> EditConfig(Dictionary<string,string> req,int hid,int uid)
         {
-            List<Config> confs = await _DailyLoanContext.Configs.Where(x => x.HouseId==hid).ToListAsync();
+            List<Config> confs = await _DailyLoanContext.Config.Where(x => x.HouseId==hid).ToListAsync();
             if (confs == null)
             {
                 return await Task.FromResult(false);
@@ -396,10 +396,10 @@ namespace DailyLoan.Repository
         public async Task<bool> EditSpecialRate(SpecialRate req)
         {
             if (req.Id == 0)
-                _DailyLoanContext.SpecialRates.Add(req);
+                _DailyLoanContext.SpecialRate.Add(req);
             else
             {
-                var special = await _DailyLoanContext.SpecialRates.FindAsync(req.Id);
+                var special = await _DailyLoanContext.SpecialRate.FindAsync(req.Id);
                 if (special == null)
                 {
                     return await Task.FromResult(false);
@@ -417,7 +417,7 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> DeleteSpecialRate(int spid)
         {
-            _DailyLoanContext.SpecialRates.Remove(_DailyLoanContext.SpecialRates.Where(x => x.Id == spid).FirstOrDefault());
+            _DailyLoanContext.SpecialRate.Remove(_DailyLoanContext.SpecialRate.Where(x => x.Id == spid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
         #endregion
