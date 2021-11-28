@@ -26,6 +26,19 @@ namespace DailyLoan.Repository
             //_appsettingModel = appsettingModel;
         }
         #region getValue
+        public async Task<List<User>> GetAllUserByCustomerLine(int cid)
+        {
+            List<User> rtn = await (from u in _DailyLoanContext.User
+                                              join up in _DailyLoanContext.UserPermission on u.Id equals up.UserId
+                                              where up.CustomerLineId == cid
+                                              select new User()
+                                              {
+                                                  Id = u.Id,
+                                                  Firstname = u.Firstname,
+                                                  Lastname = u.Lastname
+                                              }).ToListAsync();
+            return rtn;
+        }
         public int GetHouseIdByUserId(int uid)
         {
             return (_DailyLoanContext.User.Where(x => x.Id == uid).FirstOrDefault().HouseId);
@@ -273,7 +286,14 @@ namespace DailyLoan.Repository
             _DailyLoanContext.Contract.Remove(_DailyLoanContext.Contract.Where(x => x.Id == cid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
-        #endregion 
+        #endregion
+        #region DailyCost
+        public async Task<bool> SaveDailyCost(DailyCost req)
+        {
+            _DailyLoanContext.DailyCost.Add(req);
+            return (await _DailyLoanContext.SaveChangesAsync()) > 0;
+        }
+        #endregion
         #region DailyReport
         public async Task<DailyReportResponse> GetDailyReport(int uid, DateTime date)
         {

@@ -12,14 +12,12 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public int Id { get; set; }
         public string HouseName { get; set; }
         public string Province { get; set; }
-        public string District { get; set; }
-        public string SubDistrict { get; set; }
-        public string Address { get; set; }
         public int Status { get; set; }
         public string Remark { get; set; }
         public int CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
         public int? UpdateBy { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public string Region { get; set; }
     }
 }

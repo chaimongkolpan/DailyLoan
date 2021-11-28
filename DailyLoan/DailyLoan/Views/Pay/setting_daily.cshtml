@@ -1,112 +1,182 @@
-﻿<div class="card-body bg-light p-3 rounded ">
+﻿@using DailyLoan.Library.Status
+<div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
-        <input type="date" class="form-control" placeholder="วันที่">
 
     </div>
 
     <div class="input-group mb-3 input-group-sm justify-content-center">
-        <label for="sel1" class="form-label"></label>
-        <select class="form-select form-select-sm" id="sel1" name="sellist1">
-            <option>บ้าน1</option>
-        </select>
-        <label for="sel2" class="form-label"></label>
-        <select class="form-select form-select-sm" id="sel2" name="sellist1">
-            <option>สาย1</option>
-        </select>
+        <label for="todaydate" class="form-label">ข้อมูลประจำวันที่</label>
+        <input type="date" class="form-control" timezone="en-us" id="todaydate" placeholder="dd/MM/yyyy" readonly>
+
+        @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+        {
+            <label for="house" class="form-label">บ้าน</label>
+            <select class="form-select form-select-sm" id="house" name="house">
+                @foreach (var item in ViewBag.House)
+                {
+                    <option value="@item.Id">@item.HouseName</option>
+                }
+            </select>
+            <label for="customerline" class="form-label">สาย</label>
+            <select class="form-select form-select-sm" id="customerline" name="customerline">
+            </select>
+        }
+        else
+        {
+            <label for="customerline" class="form-label">สาย</label>
+            <select class="form-select form-select-sm" id="customerline" name="customerline">
+                @if (ViewBag.CustomerLine.Count() > 0)
+                {
+                    @foreach (var item in ViewBag.CustomerLine)
+                    {
+                        <option value="@item.Id">@item.CustomerLineName</option>
+                    }
+                }
+            </select>
+        }
+        <!--
         <button type="button" class="btn btn-info btn-sm">
             <i class="fa fa-search"></i>
             ค้นหา
         </button>
+            -->
     </div>
 </div>
 <br>
-<form style="background-color:#F8F9FA;">
+<form style="background-color:#F8F9FA;" id="inputpane">
     <div class="form-row">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินเดือน 1</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินเดือน 1">
+                    <label for="salary1">เงินเดือน 1</label>
+                    <input type="text" class="form-control form-control-sm" id="salary1" placeholder="เงินเดือน 1">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">หมายเหตุ 1 </label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ 1 ">
+                    <label for="salaryremark1">ผู้รับเงินเดือน 1</label>
+                    <select class="form-select form-select-sm" id="salaryremark1" name="salaryremark1" placeholder="ผู้รับเงินเดือน 1">
+                    </select>
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินเดือน 2</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินเดือน 2">
+                    <label for="salary2">เงินเดือน 2</label>
+                    <input type="text" class="form-control form-control-sm" id="salary2" placeholder="เงินเดือน 2">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">หมายเหตุ 2 </label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ 2 ">
+                    <label for="salaryremark2">ผู้รับเงินเดือน 2</label>
+                    <select class="form-select form-select-sm" id="salaryremark2" name="salaryremark2" placeholder="ผู้รับเงินเดือน 2">
+                    </select>
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินเดือน 3</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินเดือน 3">
+                    <label for="salary3">เงินเดือน 3</label>
+                    <input type="text" class="form-control form-control-sm" id="salary3" placeholder="เงินเดือน 3">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">หมายเหตุ 3 </label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ 3 ">
+                    <label for="salaryremark3">ผู้รับเงินเดือน 3</label>
+                    <select class="form-select form-select-sm" id="salaryremark3" name="salaryremark3" placeholder="ผู้รับเงินเดือน 3">
+                    </select>
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินเดือน 4</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินเดือน 4">
+                    <label for="salary4">เงินเดือน 4</label>
+                    <input type="text" class="form-control form-control-sm" id="salary4" placeholder="เงินเดือน 4">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">หมายเหตุ 4 </label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ 4 ">
+                    <label for="salaryremark4">ผู้รับเงินเดือน 4</label>
+                    <select class="form-select form-select-sm" id="salaryremark4" name="salaryremark4" placeholder="ผู้รับเงินเดือน 4">
+                    </select>
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินเดือน 5</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินเดือน 5">
+                    <label for="salary5">เงินเดือน 5</label>
+                    <input type="text" class="form-control form-control-sm" id="salary5" placeholder="เงินเดือน 5">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">หมายเหตุ 5 </label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ 5 ">
+                    <label for="salaryremark5">ผู้รับเงินเดือน 5</label>
+                    <select class="form-select form-select-sm" id="salaryremark5" name="salaryremark5" placeholder="ผู้รับเงินเดือน 5">
+                    </select>
+                </div>
+
+                <div class="col-md-6 pb-3">
+                    <label for="gas">น้ำมัน</label>
+                    <input type="text" class="form-control form-control-sm" id="gas" placeholder="น้ำมัน">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">น้ำมัน</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="น้ำมัน">
+                    <label for="topup">เติมเงิน</label>
+                    <input type="text" class="form-control form-control-sm" id="topup" placeholder="เติมเงิน ">
+                </div>
+
+                <div class="col-md-6 pb-3">
+                    <label for="police1">ตำรวจ 1</label>
+                    <input type="text" class="form-control form-control-sm" id="police1" placeholder="ตำรวจ 1">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เติมเงิน</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เติมเงิน ">
+                    <label for="policeremark1">หมายเหตุตำรวจ 1</label>
+                    <input type="text" class="form-control form-control-sm" id="policeremark1" placeholder="หมายเหตุตำรวจ 1">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">ตำรวจ 1</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำรวจ 1">
+                    <label for="police2">ตำรวจ 2</label>
+                    <input type="text" class="form-control form-control-sm" id="police2" placeholder="ตำรวจ 2 ">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">ตำรวจ 2</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำรวจ 2 ">
+                    <label for="policeremark2">หมายเหตุตำรวจ 2</label>
+                    <input type="text" class="form-control form-control-sm" id="policeremark2" placeholder="หมายเหตุตำรวจ 2">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">ตำรวจ 3</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำรวจ 3 ">
+                    <label for="police3">ตำรวจ 3</label>
+                    <input type="text" class="form-control form-control-sm" id="police3" placeholder="ตำรวจ 3 ">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">หมึก+กระดาษ</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมึก+กระดาษ">
+                    <label for="policeremark3">หมายเหตุตำรวจ 3</label>
+                    <input type="text" class="form-control form-control-sm" id="policeremark3" placeholder="หมายเหตุตำรวจ 3">
+                </div>
+
+                <div class="col-md-6 pb-3">
+                    <label for="paperink">หมึก+กระดาษ</label>
+                    <input type="text" class="form-control form-control-sm" id="paperink" placeholder="หมึก+กระดาษ">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">โดนจับ</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="โดนจับ">
+                    <label for="caught">โดนจับ</label>
+                    <input type="text" class="form-control form-control-sm" id="caught" placeholder="โดนจับ">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">ค่าบำรุงรักษารถ</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ค่าบำรุงรักษารถ">
+                    <label for="bikemaintenance">ค่าบำรุงรักษารถ</label>
+                    <input type="text" class="form-control form-control-sm" id="bikemaintenance" placeholder="ค่าบำรุงรักษารถ">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินประจำบ้าน</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินประจำบ้าน">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินที่ต้องได้คืน</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินที่ต้องได้คืน" readonly>
+                    <label for="other">ค่าใช้จ่ายอื่นๆ</label>
+                    <input type="text" class="form-control form-control-sm" id="other" placeholder="ค่าใช้จ่ายอื่นๆ">
                 </div>
                 <div class="col-md-6 pb-3">
-                    <label for="inputEmail4">เงินที่ได้รับคืน</label>
-                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เงินที่ได้รับคืน">
+                    <label for="otherremark">หมายเหตุค่าใช้จ่ายอื่นๆ</label>
+                    <input type="text" class="form-control form-control-sm" id="otherremark" placeholder="หมายเหตุค่าใช้จ่ายอื่นๆ">
+                </div>
+
+                <div class="col-md-6 pb-3">
+                    <label for="payout">เงินออกจากบ้าน</label>
+                    <input type="text" class="form-control form-control-sm" id="payout" placeholder="เงินประจำบ้าน">
+                </div>
+                <div class="col-md-6 pb-3">
+                    <label for="receive">เงินที่ต้องได้คืน</label>
+                    <input type="text" class="form-control form-control-sm" value="@ViewBag.PageData" placeholder="เงินที่ต้องได้คืน" readonly>
+                </div>
+                <div class="col-md-6 pb-3">
+                    <label for="allowance">ค่าเบี้ยเลี้ยงสาย</label>
+                    <input type="text" class="form-control form-control-sm" id="allowance" placeholder="ค่าเบี้ยเลี้ยงสาย">
+                </div>
+                <div class="col-md-6 pb-3">
+                    <label for="receive">เงินที่ได้รับคืน</label>
+                    <input type="text" class="form-control form-control-sm" id="receive" placeholder="เงินที่ได้รับคืน">
+                </div>
+                <div class="col-md-6 pb-3">
+                    <label for="otherincome">เงินเก็บได้เพิ่มเติม</label>
+                    <input type="text" class="form-control form-control-sm" id="otherincome" placeholder="เงินเก็บได้เพิ่มเติม">
+                </div>
+                <div class="col-md-6 pb-3">
+                    <label for="otherincomeremark">หมายเหตุเพิ่มเติม</label>
+                    <input type="text" class="form-control form-control-sm" id="otherincomeremark" placeholder="หมายเหตุเพิ่มเติม">
+                </div>
+                <div class="col-md-12 pb-3">
+                    <label for="remark">รายละเอียดเพิ่มเติม</label>
+                    <input type="text" class="form-control form-control-sm" id="remark" placeholder="รายละเอียดเพิ่มเติม">
                 </div>
             </div>
         </div>
@@ -115,5 +185,195 @@
 </form>
 <br>
 <div class="justify-content-center text-center">
-    <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+    <button type="button" onclick="save();" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
 </div>
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+    var useraccess = '@ViewBag.UserAccess';
+    var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
+    var admin = '@StatusUserAccess.UserAccess_Admin';
+    function dateStr(dat) {
+        return dat.getFullYear() + '-' + ('0' + (dat.getMonth() + 1)).slice(-2) +'-'+('0' + (dat.getDate())).slice(-2)
+    }
+    function dateData(str) {
+        var arr = str.split('-');
+        return new Date(parseInt(arr[0]), parseInt(arr[1])-1, parseInt(arr[2]))
+    }
+    function save() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("Id", 0);
+        formData.append("HouseId", $("#house").val());
+        formData.append("CustomerLineId", $("#customerline").val());
+        formData.append("Date", ($("#todaydate").val()));
+        if ($("#salary1").val() != null && $("#salary1").val() != 0) formData.append("SalaryReceived1", $("#salaryremark1").val());
+        formData.append("Salary1", $("#salary1").val());
+        if ($("#salary2").val() != null && $("#salary2").val() != 0) formData.append("SalaryReceived2", $("#salaryremark2").val());
+        formData.append("Salary2", $("#salary2").val());
+        if ($("#salary3").val() != null && $("#salary3").val() != 0) formData.append("SalaryReceived3", $("#salaryremark3").val());
+        formData.append("Salary3", $("#salary3").val());
+        if ($("#salary4").val() != null && $("#salary4").val() != 0) formData.append("SalaryReceived4", $("#salaryremark4").val());
+        formData.append("Salary4", $("#salary4").val());
+        if ($("#salary5").val() != null && $("#salary5").val() != 0) formData.append("SalaryReceived5", $("#salaryremark5").val());
+        formData.append("Salary5", $("#salary5").val());
+
+        formData.append("Gas", $("#gas").val());
+        formData.append("Topup", $("#topup").val());
+
+        formData.append("Police1", $("#police1").val());
+        formData.append("PoliceRemark1", $("#policeremark1").val());
+        formData.append("Police2", $("#police2").val());
+        formData.append("PoliceRemark2", $("#policeremark2").val());
+        formData.append("Police3", $("#police3").val());
+        formData.append("PoliceRemark3", $("#policeremark3").val());
+
+        formData.append("PaperInk", $("#paperink").val());
+        formData.append("Caught", $("#caught").val());
+
+        formData.append("BikeMaintenance", $("#bikemaintenance").val());
+
+        formData.append("Other", $("#other").val());
+        formData.append("OtherDetail", $("#otherremark").val());
+
+        formData.append("PayOut", $("#payout").val());
+        formData.append("Receive", $("#receive").val());
+        formData.append("Allowance", $("#allowance").val());
+
+        formData.append("OtherIncome", $("#otherincome").val());
+        formData.append("OtherIncomeRemark", $("#otherincomeremark").val());
+
+        formData.append("Remark", $("#remark").val());
+        req.open("POST", '/SaveDailyCost');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    $(document).ready(function () {
+        $('#todaydate').val(dateStr(new Date()));
+        $('#inputpane').hide();
+        if (useraccess == superadmin) {
+            $('#house').on('change', function () {
+                $('#customerline').empty();
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != undefined) {
+                            for (var it of data) {
+                                $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                            if ($('#customerline').val() != 0 && $('#customerline').val() != null) {
+                                $('#salaryremark1').empty();
+                                $('#salaryremark2').empty();
+                                $('#salaryremark3').empty();
+                                $('#salaryremark4').empty();
+                                $('#salaryremark5').empty();
+                                $.ajax({
+                                    type: "GET",
+                                    url: root + "/GetAllUserByCustomerLine/" + $("#customerline").val(),
+                                    contentType: "application/json; charset=utf-8;",
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data != undefined) {
+                                            for (var it of data) {
+                                                $('#salaryremark1').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark2').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark3').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark4').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark5').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                            }
+
+                                            $('#inputpane').show();
+                                        }
+                                    },
+                                    error: function (e) { console.log(e) }
+                                });
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            });
+            if ($('#house').val() != 0 && $('#house').val() != 1) {
+                $('#customerline').empty();
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data1) {
+                        if (data1 != undefined) {
+                            for (var it of data1) {
+                                $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                            if ($('#customerline').val() != 0 && $('#customerline').val() != null) {
+                                $('#salaryremark1').empty();
+                                $('#salaryremark2').empty();
+                                $('#salaryremark3').empty();
+                                $('#salaryremark4').empty();
+                                $('#salaryremark5').empty();
+                                $.ajax({
+                                    type: "GET",
+                                    url: root + "/GetAllUserByCustomerLine/" + $("#customerline").val(),
+                                    contentType: "application/json; charset=utf-8;",
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data != undefined) {
+                                            for (var it of data) {
+                                                $('#salaryremark1').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark2').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark3').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark4').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                                $('#salaryremark5').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                                            }
+
+                                            $('#inputpane').show();
+                                        }
+                                    },
+                                    error: function (e) { console.log(e) }
+                                });
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            }
+        }
+        $('#customerline').on('change', function () {
+            $('#salaryremark1').empty();
+            $('#salaryremark2').empty();
+            $('#salaryremark3').empty();
+            $('#salaryremark4').empty();
+            $('#salaryremark5').empty();
+            $.ajax({
+                type: "GET",
+                url: root + "/GetAllUserByCustomerLine/" + $("#customerline").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        for (var it of data) {
+                            $('#salaryremark1').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark2').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark3').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark4').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark5').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                        }
+
+                        $('#inputpane').show();
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+    });
+</script>

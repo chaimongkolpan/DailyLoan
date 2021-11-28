@@ -19,28 +19,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
         {
         }
 
-        private readonly string _connectionString;
-
-        public DailyLoanContext(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new Exception("ConnectionString can't be empty");
-            }
-
-            _connectionString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            if (!string.IsNullOrEmpty(_connectionString))
-            {
-                builder.UseSqlServer(_connectionString);
-                builder.EnableSensitiveDataLogging();
-                base.OnConfiguring(builder);
-            }
-        }
-
         public virtual DbSet<Config> Config { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
@@ -66,6 +44,27 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public virtual DbSet<UserAccess> UserAccess { get; set; }
         public virtual DbSet<UserPermission> UserPermission { get; set; }
 
+        private readonly string _connectionString;
+
+        public DailyLoanContext(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("ConnectionString can't be empty");
+            }
+
+            _connectionString = connectionString;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            if (!string.IsNullOrEmpty(_connectionString))
+            {
+                builder.UseSqlServer(_connectionString);
+                builder.EnableSensitiveDataLogging();
+                base.OnConfiguring(builder);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -166,6 +165,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
                 entity.Property(e => e.OtherDetail).HasMaxLength(500);
 
+                entity.Property(e => e.OtherIncomeRemark).HasMaxLength(100);
+
                 entity.Property(e => e.PoliceRemark1).HasMaxLength(500);
 
                 entity.Property(e => e.PoliceRemark2).HasMaxLength(500);
@@ -181,11 +182,7 @@ namespace DailyLoan.Model.Entities.DailyLoan
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Address).HasMaxLength(500);
-
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.District).HasMaxLength(100);
 
                 entity.Property(e => e.HouseName)
                     .IsRequired()
@@ -193,9 +190,9 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
                 entity.Property(e => e.Province).HasMaxLength(100);
 
-                entity.Property(e => e.Remark).HasMaxLength(500);
+                entity.Property(e => e.Region).HasMaxLength(100);
 
-                entity.Property(e => e.SubDistrict).HasMaxLength(100);
+                entity.Property(e => e.Remark).HasMaxLength(500);
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });

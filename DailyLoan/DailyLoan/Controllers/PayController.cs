@@ -54,6 +54,7 @@ namespace DailyLoan.Controllers
             var UserAccess = "1";
             ViewBag.UserId = UserId;
             ViewBag.UserAccess = UserAccess;
+            /** /
             if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
             {
                 ViewBag.House = await _managementService.GetAllHouseList();
@@ -64,6 +65,8 @@ namespace DailyLoan.Controllers
                 ViewBag.House = hid;
                 ViewBag.PageData = await _managementService.GetConfig(hid);
             }
+            /**/
+            ViewBag.PageData = await _managementService.GetConfig(1);
             ViewBag.partialView = ConstMessage.View_PAY_setting_system;
             return View(ConstMessage.View_Index);
         }
@@ -119,13 +122,49 @@ namespace DailyLoan.Controllers
             else return BadRequest(ConstMessage.Message_SomethingWentWrong);
         }
         #endregion
-        #region setting_home
-        public ActionResult setting_daily()
+        #region system_daily
+        public async Task<ActionResult> setting_daily()
         {
             //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+
+            var UserId = "1";
+            var UserAccess = "1";
+            ViewBag.UserId = UserId;
+            ViewBag.UserAccess = UserAccess;
+            if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                ViewBag.House = await _managementService.GetAllHouse();
+            else
+                ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
+            ViewBag.PageData = 35000;
             ViewBag.partialView = ConstMessage.View_PAY_setting_daily;
             return View(ConstMessage.View_Index);
         }
+
+        [HttpGet]
+        [Route("GetAllUserByCustomerLine/{cid}")]
+        public async Task<List<User>> GetAllUserByCustomerLine(int cid)
+        { 
+            List<User> rtn = await _payService.GetAllUserByCustomerLine(cid);
+            if (rtn == null) rtn = new List<User>();
+            return rtn;
+        }
+        
+        [HttpPost]
+        [Route("SaveDailyCost")]
+        public async Task<ActionResult> SaveDailyCost(DailyCost req)
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            req.CreateBy = Convert.ToInt32(UserId);
+            req.CreateDate = DateTime.Now;
+            if (await _payService.SaveDailyCost(req))
+            {
+                return Ok(ConstMessage.Message_Successful);
+            }
+            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+        }
+        #endregion
+        #region setting_home
         public async Task<ActionResult> setting_homeAsync()
         {
             //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
@@ -172,20 +211,6 @@ namespace DailyLoan.Controllers
                 return Ok(ConstMessage.Message_Successful);
             }
             else return BadRequest(ConstMessage.Message_SomethingWentWrong);
-        }
-        public async Task<ActionResult> CustomerLineActionAsync()
-        {
-            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
-            var UserId = "1";
-            var UserAccess = "1";
-            List<ManagementCustomerLine> res = await _managementService.GetAllCustomerLineList(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
-            ViewBag.UserId = UserId;
-            ViewBag.UserAccess = UserAccess;
-            if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
-                ViewBag.House = await _managementService.GetAllHouse();
-            ViewBag.PageData = res;
-            ViewBag.partialView = ConstMessage.View_MNM_CustomerLine;
-            return View(ConstMessage.View_Index);
         }
         [HttpGet]
         [Route("GetCustomerLineDetail/{clid}")]

@@ -10,7 +10,7 @@
         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
                 <form>
-                    <div class="d-flex justify-content-end" ">
+                    <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addhouse">
                             <i class="fa fa-plus-circle"></i>
                             เพิ่มบ้าน
@@ -20,13 +20,13 @@
                     <div class="form-row">
                         <div class="container-fluid">
                             <div class="row">
-                                <table class="table table-bordered table-hover" style="text-align: center; vertical-align: middle;">
+                                <table id="tableh" class="table table-bordered table-hover" style="text-align: center; vertical-align: middle;">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">บ้าน</th>
+                                            <th scope="col">ภาค</th>
                                             <th scope="col">จังหวัด</th>
-                                            <th scope="col">อำเภอ</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -35,27 +35,22 @@
                                         {
                                             foreach (var items in ViewBag.House)
                                             {
-                                                <tr class='clickable-row'>
-                                                    <th scope="row">@items.Id</th>
-                                                    <td>@items.HouseName</td>
-                                                    <td>@items.Province</td>
-                                                    <td>@items.District</td>
-                                                    <!--
-                                                    <td>@items.SubDistrict</td>
-                                                    <td>@items.StatusText</td>
-                                                    <td>@items.Remark</td>
-                                                      -->
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#edithouse">
-                                                            <i class="fa fa-pen-square"></i>
-                                                            แก้ไข
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletehouse">
-                                                            <i class="fa fa-trash-alt"></i>
-                                                            ลบ
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                        <tr class='clickable-row'>
+                                            <th scope="row">@items.Id</th>
+                                            <td>@items.HouseName</td>
+                                            <td>@items.Region</td>
+                                            <td>@items.Province</td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edithouse">
+                                                    <i class="fa fa-pen-square"></i>
+                                                    แก้ไข
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                    ลบ
+                                                </button>
+                                            </td>
+                                        </tr>
                                             }
                                         }
                                     </tbody>
@@ -76,7 +71,7 @@
         <div id="panelsStayOpen-collapseTwo_1" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo_1">
             <div class="accordion-body">
                 <form>
-                    <div class="d-flex justify-content-end" ">
+                    <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addCustomerLine">
                             <i class="fa fa-plus-circle"></i>
                             เพิ่มสาย
@@ -86,12 +81,12 @@
                     <div class="form-row">
                         <div class="container-fluid">
                             <div class="row">
-                                <table class="table table-bordered table-hover" style="text-align: center; vertical-align: middle;">
+                                <table id="tablec" class="table table-bordered table-hover" style="text-align: center; vertical-align: middle;">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">บ้าน</th>
                                             <th scope="col">สาย</th>
+                                            <th scope="col">บ้าน</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -102,29 +97,24 @@
                                             for (var i=0;i<ViewBag.PageData.Count;i++)
                                             {
                                                 var items = ViewBag.PageData[i];
-                                    <tr class='clickable-row'>
-                                        <th scope="row">@items.Id</th>
-                                        @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-                                        {
-                                            <td>@items.HouseText</td>
-                                        }
-                                        <td>@items.CustomerLineName</td>
-                                        <!-- -- >
-    <td>@items.StatusText</td>
-    <td>@items.Remark</td>
-    <!-- -->
-                                        <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editCustomerLine">
-                                                <i class="fa fa-pen-square"></i>
-                                                แก้ไข
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCustomerLine">
-                                                <i class="fa fa-trash-alt"></i>
-                                                ลบ
-                                            </button>
-
-                                        </td>
-                                    </tr>
+                                        <tr class='clickable-row'>
+                                            <th scope="row">@items.Id</th>
+                                            <td>@items.CustomerLineName</td>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <td>@items.HouseText</td>
+                                            }
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editCustomerLine">
+                                                    <i class="fa fa-pen-square"></i>
+                                                    แก้ไข
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deleteCustomerLine">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                    ลบ
+                                                </button>
+                                            </td>
+                                        </tr>
                                             }
                                         }
                                     </tbody>
@@ -155,25 +145,27 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="inputEmail4">บ้าน</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="บ้าน">
+                                    <label for="housenameadd">บ้าน</label>
+                                    <input type="text" class="form-control form-control-sm" id="housenameadd" placeholder="บ้าน">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="house" class="form-label">จังหวัด</label>
-                                    <select class="form-select form-select-sm" id="house" name="sellist1">
-                                        <option>จังหวัด1</option>
-                                        <option>จังหวัด2</option>
+                                    <label for="regionhouseadd" class="form-label">ภาค</label>
+                                    <select class="form-select form-select-sm" id="regionhouseadd" name="regionhouseadd">
+                                        <option>ภาคกลาง</option>
+                                        <option>ภาคตะวันตก</option>
+                                        <option>ภาคตะวันออก</option>
+                                        <option>ภาคตะวันออกเฉียงเหนือ</option>
+                                        <option>ภาคเหนือ</option>
+                                        <option>ภาคใต้</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="house_detail" class="form-label">อำเภอ</label>
-                                    <select class="form-select form-select-sm" id="house_detail" name="sellist1">
-                                        <option>อำเภอ1</option>
-                                        <option>อำเภอ2</option>
+                                    <label for="provincehouseadd" class="form-label">จังหวัด</label>
+                                    <select class="form-select form-select-sm" id="provincehouseadd" name="provincehouseadd">
                                     </select>
                                 </div>
                             </div>
@@ -184,7 +176,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button" onclick="saveaddh();" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
             </div>
 
@@ -210,25 +202,27 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="inputEmail4">บ้าน</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="บ้าน">
+                                    <label for="housenameedit">บ้าน</label>
+                                    <input type="text" class="form-control form-control-sm" id="housenameedit" placeholder="บ้าน">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="house" class="form-label">จังหวัด</label>
-                                    <select class="form-select form-select-sm" id="house" name="sellist1">
-                                        <option>จังหวัด1</option>
-                                        <option>จังหวัด2</option>
+                                    <label for="regionhouseedit" class="form-label">ภาค</label>
+                                    <select class="form-select form-select-sm" id="regionhouseedit" name="regionhouseedit">
+                                        <option>ภาคกลาง</option>
+                                        <option>ภาคตะวันตก</option>
+                                        <option>ภาคตะวันออก</option>
+                                        <option>ภาคตะวันออกเฉียงเหนือ</option>
+                                        <option>ภาคเหนือ</option>
+                                        <option>ภาคใต้</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="house_detail" class="form-label">อำเภอ</label>
-                                    <select class="form-select form-select-sm" id="house_detail" name="sellist1">
-                                        <option>อำเภอ1</option>
-                                        <option>อำเภอ2</option>
+                                    <label for="provincehouseedit" class="form-label">จังหวัด</label>
+                                    <select class="form-select form-select-sm" id="provincehouseedit" name="provincehouseedit">
                                     </select>
                                 </div>
                             </div>
@@ -237,9 +231,10 @@
                 </form>
             </div>
 
+            <input type="hidden" id="editidh" />
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button" onclick="saveh();" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
             </div>
 
@@ -261,13 +256,13 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form>
-                    <h5>คุณต้องการลบบ้าน</h5>
+                    <h5>คุณต้องการลบบ้าน <span id="deletenameh"></span> ใช่หรือไม่?</h5>
                 </form>
             </div>
-
+            <input type="hidden" id="deleteidh" />
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
+                <button type="button" id="deleteh" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
 
@@ -292,20 +287,23 @@
                     <div class="form-row">
                         <div class="container-fluid">
                             <div class="row">
-
                                 <div class="col pb-3">
-                                    <label for="house" class="form-label">บ้าน</label>
-                                    <select class="form-select form-select-sm" id="house" name="sellist1">
-                                        <option>บ้าน1</option>
-                                        <option>บ้าน2</option>
+                                    <label for="houseaddlist" class="form-label">บ้าน</label>
+                                    <select class="form-select form-select-sm" id="houseaddlist" name="houseaddlist">
+                                        @if (ViewBag.House.Count > 0)
+                                        {
+                                            foreach (var items in ViewBag.House)
+                                            {
+                                                <option value="@items.Id">@items.HouseName</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
-
                                 <div class="col pb-3">
-                                    <label for="inputEmail4">สาย</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สาย">
+                                    <label for="customerlineadd">สาย</label>
+                                    <input type="text" class="form-control form-control-sm" id="customerlineadd" placeholder="สาย">
                                 </div>
                             </div>
                         </div>
@@ -315,7 +313,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button"  onclick="saveaddc();" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
             </div>
 
@@ -341,8 +339,22 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col pb-3">
-                                    <label for="inputEmail4">สาย</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สาย">
+                                    <label for="houseeditlist" class="form-label">บ้าน</label>
+                                    <select class="form-select form-select-sm" id="houseeditlist" name="houseeditlist">
+                                        @if (ViewBag.House.Count > 0)
+                                        {
+                                            foreach (var items in ViewBag.House)
+                                            {
+                                                <option value="@items.Id">@items.HouseName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col pb-3">
+                                    <label for="customerlineedit">สาย</label>
+                                    <input type="text" class="form-control form-control-sm" id="customerlineedit" placeholder="สาย">
                                 </div>
                             </div>
                         </div>
@@ -350,9 +362,10 @@
                 </form>
             </div>
 
+            <input type="hidden" id="editidc" />
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button"  onclick="savec();" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
             </div>
 
@@ -374,13 +387,13 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form>
-                    <h5>คุณต้องการลบสาย</h5>
+                    <h5>คุณต้องการลบสาย <span id="deletenamec"></span> ใช่หรือไม่?</h5>
                 </form>
             </div>
-
+            <input type="hidden" id="deleteidc" />
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
+                <button type="button" id="deletec" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
 
@@ -388,3 +401,188 @@
     </div>
 </div>
 <!--end -->
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    var useraccess = '@ViewBag.UserAccess';
+    var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
+    var admin = '@StatusUserAccess.UserAccess_Admin';
+    root = (root == '/' ? "" : root);
+    var provinces = ["กระบี่", "กรุงเทพมหานคร", "กาญจนบุรี", "กาฬสินธุ์", "กำแพงเพชร", "ขอนแก่น", "จันทบุรี", "ฉะเชิงเทรา", "ชลบุรี"
+        , "ชัยนาท", "ชัยภูมิ", "ชุมพร", "ตรัง", "ตราด", "ตาก", "นครนายก", "นครปฐม", "นครพนม", "นครราชสีมา", "นครศรีธรรมราช"
+        , "นครสวรรค์", "นนทบุรี", "นราธิวาส", "น่าน", "บึงกาฬ", "บุรีรัมย์", "ปทุมธานี", "ประจวบคีรีขันธ์", "ปราจีนบุรี", "ปัตตานี"
+        , "พระนครศรีอยุธยา", "พะเยา", "พังงา", "พัทลุง", "พิจิตร", "พิษณุโลก", "ภูเก็ต", "มหาสารคาม", "มุกดาหาร", "ยะลา", "ยโสธร"
+        , "ระนอง", "ระยอง", "ราชบุรี", "ร้อยเอ็ด", "ลพบุรี", "ลำปาง", "ลำพูน", "ศรีสะเกษ", "สกลนคร", "สงขลา", "สตูล", "สมุทรปราการ"
+        , "สมุทรสงคราม", "สมุทรสาคร", "สระบุรี", "สระแก้ว", "สิงห์บุรี", "สุพรรณบุรี", "สุราษฎร์ธานี", "สุรินทร์", "สุโขทัย", "หนองคาย"
+        , "หนองบัวลำภู", "อำนาจเจริญ", "อุดรธานี", "อุตรดิตถ์", "อุทัยธานี", "อุบลราชธานี", "อ่างทอง", "เชียงราย", "เชียงใหม่", "เพชรบุรี"
+        , "เพชรบูรณ์", "เลย", "แพร่", "แม่ฮ่องสอน"];
+    function saveh() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("isNew", false)
+        formData.append("HouseName", $("#housenameedit").val());
+        formData.append("Status", 1);
+        formData.append("Id", $("#editidh").val());
+        formData.append("Province", $("#provincehouseedit").val());
+        formData.append("Region", $("#regionhouseedit").val());
+        formData.append("Remark", "-");
+        req.open("POST", '/EditHouse');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function saveaddh() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("isNew", true)
+        formData.append("HouseName", $("#housenameadd").val());
+        formData.append("Status", 1);
+        formData.append("Id", 0);
+        formData.append("Province", $("#provincehouseadd").val());
+        formData.append("Region", $("#regionhouseadd").val());
+        formData.append("Remark", "-");
+        req.open("POST", '/EditHouse');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function savec() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("isNew", false)
+        formData.append("Id", $("#editidc").val());
+        formData.append("CustomerLineName", $("#customerlineedit").val());
+        formData.append("Status", 1);
+        formData.append("HouseId", $("#houseeditlist").val());
+        formData.append("Remark", "-");
+        req.open("POST", '/EditCustomerLine');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function saveaddc() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("isNew", true)
+        formData.append("Id", 0);
+        formData.append("CustomerLineName", $("#customerlineadd").val());
+        formData.append("Status", 1);
+        formData.append("HouseId", $("#houseaddlist").val());
+        formData.append("Remark", "-");
+        req.open("POST", '/EditCustomerLine');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    $(document).ready(function () {
+        /** /
+        $('#table').DataTable({
+            "info": true,
+            "pageLength": 10,
+            "bLengthChange": false,
+            "initComplete": function() {
+
+            }
+        });
+        /**/
+        for (var i in provinces) {
+            $('#provincehouseadd').append('<option>' + provinces[i] + '</option>');
+            $('#provincehouseedit').append('<option>' + provinces[i] + '</option>');
+        }
+        $('#tableh tbody').on('click', '.btn-edit', function () {
+            $("#editidh").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetHouseDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#housenameedit").val(data.houseName);
+                        $("#provincehouseedit").val(data.province);
+                        $("#regionhouseedit").val(data.region);
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('#tablec tbody').on('click', '.btn-edit', function () {
+            $("#editidc").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCustomerLineDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        console.log(data);
+                        $("#customerlineedit").val(data.customerLineName);
+                        $("#houseeditlist").val(data.houseId);
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('#tableh tbody').on('click', '.btn-delete', function () {
+            $("#deleteidh").val($(this).closest('tr').find('th').eq(0).text());
+            $("#deletenameh").html($(this).closest('tr').find('td').eq(0).text());
+        });
+        $('#tablec tbody').on('click', '.btn-delete', function () {
+            $("#deleteidc").val($(this).closest('tr').find('th').eq(0).text());
+            $("#deletenamec").html($(this).closest('tr').find('td').eq(0).text());
+        });
+        $("#deleteh").click(function () {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteHouse/' + $("#deleteidh").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        });
+        $("#deletec").click(function () {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteCustomerLine/' + $("#deleteidc").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        });
+    });
+</script>
