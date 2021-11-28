@@ -199,11 +199,9 @@ namespace DailyLoan.Repository
                                                   {
                                                       Id = h.Id,
                                                       HouseName = h.HouseName,
-                                                      Address = h.Address,
+                                                      Region = h.Region,
                                                       Status = h.Status,
                                                       Province = h.Province,
-                                                      District = h.District,
-                                                      SubDistrict = h.SubDistrict,
                                                       Remark = h.Remark,
                                                       CreateBy = h.CreateBy,
                                                       CreateDate = h.CreateDate,
@@ -222,11 +220,9 @@ namespace DailyLoan.Repository
                                       {
                                           Id = h.Id,
                                           HouseName = h.HouseName,
-                                          Address = h.Address,
+                                          Region = h.Region,
                                           Status = h.Status,
                                           Province = h.Province,
-                                          District = h.District,
-                                          SubDistrict = h.SubDistrict,
                                           Remark = h.Remark,
                                           CreateBy = h.CreateBy,
                                           CreateDate = h.CreateDate,
@@ -252,10 +248,8 @@ namespace DailyLoan.Repository
                     return await Task.FromResult(false);
                 }
                 house.HouseName = req.HouseName;
-                house.Address = req.Address;
+                house.Region = req.Region;
                 house.Province = req.Province;
-                house.District = req.District;
-                house.SubDistrict = req.SubDistrict;
                 house.Remark = req.Remark;
                 house.Status = req.Status;
                 house.UpdateBy = req.UpdateBy;
@@ -380,7 +374,8 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> EditConfig(Dictionary<string,string> req,int hid,int uid)
         {
-            List<Config> confs = await _DailyLoanContext.Config.Where(x => x.HouseId==hid).ToListAsync();
+            //List<Config> confs = await _DailyLoanContext.Config.Where(x => x.HouseId==hid).ToListAsync();
+            List<Config> confs = await _DailyLoanContext.Config.ToListAsync();
             if (confs == null)
             {
                 return await Task.FromResult(false);

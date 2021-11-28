@@ -124,6 +124,7 @@ namespace DailyLoan.Controllers
             }
         }
         #endregion
+        /** /
         #region House
         public async Task<ActionResult> HouseActionAsync()
         {
@@ -216,6 +217,7 @@ namespace DailyLoan.Controllers
             else return BadRequest(ConstMessage.Message_SomethingWentWrong);
         }
         #endregion
+        /** /
         #region Config
         public async Task<ActionResult> ConfigActionAsync()
         {
@@ -289,5 +291,6 @@ namespace DailyLoan.Controllers
             else return BadRequest(ConstMessage.Message_SomethingWentWrong);
         }
         #endregion
+        /**/
     }
 }

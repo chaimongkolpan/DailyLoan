@@ -12,8 +12,34 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">ดอกเบี้ย</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ดอกเบี้ย" value="10">
+                                    <label for="houserate">ดอกเบี้ย(%)</label>
+                                    @{
+                                        var CustomerRate = ViewBag.PageData.Configs["CustomerRate"];
+                                        var AgentRate = ViewBag.PageData.Configs["AgentRate"];
+                                        var HouseRate = ViewBag.PageData.Configs["HouseRate"];
+                                        var MinCutDay = ViewBag.PageData.Configs["MinCutDay"];
+                                        var IncCutCriteria = ViewBag.PageData.Configs["IncCutCriteria"];
+                                        var DecCutCriteria = ViewBag.PageData.Configs["DecCutCriteria"];
+                                        var DecCutPercen = ViewBag.PageData.Configs["DecCutPercen"];
+                                        var SpecialRateCriteria = ViewBag.PageData.Configs["SpecialRateCriteria"];
+                                        var TotalProfit = ViewBag.PageData.Configs["TotalProfit"];
+                                        var NotPayAlert = ViewBag.PageData.Configs["NotPayAlert"];
+                                        var PartialPayAlert = ViewBag.PageData.Configs["PartialPayAlert"];
+                                    }
+                                    <input type="hidden" class="form-control form-control-sm" id="customerrate" value="@CustomerRate">
+                                    <input type="hidden" class="form-control form-control-sm" id="agentrate" value="@AgentRate">
+                                    <input type="text" class="form-control form-control-sm" id="houserate" placeholder="ดอกเบี้ย" value="@HouseRate">
+                                    <input type="hidden" class="form-control form-control-sm" id="mincutday" value="@MinCutDay">
+                                    <input type="hidden" class="form-control form-control-sm" id="inccutcriteria" value="@IncCutCriteria">
+                                    <input type="hidden" class="form-control form-control-sm" id="deccutcriteria" value="@DecCutCriteria">
+                                    <input type="hidden" class="form-control form-control-sm" id="deccutpercen" value="@DecCutPercen">
+                                    <input type="hidden" class="form-control form-control-sm" id="specialratecriteria" value="@SpecialRateCriteria">
+                                    <input type="hidden" class="form-control form-control-sm" id="totalprofit" value="@TotalProfit">
+                                    <input type="hidden" class="form-control form-control-sm" id="notpayalert" value="@NotPayAlert">
+                                    <input type="hidden" class="form-control form-control-sm" id="partialalert" value="@PartialPayAlert">
+                                </div>
+                                <div class="justify-content-center text-center">
+                                    <button type="button" class="btn btn-success" onclick="save();" data-bs-dismiss="modal">บันทึก</button>
                                 </div>
                             </div>
                         </div>
@@ -30,36 +56,315 @@
         </h2>
         <div id="panelsStayOpen-collapseTwo_1" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo_1">
             <div class="accordion-body">
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addspecial">
+                    <i class="fa fa-plus-circle"></i>
+                    เพิ่มดอกเบี้ยพิเศษ
+                </button>
                 <form>
                     <div class="form-row">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">ดอกเบี้ย</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ดอกเบี้ย" value="5">
-                                </div>
+                                @if (ViewBag.PageData.SpecialRates.Count > 0)
+                                {
+                                <table id="table" class="table table-hover" style="text-align: center; vertical-align: middle;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">วันที่เริ่มต้น</th>
+                                            <th scope="col">วันที่สิ้นสุด</th>
+                                            <th scope="col">ดอกเบี้ย(%)</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach (var items in ViewBag.PageData.SpecialRates)
+                                            {
+                                                <tr class='clickable-row'>
+                                                    <th scope="row">@items.Id</th>
+                                                    <td>@items.StartDate.ToString("dd/MM")</td>
+                                                    <td>@items.EndDate.ToString("dd/MM")</td>
+                                                    <td>@items.HouseRate</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editspecial">
+                                                            <i class="fa fa-pen-square"></i>
+                                                            แก้ไข
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delspecial">
+                                                            <i class="fa fa-trash-alt"></i>
+                                                            ลบ
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                    </tbody>
+                                </table>
+                                }
+                                else
+                                {
+                                    <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">ไม่มีข้อมูล</label>
+                                    </div>
+                                }
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">วันที่เริ่มต้น</label>
-                                    <input type="date" class="form-control form-control-sm" id="inputEmail4" placeholder="วันที่เริ่มต้น">
-                                </div>
-                                <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">วันที่สิ้นสุด</label>
-                                    <input type="date" class="form-control form-control-sm" id="inputEmail4" placeholder="วันที่สิ้นสุด">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="justify-content-center text-center">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- The Modal addcustomer -->
+<div class="modal" id="addspecial">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:#ff9800;color:#000;">
+                <h4 class="modal-title">เพิ่มดอกเบี้ยพิเศษ</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 pb-3">
+                                    <label for="addhouserate">ดอกเบี้ยพิเศษ(%)</label>
+                                    <input type="hidden" class="form-control form-control-sm" id="addcustomerrate">
+                                    <input type="hidden" class="form-control form-control-sm" id="addagentrate">
+                                    <input type="text" class="form-control form-control-sm" id="addhouserate" placeholder="ดอกเบี้ยพิเศษ(%)">
+                                    <input type="hidden" class="form-control form-control-sm" id="addmincutday">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 pb-3">
+                                    <label for="addstartdate">วันที่เริ่ม</label>
+                                    <input type="date" class="form-control form-control-sm" id="addstartdate" placeholder="วันที่เริ่ม">
+                                </div>
+                                <div class="col-md-6 pb-3">
+                                    <label for="addenddate">วันที่สิ้นสุด</label>
+                                    <input type="date" class="form-control form-control-sm" id="addenddate" placeholder="วันที่สิ้นสุด">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="savespecialadd();" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- The Modal editcustomer -->
+<div class="modal" id="editspecial">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:#ff9800;color:#000;">
+                <h4 class="modal-title">แก้ไขดอกเบี้ยพิเศษ</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 pb-3">
+                                    <label for="edithouserate">ดอกเบี้ยพิเศษ(%)</label>
+                                    <input type="hidden" class="form-control form-control-sm" id="editcustomerrate">
+                                    <input type="hidden" class="form-control form-control-sm" id="editagentrate">
+                                    <input type="text" class="form-control form-control-sm" id="edithouserate" placeholder="ดอกเบี้ยพิเศษ(%)">
+                                    <input type="hidden" class="form-control form-control-sm" id="editmincutday">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 pb-3">
+                                    <label for="editstartdate">วันที่เริ่ม</label>
+                                    <input type="date" class="form-control form-control-sm" id="editstartdate" placeholder="วันที่เริ่ม">
+                                </div>
+                                <div class="col-md-6 pb-3">
+                                    <label for="editenddate">วันที่สิ้นสุด</label>
+                                    <input type="date" class="form-control form-control-sm" id="editenddate" placeholder="วันที่สิ้นสุด">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <input type="hidden" id="editid" />
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="savespecial();" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--end -->
+<!-- The Modal deletecustomer -->
+<div class="modal" id="delspecial">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:red;color:#fff;">
+                <h4 class="modal-title">ลบข้อมูล</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <h5>คุณต้องการลบข้อมูลดอกเบี้ยพิเศษนี้ใช่หรือไม่?</h5>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" id="delete" class="btn btn-danger" data-bs-dismiss="modal">ลบ</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+            </div>
+            <input type="hidden" id="deleteid" />
+        </div>
+    </div>
+</div>
+<!--end -->
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+    function dateStr(dat) {
+        var arr = dat.split('T');
+        return arr[0]
+        //return dat.getFullYear() + '-' + ('0' + (dat.getMonth() + 1)).slice(-2) + '-' + ('0' + (dat.getDate())).slice(-2)
+    }
+    function dateData(str) {
+        var arr = str.split('-');
+        return new Date(parseInt(arr[0]), parseInt(arr[1]) - 1, parseInt(arr[2]))
+    }
+    function save() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("HouseId", 1);
+        formData.append("CustomerRate", 95 - $("#houserate").val());
+        formData.append("AgentRate", $("#agentrate").val());
+        formData.append("HouseRate", $("#houserate").val());
+        formData.append("MinCutDay", $("#mincutday").val());
+        formData.append("IncCutCriteria", $("#inccutcriteria").val());
+        formData.append("DecCutCriteria", $("#deccutcriteria").val());
+        formData.append("DecCutPercen", $("#deccutpercen").val());
+        formData.append("SpecialRateCriteria", $("#specialratecriteria").val());
+        formData.append("TotalProfit", $("#totalprofit").val());
+        formData.append("NotPayAlert", $("#notpayalert").val());
+        formData.append("PartialPayAlert", $("#partialalert").val());
+        req.open("POST", '/EditConfig');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function savespecialadd() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        
+        formData.append("isNew", true);
+        formData.append("HouseId", 1);
+        formData.append("Id", 0);
+        formData.append("HouseRate", $("#addhouserate").val());
+        formData.append("AgentRate", 5);
+        formData.append("CustomerRate", 95 - $("#addhouserate").val());
+        formData.append("MinCutDay", 6);
+        formData.append("StartDate", $("#addstartdate").val());
+        formData.append("EndDate", $("#addenddate").val());
+        req.open("POST", '/EditSpecialRate');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function savespecial() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        formData.append("isNew", false);
+        formData.append("HouseId", 1);
+        formData.append("Id", $("#editid").val());
+        formData.append("HouseRate", $("#edithouserate").val());
+        formData.append("AgentRate", $("#editagentrate").val());
+        formData.append("CustomerRate", 95 - $("#edithouserate").val());
+        formData.append("MinCutDay", $("#editmincutday").val());
+        formData.append("StartDate", $("#editstartdate").val());
+        formData.append("EndDate", $("#editenddate").val());
+        req.open("POST", '/EditSpecialRate');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                $("#msg").text(req.responseText)
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    $(document).ready(function () {
+        $('table tbody').on('click', '.btn-edit', function () {
+            $("#editid").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetSpecialRateDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        console.log(data.startDate, typeof data.startDate);
+                        $("#edithouserate").val(data.houseRate);
+                        $("#editagentrate").val(data.agentRate);
+                        $("#editcustomerrate").val(data.customerRate);
+                        $("#editmincutday").val(data.minCutDay);
+                        $("#editstartdate").val(dateStr(data.startDate));
+                        $("#editenddate").val(dateStr(data.endDate));
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('table tbody').on('click', '.btn-delete', function () {
+            $("#deleteid").val($(this).closest('tr').find('th').eq(0).text());
+        });
+        $("#delete").click(function () {
+            let req = new XMLHttpRequest();
+            req.open("GET", '/DeleteSpecialRate/' + $("#deleteid").val());
+            req.send();
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        });
+    });
+</script>

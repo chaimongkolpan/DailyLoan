@@ -9,6 +9,7 @@ namespace DailyLoan.Service.Interfaces
 {
     public interface IPayService
     {
+        Task<List<User>> GetAllUserByCustomerLine(int cid);
         int GetHouseIdByUserId(int uid);
         Task<List<ManagementCustomer>> SearchCustomer(ContractSearchRequest req);
         bool isExistContract(int cid);
@@ -23,6 +24,9 @@ namespace DailyLoan.Service.Interfaces
         ManagementContract GetContract(int cid);
         Task<bool> EditContract(EditContractRequest req, int uid);
         Task<bool> DeleteContract(int cid);
+        #endregion
+        #region DailyCost
+        Task<bool> SaveDailyCost(DailyCost req);
         #endregion
     }
 }

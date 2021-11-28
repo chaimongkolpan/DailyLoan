@@ -18,6 +18,10 @@ namespace DailyLoan.Service
         {
             _PayRepo = payRepo;
         }
+        public async Task<List<User>> GetAllUserByCustomerLine(int cid)
+        {
+            return await _PayRepo.GetAllUserByCustomerLine(cid);
+        }
         public int GetHouseIdByUserId(int uid)
         {
             return _PayRepo.GetHouseIdByUserId(uid);
@@ -64,6 +68,12 @@ namespace DailyLoan.Service
         public async Task<bool> DeleteContract(int cid)
         {
             return await _PayRepo.DeleteContract(cid);
+        }
+        #endregion
+        #region DailyCost
+        public async Task<bool> SaveDailyCost(DailyCost req)
+        {
+            return await _PayRepo.SaveDailyCost(req);
         }
         #endregion
     }

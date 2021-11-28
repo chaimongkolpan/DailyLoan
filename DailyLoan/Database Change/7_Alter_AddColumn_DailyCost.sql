@@ -1,0 +1,21 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.[DailyCost]
+	ADD OtherIncome float(53) NULL;
+GO
+ALTER TABLE dbo.[DailyCost]
+	ADD OtherIncomeRemark nvarchar(100) NULL;
+GO
+ALTER TABLE dbo.[DailyCost] SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+select Has_Perms_By_Name(N'dbo.DailyCost', 'Object', 'ALTER') as ALT_Per, Has_Perms_By_Name(N'dbo.DailyCost', 'Object', 'VIEW DEFINITION') as View_def_Per, Has_Perms_By_Name(N'dbo.DailyCost', 'Object', 'CONTROL') as Contr_Per 

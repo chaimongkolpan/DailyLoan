@@ -142,9 +142,7 @@ namespace DailyLoan.Model.Request.Management
                 HouseName = this.HouseName,
                 Status = this.Status,
                 Province = this.Province,
-                District = this.District,
-                SubDistrict = this.SubDistrict,
-                Address = this.Address,
+                Region = this.Region,
                 Remark = this.Remark,
             };
             if (this.isNew)
