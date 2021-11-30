@@ -723,5 +723,24 @@ namespace DailyLoan.Controllers
             
         }
         #endregion
+
+        #region DailyReport
+        public async Task<ActionResult> DailyReportAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            var UserAccess = "1";
+            return View();
+        }
+        #endregion
+        #region History
+        public async Task<ActionResult> HistoryAsync()
+        {
+            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserId = "1";
+            var UserAccess = "1";
+            return View();
+        }
+        #endregion
     }
 }

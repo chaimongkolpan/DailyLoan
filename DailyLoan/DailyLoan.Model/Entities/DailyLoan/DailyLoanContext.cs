@@ -10,13 +10,26 @@ namespace DailyLoan.Model.Entities.DailyLoan
 {
     public partial class DailyLoanContext : DbContext
     {
-        public DailyLoanContext()
+        private readonly string _connectionString;
+
+        public DailyLoanContext(string connectionString)
         {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("ConnectionString can't be empty");
+            }
+
+            _connectionString = connectionString;
         }
 
-        public DailyLoanContext(DbContextOptions<DailyLoanContext> options)
-            : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
+            if (!string.IsNullOrEmpty(_connectionString))
+            {
+                builder.UseSqlServer(_connectionString);
+                builder.EnableSensitiveDataLogging();
+                base.OnConfiguring(builder);
+            }
         }
 
         public virtual DbSet<Config> Config { get; set; }
@@ -44,27 +57,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public virtual DbSet<UserAccess> UserAccess { get; set; }
         public virtual DbSet<UserPermission> UserPermission { get; set; }
 
-        private readonly string _connectionString;
-
-        public DailyLoanContext(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new Exception("ConnectionString can't be empty");
-            }
-
-            _connectionString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            if (!string.IsNullOrEmpty(_connectionString))
-            {
-                builder.UseSqlServer(_connectionString);
-                builder.EnableSensitiveDataLogging();
-                base.OnConfiguring(builder);
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

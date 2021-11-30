@@ -18,12 +18,12 @@ namespace DailyLoan.Repository
     public class PayRepo : IPayRepo
     {
         private readonly DailyLoanContext _DailyLoanContext;
-        //private readonly AppsettingModel _appsettingModel;
-        public PayRepo(DailyLoanContext dailyLoanContext)//,
-            //AppsettingModel appsettingModel)
+        private readonly AppsettingModel _appsettingModel;
+        public PayRepo(DailyLoanContext dailyLoanContext,
+            AppsettingModel appsettingModel)
         {
             _DailyLoanContext = dailyLoanContext;
-            //_appsettingModel = appsettingModel;
+            _appsettingModel = appsettingModel;
         }
         #region getValue
         public async Task<List<User>> GetAllUserByCustomerLine(int cid)
@@ -59,18 +59,13 @@ namespace DailyLoan.Repository
         }
         public string GetContractIDByIdcard(string idcard)
         {
-            var rtn = (from c in _DailyLoanContext.Contract
-                       join cc in _DailyLoanContext.Customer on c.CustomerId equals cc.Id
-                       where cc.Idcard == idcard && c.Status != ContractStatus.StatusContract_Closed
-                       select new Contract() { ContractId = c.ContractId }).FirstOrDefault();
-            return rtn.ContractId;
-        }
-        public async Task<List<ManagementCustomer>> SearchCustomer(int uid,string idcard,string name,string firstname,string lastname,string address)
-        {
+            if (String.IsNullOrEmpty(idcard)) idcard = "";
+            if (String.IsNullOrEmpty(name)) name = "";
             List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customer
                                       join us in _DailyLoanContext.StatusCustomer on c.Status equals us.Id
                                       join cl in _DailyLoanContext.CustomerLine on c.CustomerLineId equals cl.Id
                                       join h in _DailyLoanContext.House on cl.HouseId equals h.Id
+                                      where c.Idcard.Contains(idcard) || c.Firstname.Contains(name) || c.Lastname.Contains(name) || c.Nickname.Contains(name)
                                       select new ManagementCustomer()
                                       {
                                           Id = c.Id,
@@ -345,19 +340,12 @@ namespace DailyLoan.Repository
             _DailyLoanContext.Contract.Remove(_DailyLoanContext.Contract.Where(x => x.Id == cid).FirstOrDefault());
             return (await _DailyLoanContext.SaveChangesAsync()) > 0;
         }
-        #endregion
-        #region DailyCost
-        public async Task<bool> SaveDailyCost(DailyCost req)
-        {
-            _DailyLoanContext.DailyCost.Add(req);
-            return (await _DailyLoanContext.SaveChangesAsync()) > 0;
-        }
-        #endregion
+        #endregion 
         #region DailyReport
         public async Task<DailyReportResponse> GetDailyReport(int uid, DateTime date)
         {
             var result = new DailyReportResponse();
-            var data = await (from tran in _DailyLoanContext.Transaction.Where(x => x.CreateDate.Date == date.Date && x.CustomerLineId == uid)
+            var data = await (from tran in _DailyLoanContext.Transaction.Where(x => x.CreateDate.Date == date.Date && x.AgentId == uid)
                                 select tran ).ToListAsync();
 
             var collect = await (from con in _DailyLoanContext.Contract
@@ -370,8 +358,7 @@ namespace DailyLoan.Repository
                 result = new DailyReportResponse()
                 {
                     bounty = bounty,
-                    //allowance = bounty >= AppsettingModel.Allowance ? 0 : (AppsettingModel.Allowance - bounty),
-                    allowance = bounty >= 200 ? 0 : (200 - bounty),
+                    allowance = bounty >= _appsettingModel.Allowance ? 0 : (_appsettingModel.Allowance - bounty),
                     collect = data.Where(x => x.Type == TransactionType_Status.Pay).Select(x => x.Amount).Sum(),
                     mustcollect = collect.Select(x => x.DailyCollect).Sum()
                 };

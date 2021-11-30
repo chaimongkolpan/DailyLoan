@@ -34,9 +34,8 @@ namespace DailyLoan.Repository.Interfaces
         Task<bool> EditContract(Contract req);
         Task<bool> DeleteContract(int cid);
         #endregion
-        #region DailyCost
-        Task<bool> SaveDailyCost(DailyCost req);
-        #endregion
+
+
         #region DailyReport
         Task<DailyReportResponse> GetDailyReport(int uid, DateTime date);
         #endregion

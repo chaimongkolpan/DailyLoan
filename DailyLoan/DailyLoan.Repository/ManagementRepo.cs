@@ -336,7 +336,6 @@ namespace DailyLoan.Repository
                         CreateDate = req.CreateDate
                     });
                 }
-                /**/
                 await _DailyLoanContext.Config.AddRangeAsync(configs);
                 isDone = (await _DailyLoanContext.SaveChangesAsync()) > 0;
             }
@@ -440,8 +439,7 @@ namespace DailyLoan.Repository
         }
         public async Task<bool> EditConfig(Dictionary<string,string> req,int hid,int uid)
         {
-            //List<Config> confs = await _DailyLoanContext.Config.Where(x => x.HouseId==hid).ToListAsync();
-            List<Config> confs = await _DailyLoanContext.Config.ToListAsync();
+            List<Config> confs = await _DailyLoanContext.Config.Where(x => x.HouseId==hid).ToListAsync();
             if (confs == null)
             {
                 return await Task.FromResult(false);
