@@ -65,7 +65,7 @@
                             <div class="accordion" id="accordionPanelsStayOpenExampleAdd">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOneAdd">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneAdd" aria-expanded="true" aria-controls="panelsStayOpen-collapseOneAdd">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneAdd" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneAdd">
                                             ข้อมูลคนกู้
                                         </button>
                                     </h2>
@@ -1211,164 +1211,92 @@
             }
         }
     }
-    $(document).ready(function () {
-        /** /
-        $('#table').DataTable({
-            "info": true,
-            "pageLength": 10,
-            "bLengthChange": false,
-            "initComplete": function() {
-
+    var arr = null;
+    function removeShow(mode, i) {
+        var data = arr[i];
+        if (mode == 'edit') {
+            $('#editsearchpanelchild').removeClass('show');
+            $('#editsearchitem').empty();
+            if ($('#editcustype').val() == '1') {
+                $("#edithouse").val(data.houseText);
+                $("#editidcard").val(data.idcard);
+                $("#editfirstname").val(data.firstname);
+                $("#editlastname").val(data.lastname);
+                $("#editnickname").val(data.nickname);
+                $("#editphone1").val(data.phone1);
+                $("#editphone2").val(data.phone2);
+                $("#editaddress").val(data.address);
+                if (data.status == 1)
+                    $("#editstatus1").prop('checked', true);
+                else if (data.status == 2)
+                    $("#editstatus2").prop('checked', true);
+                else if (data.status == 3)
+                    $("#editstatus3").prop('checked', true);
+                $("#editcustomerline").val(data.customerLineText);
+                $("#editshortaddress").val(data.shortAddress);
+                $("#editcid").val(data.id);
+            } else {
+                $("#editghouse").val(data.houseText);
+                $("#editgidcard").val(data.idcard);
+                $("#editgfirstname").val(data.firstname);
+                $("#editglastname").val(data.lastname);
+                $("#editgnickname").val(data.nickname);
+                $("#editgphone1").val(data.phone1);
+                $("#editgphone2").val(data.phone2);
+                $("#editgaddress").val(data.address);
+                $("#editgshortaddress").val(data.shortAddress);
+                if (data.status == 1)
+                    $("#editgstatus1").prop('checked', true);
+                else if (data.status == 2)
+                    $("#editgstatus2").prop('checked', true);
+                else if (data.status == 3)
+                    $("#editgstatus3").prop('checked', true);
+                $("#editgcustomerline").val(data.customerLineText);
+                $("#editgid").val(data.id);
             }
-        });
-        /**/
-        if (useraccess == superadmin) {
-        }
-        $('#addmodal').click(function () {
-            var dat = new Date();
-            var datstr = ('0' + dat.getDate()).slice(-2) + '/' + ('0' + (dat.getMonth()+1)).slice(-2) + '/' + dat.getFullYear();
-            $('#addcondate').val(datstr);
-            $('#addconamount').val();
-            $("#addhouse").val();
-            $("#addidcard").val();
-            $("#addfirstname").val();
-            $("#addlastname").val();
-            $("#addnickname").val();
-            $("#addphone1").val();
-            $("#addphone2").val();
-            $("#addaddress").val();
-            $("#addstatus1").prop('checked', true);
-            $("#addcustomerline").val();
-            $("#addshortaddress").val();
-            $("#addghouse").val();
-            $("#addgidcard").val();
-            $("#addgfirstname").val();
-            $("#addglastname").val();
-            $("#addgnickname").val();
-            $("#addgphone1").val();
-            $("#addgphone2").val();
-            $("#addgaddress").val();
-            $("#addgshortaddress").val();
-            $("#addgstatus1").prop('checked', true);
-            $("#addgcustomerline").val();
-        });
-        $('#editsearch').click(function () {
-            let req = new XMLHttpRequest();
-            let formData = new FormData();
+        } else {
+            $('#addsearchpanelchild').removeClass('show');
+            $('#addsearchitem').empty();
+            if ($('#addcustype').val() == '1') {
+                $("#addhouse").val(data.houseText);
+                $("#addidcard").val(data.idcard);
+                $("#addfirstname").val(data.firstname);
+                $("#addlastname").val(data.lastname);
+                $("#addnickname").val(data.nickname);
+                $("#addphone1").val(data.phone1);
+                $("#addphone2").val(data.phone2);
+                $("#addaddress").val(data.address);
+                if (data.status == 1)
+                    $("#addstatus1").prop('checked', true);
+                else if (data.status == 2)
+                    $("#addstatus2").prop('checked', true);
+                else if (data.status == 3)
+                    $("#addstatus3").prop('checked', true);
+                $("#addcustomerline").val(data.customerLineText);
+                $("#addshortaddress").val(data.shortAddress);
 
-            formData.append("Idcard", $("#editidcardsearch").val());
-            formData.append("Name", $("#editnamesearch").val());
-            req.open("POST", '/SearchCustomer');
-            req.send(formData);
-            req.onload = function () {
-                if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
-                } else {
-                    console.log(req.responseText);
-                    var data = JSON.parse(req.responseText);
-                    if ($('#editcustype').val() == '1') {
-                        $("#edithouse").val(data.houseText);
-                        $("#editidcard").val(data.idcard);
-                        $("#editfirstname").val(data.firstname);
-                        $("#editlastname").val(data.lastname);
-                        $("#editnickname").val(data.nickname);
-                        $("#editphone1").val(data.phone1);
-                        $("#editphone2").val(data.phone2);
-                        $("#editaddress").val(data.address);
-                        if (data.status == 1)
-                            $("#editstatus1").prop('checked', true);
-                        else if (data.status == 2)
-                            $("#editstatus2").prop('checked', true);
-                        else if (data.status == 3)
-                            $("#editstatus3").prop('checked', true);
-                        $("#editcustomerline").val(data.customerLineText);
-                        $("#editshortaddress").val(data.shortAddress);
-                        $("#editcid").val(data.id);
-                    } else {
-                        $("#editghouse").val(data.houseText);
-                        $("#editgidcard").val(data.idcard);
-                        $("#editgfirstname").val(data.firstname);
-                        $("#editglastname").val(data.lastname);
-                        $("#editgnickname").val(data.nickname);
-                        $("#editgphone1").val(data.phone1);
-                        $("#editgphone2").val(data.phone2);
-                        $("#editgaddress").val(data.address);
-                        $("#editgshortaddress").val(data.shortAddress);
-                        if (data.status == 1)
-                            $("#editgstatus1").prop('checked', true);
-                        else if (data.status == 2)
-                            $("#editgstatus2").prop('checked', true);
-                        else if (data.status == 3)
-                            $("#editgstatus3").prop('checked', true);
-                        $("#editgcustomerline").val(data.customerLineText);
-                        $("#editgid").val(data.id);
+                $("#addcid").val(data.id);
+            } else {
+                $("#addghouse").val(data.houseText);
+                $("#addgidcard").val(data.idcard);
+                $("#addgfirstname").val(data.firstname);
+                $("#addglastname").val(data.lastname);
+                $("#addgnickname").val(data.nickname);
+                $("#addgphone1").val(data.phone1);
+                $("#addgphone2").val(data.phone2);
+                $("#addgaddress").val(data.address);
+                $("#addgshortaddress").val(data.shortAddress);
+                if (data.status == 1)
+                    $("#addgstatus1").prop('checked', true);
+                else if (data.status == 2)
+                    $("#addgstatus2").prop('checked', true);
+                else if (data.status == 3)
+                    $("#addgstatus3").prop('checked', true);
+                $("#addgcustomerline").val(data.customerLineText);
+
+                        $("#addgid").val(data.id);
                     }
                 }
-            }
-        });
-        $('#addsearch').click(function () {
-            let req = new XMLHttpRequest();
-            let formData = new FormData();
-
-            formData.append("Idcard", $("#addidcardsearch").val());
-            formData.append("Name", $("#addnamesearch").val());
-            req.open("POST", '/SearchCustomer');
-            req.send(formData);
-            req.onload = function () {
-                if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
-                } else {
-                    console.log(req.responseText);
-                    var data = JSON.parse(req.responseText);
-                    if ($('#addcustype').val() == '1') {
-                        $("#addhouse").val(data.houseText);
-                        $("#addidcard").val(data.idcard);
-                        $("#addfirstname").val(data.firstname);
-                        $("#addlastname").val(data.lastname);
-                        $("#addnickname").val(data.nickname);
-                        $("#addphone1").val(data.phone1);
-                        $("#addphone2").val(data.phone2);
-                        $("#addaddress").val(data.address);
-                        if (data.status == 1)
-                            $("#addstatus1").prop('checked', true);
-                        else if (data.status == 2)
-                            $("#addstatus2").prop('checked', true);
-                        else if (data.status == 3)
-                            $("#addstatus3").prop('checked', true);
-                        $("#addcustomerline").val(data.customerLineText);
-                        $("#addshortaddress").val(data.shortAddress);
-
-                        $("#addcid").val(data.id);
-                    } else {
-                        $("#addghouse").val(data.houseText);
-                        $("#addgidcard").val(data.idcard);
-                        $("#addgfirstname").val(data.firstname);
-                        $("#addglastname").val(data.lastname);
-                        $("#addgnickname").val(data.nickname);
-                        $("#addgphone1").val(data.phone1);
-                        $("#addgphone2").val(data.phone2);
-                        $("#addgaddress").val(data.address);
-                        $("#addgshortaddress").val(data.shortAddress);
-                        if (data.status == 1)
-                            $("#addgstatus1").prop('checked', true);
-                        else if (data.status == 2)
-                            $("#addgstatus2").prop('checked', true);
-                        else if (data.status == 3)
-                            $("#addgstatus3").prop('checked', true);
-                        $("#addgcustomerline").val(data.customerLineText);
-
-                $("#addgid").val(data.id);
-            }
-        }
-    }
-    $(document).ready(function () {
-        /** /
-        $('#table').DataTable({
-            "info": true,
-            "pageLength": 10,
-            "bLengthChange": false,
-            "initComplete": function() {
-
             }
         });
         /**/
