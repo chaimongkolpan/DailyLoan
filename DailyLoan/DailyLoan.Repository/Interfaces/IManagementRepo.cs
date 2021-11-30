@@ -14,8 +14,9 @@ namespace DailyLoan.Repository.Interfaces
         int GetHouseIdByUserId(int uid);
         int GetCustomerLineIdByUserId(int uid);
         string GetHouseNameByHouseId(int hid);
+        string GetIdcardByCustomerId(int cid);
         #endregion
-        
+
 
         Task<List<House>> GetAllHouse();
         Task<List<CustomerLine>> GetAllCustomerLine(int uid);
