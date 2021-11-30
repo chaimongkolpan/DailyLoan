@@ -8,5 +8,6 @@ namespace DailyLoan.Repository.Interfaces
 {
     public interface ILogInRepo
     {
+        User LogIn(string username, string password);
     }
 }

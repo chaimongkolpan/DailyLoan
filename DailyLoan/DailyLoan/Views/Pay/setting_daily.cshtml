@@ -5,43 +5,52 @@
     </div>
 
     <div class="input-group mb-3 input-group-sm justify-content-center">
-        <label for="todaydate" class="form-label">ข้อมูลประจำวันที่</label>
-        <input type="date" class="form-control" timezone="en-us" id="todaydate" placeholder="dd/MM/yyyy" readonly>
-
-        @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-        {
-            <label for="house" class="form-label">บ้าน</label>
-            <select class="form-select form-select-sm" id="house" name="house">
-                @foreach (var item in ViewBag.House)
-                {
-                    <option value="@item.Id">@item.HouseName</option>
-                }
-            </select>
-            <label for="customerline" class="form-label">สาย</label>
-            <select class="form-select form-select-sm" id="customerline" name="customerline">
-            </select>
-        }
-        else
-        {
-            <label for="customerline" class="form-label">สาย</label>
-            <select class="form-select form-select-sm" id="customerline" name="customerline">
-                @if (ViewBag.CustomerLine.Count() > 0)
-                {
-                    @foreach (var item in ViewBag.CustomerLine)
-                    {
-                        <option value="@item.Id">@item.CustomerLineName</option>
-                    }
-                }
-            </select>
-        }
+        <div class="row">
+            <div class="col-md-4 pb-3">
+                <label for="todaydate" class="form-label">ข้อมูลประจำวันที่</label>
+                <input type="date" class="form-control" timezone="en-us" id="todaydate" placeholder="dd/MM/yyyy" readonly>
+            </div>
+            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+            {
+                <div class="col-md-4 pb-3">
+                    <label for="house" class="form-label">บ้าน</label>
+                    <select class="form-select form-select-sm" id="house" name="house">
+                        @foreach (var item in ViewBag.House)
+                        {
+                            <option value="@item.Id">@item.HouseName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 pb-3">
+                    <label for="customerline" class="form-label">สาย</label>
+                    <select class="form-select form-select-sm" id="customerline" name="customerline">
+                    </select>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-8 pb-3">
+                    <label for="customerline" class="form-label">สาย</label>
+                    <select class="form-select form-select-sm" id="customerline" name="customerline">
+                        @if (ViewBag.CustomerLine.Count() > 0)
+                        {
+                            @foreach (var item in ViewBag.CustomerLine)
+                            {
+                                <option value="@item.Id">@item.CustomerLineName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            }
+        </div>
         <!--
-        <button type="button" class="btn btn-info btn-sm">
-            <i class="fa fa-search"></i>
-            ค้นหา
-        </button>
-            -->
+    <button type="button" class="btn btn-info btn-sm">
+        <i class="fa fa-search"></i>
+        ค้นหา
+    </button>
+        -->
     </div>
-</div>
+    </div>
 <br>
 <form style="background-color:#F8F9FA;" id="inputpane">
     <div class="form-row">
@@ -375,5 +384,32 @@
                 error: function (e) { console.log(e) }
             });
         });
+        if ($('#customerline').val() != 0 && $('#customerline').val() != null) {
+            $('#salaryremark1').empty();
+            $('#salaryremark2').empty();
+            $('#salaryremark3').empty();
+            $('#salaryremark4').empty();
+            $('#salaryremark5').empty();
+            $.ajax({
+                type: "GET",
+                url: root + "/GetAllUserByCustomerLine/" + $("#customerline").val(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        for (var it of data) {
+                            $('#salaryremark1').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark2').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark3').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark4').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                            $('#salaryremark5').append('<option value="' + it['id'] + '">' + it['firstname'] + ' ' + it['lastname'] + '</option>');
+                        }
+
+                        $('#inputpane').show();
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        }
     });
 </script>

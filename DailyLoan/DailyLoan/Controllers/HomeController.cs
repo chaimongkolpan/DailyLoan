@@ -1,40 +1,36 @@
-﻿using DailyLoan.Model;
-using DailyLoan.Models;
-/*using DailyLoan.Library;
-using DailyLoan.Library.Status;
-using DailyLoan.Model.Request.LogIn;
-using DailyLoan.Service.Interfaces;*/
+﻿using DailyLoan.Models;
+using DailyLoan.Library;
+using DailyLoan.Model.Request.Home;
+using DailyLoan.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.IO;
 using System.Diagnostics;
-using DailyLoan.Model.Request.Home;
-using DailyLoan.Library;
 
 namespace DailyLoan.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ILogInService _loginService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ILogInService loginService)
         {
             _logger = logger;
+            _loginService = loginService;
         }
 
         public IActionResult Index()
         {
+            HttpContext.Session.Remove(ConstMessage.Session_UserId);
+            HttpContext.Session.Remove(ConstMessage.Session_UserAccess);
             return View("LogIn");
         }
 
         public IActionResult LogIn()
         {
+            HttpContext.Session.Remove(ConstMessage.Session_UserId);
+            HttpContext.Session.Remove(ConstMessage.Session_UserAccess);
             return View();
         }
 
@@ -45,19 +41,21 @@ namespace DailyLoan.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LogInActionAsync(LogInRequest req)
+        public ActionResult LogInActionAsync(LogInRequest req)
         {
-            return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Management);
-            //var result = await _loginService.LoginValidation(req.Username, req.Password);
-            //if (result != null)
-            //{
-            //    return View(ConstMessage.View_Index);
-            //}
-            //else
-            //{
-            //    ViewBag.NotValidUser = ConstMessage.Login_UserNamePasswordNotMatching;
-            //    return View(ConstMessage.View_Index);
-            //}
+            var result = _loginService.LogIn(req.Username,StringCipher.EncryptString(req.Password));
+            if (result != null)
+            {
+                HttpContext.Session.SetString(ConstMessage.Session_UserId, result.Id.ToString());
+                HttpContext.Session.SetString(ConstMessage.Session_Username, result.Username);
+                HttpContext.Session.SetString(ConstMessage.Session_UserAccess, result.UserAccess.ToString());
+                return RedirectToAction(ConstMessage.View_MNM_User, ConstMessage.Controller_Management);
+            }
+            else
+            {
+                ViewBag.NotValidUser = ConstMessage.Login_UserNamePasswordNotMatching;
+                return View("LogIn");
+            }
         }
     }
 }

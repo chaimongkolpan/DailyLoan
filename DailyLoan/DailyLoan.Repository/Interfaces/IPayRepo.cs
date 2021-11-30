@@ -15,7 +15,9 @@ namespace DailyLoan.Repository.Interfaces
         int GetHouseIdByUserId(int uid);
         int GetCustomerLineIdByUserId(int uid);
         string GetIdcardByCustomerId(int cid);
-        Task<List<ManagementCustomer>> SearchCustomer(string idcard, string name);
+        string GetContractIDByIdcard(string idcard);
+        Task<List<ManagementCustomer>> SearchCustomer(int uid,string idcard, string name, string firstname, string lastname, string address);
+        Task<List<ManagementContract>> SearchContract(int uid, string idcard, string firstname, string lastname, string address);
         bool isExistContract(int cid);
         #endregion
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DailyLoan.Model.Entities.DailyLoan;
 using DailyLoan.Library.Status;
+using Microsoft.AspNetCore.Http;
 
 namespace DailyLoan.Model.Request.Management
 {
@@ -61,6 +62,16 @@ namespace DailyLoan.Model.Request.Management
     public class EditCustomerRequest : Customer
     {
         public bool isNew { get; set; }
+        public string uploaded0{ get; set; }
+        public string uploaded1{ get; set; }
+        public string uploaded2{ get; set; }
+        public string uploaded3{ get; set; }
+        public string uploaded4{ get; set; }
+        public string uploaded5{ get; set; }
+        public string uploaded6{ get; set; }
+        public string uploaded7{ get; set; }
+        public string uploaded8{ get; set; }
+        public string uploaded9{ get; set; }
         public Customer ToCustomer(int uid)
         {
             Customer u = new Customer()
@@ -95,6 +106,16 @@ namespace DailyLoan.Model.Request.Management
     public class EditContractRequest : Contract
     {
         public bool isNew { get; set; }
+        public string uploaded0 { get; set; }
+        public string uploaded1 { get; set; }
+        public string uploaded2 { get; set; }
+        public string uploaded3 { get; set; }
+        public string uploaded4 { get; set; }
+        public string uploaded5 { get; set; }
+        public string uploaded6 { get; set; }
+        public string uploaded7 { get; set; }
+        public string uploaded8 { get; set; }
+        public string uploaded9 { get; set; }
         public Contract ToContract(int uid,string idcard)
         {
             Contract u = new Contract()
@@ -242,5 +263,13 @@ namespace DailyLoan.Model.Request.Management
     {
         public string Idcard { get; set; }
         public string Name { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Address { get; set; }
+    }
+    public class UploadPic
+    {
+        public List<IFormFile> uploadfile1 { get; set; }
+        public List<IFormFile> uploadfile2 { get; set; }
     }
 }
