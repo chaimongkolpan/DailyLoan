@@ -356,9 +356,27 @@ namespace DailyLoan.Controllers
                 }
                 else
                 {
+                    var old = _payService.GetCustomer(req.Id);
+                    bool isChange = req.isNew?false:(old.Idcard != req.Idcard);
                     bool isExist = _managementService.IdcardIsExist(req.Idcard);
-                    if ((!isExist && req.isNew) || (isExist && !req.isNew))
+                    if ((!isExist && req.isNew) || ((isExist||isChange) && !req.isNew))
                     {
+                        if (!req.isNew)
+                        {
+                            if(old.Idcard != req.Idcard && Directory.Exists(Path.Combine(Environment.WebRootPath, "upload", old.Idcard)))
+                            {
+                                var oldpath = Path.Combine(Environment.WebRootPath, "upload", old.Idcard);
+                                var newpath = Path.Combine(Environment.WebRootPath, "upload", req.Idcard);
+                                string[] allfiles = Directory.GetFiles(oldpath).Select(file => Path.GetFileName(file)).ToArray();
+                                Directory.CreateDirectory(newpath);
+                                for (var i = 0;i < allfiles.Length; i++)
+                                {
+                                    var tmp = allfiles[i].Replace(old.Idcard, req.Idcard);
+                                    System.IO.File.Move(oldpath+"/"+allfiles[i], newpath+"/"+tmp);
+                                }
+                                Directory.Delete(oldpath);
+                            }
+                        }
                         if (await _payService.EditCustomer(req, Convert.ToInt32(UserId)))
                         {
                             string uploadpath = Path.Combine(Environment.WebRootPath, "upload", "tmp");

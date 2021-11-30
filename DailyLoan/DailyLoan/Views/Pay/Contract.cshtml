@@ -1170,7 +1170,27 @@
         return da[2]+'/'+da[1]+'/'+da[0]
     }
     function save() {
-        $("#uploadfile1").fileinput("upload");
+        if ($("#uploadfile1")[0].files.length > 0) {
+            $("#uploadfile1").fileinput("upload");
+        } else {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append("isNew", false);
+            formData.append("Id", $("#editid").val());
+            formData.append("CustomerId", $("#editcid").val());
+            formData.append("GuarantorId", $("#editgid").val());
+            formData.append("TotalAmount", $("#editconamount").val());
+            req.open("POST", '/EditContract');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
     }
     function saveadd() {
         let req = new XMLHttpRequest();
@@ -1577,7 +1597,13 @@
         theme: 'fas',
         showCaption: false,
         showPreview: true,
-        showUpload: true,
+        showUpload: false,
+        showRemove: true,
+        fileActionSettings: {
+            showDownload: false,
+            showUpload: false,
+            showRemove: true
+        },
         uploadAsync: false,
         showCancel: false,
         dropZoneEnabled: true,
