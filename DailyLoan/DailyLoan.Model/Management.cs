@@ -19,6 +19,7 @@ namespace DailyLoan.Model
         public string HouseText { get; set; }
         public int HouseId { get; set; }
         public string CustomerLineText { get; set; }
+        public string[] Images { get; set; }
     }
     public class ManagementCustomerLine : CustomerLine
     {
@@ -43,6 +44,7 @@ namespace DailyLoan.Model
         public string ApproverName { get; set; }
         public ManagementCustomer Customer { get; set; }
         public ManagementCustomer Guaruntor { get; set; }
+        public string[] Images { get; set; }
     }
     public class ManagementConfig
     {

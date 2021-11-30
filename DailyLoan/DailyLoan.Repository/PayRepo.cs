@@ -43,6 +43,10 @@ namespace DailyLoan.Repository
         {
             return (_DailyLoanContext.User.Where(x => x.Id == uid).FirstOrDefault().HouseId);
         }
+        public int GetUseraccessByUserId(int uid)
+        {
+            return (_DailyLoanContext.User.Where(x => x.Id == uid).FirstOrDefault().UserAccess);
+        }
         public int GetCustomerLineIdByUserId(int uid)
         {
             var rtn = _DailyLoanContext.UserPermission.Where(x => x.UserId == uid).FirstOrDefault();
@@ -53,15 +57,20 @@ namespace DailyLoan.Repository
             var rtn = _DailyLoanContext.Customer.Where(x => x.Id == cid).FirstOrDefault();
             return rtn.Idcard;
         }
-        public async Task<List<ManagementCustomer>> SearchCustomer(string idcard,string name)
+        public string GetContractIDByIdcard(string idcard)
         {
-            if (String.IsNullOrEmpty(idcard)) idcard = "";
-            if (String.IsNullOrEmpty(name)) name = "";
+            var rtn = (from c in _DailyLoanContext.Contract
+                       join cc in _DailyLoanContext.Customer on c.CustomerId equals cc.Id
+                       where cc.Idcard == idcard && c.Status != ContractStatus.StatusContract_Closed
+                       select new Contract() { ContractId = c.ContractId }).FirstOrDefault();
+            return rtn.ContractId;
+        }
+        public async Task<List<ManagementCustomer>> SearchCustomer(int uid,string idcard,string name,string firstname,string lastname,string address)
+        {
             List<ManagementCustomer> rtn = await (from c in _DailyLoanContext.Customer
                                       join us in _DailyLoanContext.StatusCustomer on c.Status equals us.Id
                                       join cl in _DailyLoanContext.CustomerLine on c.CustomerLineId equals cl.Id
                                       join h in _DailyLoanContext.House on cl.HouseId equals h.Id
-                                      where c.Idcard.Contains(idcard) || c.Firstname.Contains(name) || c.Lastname.Contains(name) || c.Nickname.Contains(name)
                                       select new ManagementCustomer()
                                       {
                                           Id = c.Id,
@@ -84,6 +93,56 @@ namespace DailyLoan.Repository
                                           HouseText = h.HouseName,
                                           CustomerLineText = cl.CustomerLineName
                                       }).ToListAsync();
+            int ua = GetUseraccessByUserId(uid);
+            if (ua == StatusUserAccess.UserAccess_Admin || ua == StatusUserAccess.UserAccess_Audit)
+                rtn = rtn.Where(x => x.HouseId == GetHouseIdByUserId(uid)).ToList();
+            else if (ua == StatusUserAccess.UserAccess_Agent)
+                rtn = rtn.Where(x => x.CustomerLineId == GetCustomerLineIdByUserId(uid)).ToList();
+            if (!String.IsNullOrEmpty(idcard)) rtn = rtn.Where(x => x.Idcard.Contains(idcard)).ToList();
+            if (!String.IsNullOrEmpty(name)) rtn = rtn.Where(x => x.Firstname.Contains(name)|| x.Lastname.Contains(name)|| x.Nickname.Contains(name)).ToList();
+            if (!String.IsNullOrEmpty(firstname)) rtn = rtn.Where(x => x.Firstname.Contains(firstname)).ToList();
+            if (!String.IsNullOrEmpty(lastname)) rtn = rtn.Where(x => x.Lastname.Contains(lastname)).ToList();
+            if (!String.IsNullOrEmpty(address)) rtn = rtn.Where(x => x.Address.Contains(address)).ToList();
+            return rtn;
+        }
+        public async Task<List<ManagementContract>> SearchContract(int uid, string idcard, string firstname, string lastname, string address)
+        {
+            List<ManagementContract> rtn = await (from c in _DailyLoanContext.Contract
+                                                  join cu in _DailyLoanContext.User on c.ApproverId equals cu.Id
+                                                  join us in _DailyLoanContext.StatusContract on c.Status equals us.Id
+                                                  select new ManagementContract()
+                                                  {
+                                                      Id = c.Id,
+                                                      ContractId = c.ContractId,
+                                                      CustomerId = c.CustomerId,
+                                                      GuarantorId = c.GuarantorId,
+                                                      ApproverId = c.ApproverId,
+                                                      TotalAmount = c.TotalAmount,
+                                                      TotalPay = c.TotalPay,
+                                                      Status = c.Status,
+                                                      SpecialRateCount = c.SpecialRateCount,
+                                                      CutCount = c.CutCount,
+                                                      CreateBy = c.CreateBy,
+                                                      CreateDate = c.CreateDate,
+                                                      UpdateBy = c.UpdateBy,
+                                                      UpdateDate = c.UpdateDate,
+                                                      StatusText = us.Status,
+                                                      ApproverName = cu.Firstname + " " + cu.Lastname
+                                                  }).ToListAsync();
+            int ua = GetUseraccessByUserId(uid);
+            if (ua == StatusUserAccess.UserAccess_Admin || ua == StatusUserAccess.UserAccess_Audit)
+                rtn = rtn.Where(x => x.Customer.HouseId == GetHouseIdByUserId(uid)).ToList();
+            else if (ua == StatusUserAccess.UserAccess_Agent)
+                rtn = rtn.Where(x => x.Customer.CustomerLineId == GetCustomerLineIdByUserId(uid)).ToList();
+            for (int i = 0; i < rtn.Count(); i++)
+            {
+                rtn[i].Guaruntor = GetCustomer(rtn[i].GuarantorId);
+                rtn[i].Customer = GetCustomer(rtn[i].CustomerId);
+            }
+            if (!String.IsNullOrEmpty(idcard)) rtn = rtn.Where(x => x.Customer.Idcard.Contains(idcard)).ToList();
+            if (!String.IsNullOrEmpty(firstname)) rtn = rtn.Where(x => x.Customer.Firstname.Contains(firstname)).ToList();
+            if (!String.IsNullOrEmpty(lastname)) rtn = rtn.Where(x => x.Customer.Lastname.Contains(lastname)).ToList();
+            if (!String.IsNullOrEmpty(address)) rtn = rtn.Where(x => x.Customer.Address.Contains(address)).ToList();
             return rtn;
         }
         public bool isExistContract(int cid)

@@ -1,16 +1,23 @@
 ﻿@using DailyLoan.Library.Status
+
+<script src="~/lib/js/fileinput.js" type="text/javascript"></script>
+<script src="~/lib/js/piexif.js" type="text/javascript"></script>
+<script src="~/lib/js/sortable.js" type="text/javascript"></script>
+<script src="~/lib/js/fas/theme.js" type="text/javascript"></script>
+<script src="~/lib/js/th.js" type="text/javascript"></script>
+
 <div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" placeholder="เลขบัตรประชาชน">
-        <input type="text" class="form-control" placeholder="สถานที่">
+        <input id="searchidcard" type="text" class="form-control" placeholder="เลขบัตรประชาชน">
+        <input id="searchaddress" type="text" class="form-control" placeholder="สถานที่">
 
     </div>
     <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" placeholder="ชื่อ">
-        <input type="text" class="form-control" placeholder="นามสกุล">
+        <input id="searchfname" type="text" class="form-control" placeholder="ชื่อ">
+        <input id="searchlname" type="text" class="form-control" placeholder="นามสกุล">
     </div>
     <div class="input-group mb-3 input-group-sm justify-content-center">
-        <button type="button" class="btn btn-info btn-sm">
+        <button type="button" onclick="search();" class="btn btn-info btn-sm">
             <i class="fa fa-search"></i>
             ค้นหา
         </button>
@@ -43,6 +50,17 @@
                                     <i class="fa fa-search"></i>
                                     ค้นหา
                                 </button>
+                            </div>
+                            <div class="accordion" id="addsearchpanel">
+                                <div class="accordion-item">
+                                    <div id="addsearchpanelchild" class="accordion-collapse collapse" aria-labelledby="addsearchitem">
+                                        <!-- <div id="addsearchitem" class="accordion-body">
+                                        </div>-->
+                                        <label for="inputEmail4">เลือกลูกค้า</label>
+                                        <select class="form-select form-select-sm" id="addsearchitem" name="addsearchitem">
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="accordion" id="accordionPanelsStayOpenExampleAdd">
                                 <div class="accordion-item">
@@ -617,14 +635,7 @@
                                         <div class="form-row">
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <div class="col pb-3">
-                                                        <label for="inputEmail4">รูปหลักฐาน</label>
-                                                        <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col pb-3">
-                                                        <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                    <div id="imgview" class="col pb-3">
                                                     </div>
                                                 </div>
                                             </div>
@@ -654,7 +665,6 @@
         </div>
     </div>
 </div>
-
 <!-- The Modal editcontract -->
 <div class="modal" id="editcontract">
     <div class="modal-dialog modal-lg">
@@ -669,7 +679,6 @@
                 <form>
                     <div class="card-body bg-light p-3 rounded ">
                         <div class="input-group mb-3 input-group-sm">
-
                             <select class="form-select form-select-sm" id="editcustype" name="editcustype" style="width: 90px !important; min-width:90px; max-width: 90px;">
                                 <option value="1">คนกู้</option>
                                 <option value="2">คนค้ำ</option>
@@ -680,6 +689,19 @@
                                 <i class="fa fa-search"></i>
                                 ค้นหา
                             </button>
+                        </div>
+                        <div class="accordion" id="editsearchpanel">
+                            <div class="accordion-item">
+                                <div id="editsearchpanelchild" class="accordion-collapse collapse" aria-labelledby="editsearchitem">
+                                    <!--
+                                    <div id="editsearchitem" class="accordion-body">
+
+                                    </div>-->
+                                    <label for="inputEmail4">เลือกลูกค้า</label>
+                                    <select class="form-select form-select-sm" id="editsearchitem" name="editsearchitem">
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="accordion" id="accordionPanelsStayOpenExampleEdit">
                             <div class="accordion-item">
@@ -970,7 +992,7 @@
                                                         <label for="inputEmail4">รูปหลักฐาน</label>
                                                         <form enctype="multipart/form-data">
                                                             <div class="file-loading">
-                                                                <input id="file-0" class="file" type="file" multiple data-min-file-count="1">
+                                                                <input id="uploadfile1" name="uploadfile1" class="file" type="file" multiple>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -1019,56 +1041,56 @@
         {
             foreach (var items in ViewBag.PageData)
             {
-        <tr class='clickable-row'>
-            <th scope="row">@items.Id</th>
-            <td>@items.ContractId</td>
-            <td>@items.Customer.Firstname</td>
-            <td>@items.Customer.Lastname</td>
-            <td>@items.Customer.ShortAddress</td>
-            <td>@items.StatusText</td>
-            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-            {
-                <td>@items.Customer.HouseText</td>
-            }
-            @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Audit)
-            {
-                <td>@items.Customer.CustomerLineText</td>
-            }
-        <td>
-            <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewcontract">
-                <i class="fa fa-eye"></i>
-                ดู
-            </button>
-            @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
-            {
-                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editcontract">
-                    <i class="fa fa-pen-square"></i>
-                    แก้ไข
-                </button>
-            }
-            @if (int.Parse(ViewBag.UserAccess) == StatusUserAccess.UserAccess_Agent && ContractStatus.StatusContract_WaitConfirm == items.Status)
-            {
-                <button type="button" class="btn btn-warning btn-sm btn-editcontractwait" data-bs-toggle="modal" data-bs-target="#editcontractwait">
-                    <i class="fa fa-pen-square"></i>
-                    แก้ไข
-                </button>
-            }
-            @if (int.Parse(ViewBag.UserAccess) == StatusUserAccess.UserAccess_Agent && ContractStatus.StatusContract_Normal == items.Status)
-            {
-                <button type="button" class="btn btn-warning btn-sm btn-editcontractnormal" data-bs-toggle="modal" data-bs-target="#editcontractnormal">
-                    <i class="fa fa-pen-square"></i>
-                    แก้ไข
-                </button>
-            }
-            @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
-            {
-                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delcontract">
-                    <i class="fa fa-trash-alt"></i>
-                    ลบ
-                </button>
-            }
-        </td>
-        </tr>
+                <tr class='clickable-row'>
+                    <th scope="row">@items.Id</th>
+                    <td>@items.ContractId</td>
+                    <td>@items.Customer.Firstname</td>
+                    <td>@items.Customer.Lastname</td>
+                    <td>@items.Customer.Address</td>
+                    <td>@items.StatusText</td>
+                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                    {
+                        <td>@items.Customer.HouseText</td>
+                    }
+                    @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Audit)
+                    {
+                        <td>@items.Customer.CustomerLineText</td>
+                    }
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewcontract">
+                            <i class="fa fa-eye"></i>
+                            ดู
+                        </button>
+                        @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                        {
+                            <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editcontract">
+                                <i class="fa fa-pen-square"></i>
+                                แก้ไข
+                            </button>
+                        }
+                        @if (int.Parse(ViewBag.UserAccess) == StatusUserAccess.UserAccess_Agent && ContractStatus.StatusContract_WaitConfirm == items.Status)
+                        {
+                            <button type="button" class="btn btn-warning btn-sm btn-editcontractwait" data-bs-toggle="modal" data-bs-target="#editcontractwait">
+                                <i class="fa fa-pen-square"></i>
+                                แก้ไข
+                            </button>
+                        }
+                        @if (int.Parse(ViewBag.UserAccess) == StatusUserAccess.UserAccess_Agent && ContractStatus.StatusContract_Normal == items.Status)
+                        {
+                            <button type="button" class="btn btn-warning btn-sm btn-editcontractnormal" data-bs-toggle="modal" data-bs-target="#editcontractnormal">
+                                <i class="fa fa-pen-square"></i>
+                                แก้ไข
+                            </button>
+                        }
+                        @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                        {
+                            <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delcontract">
+                                <i class="fa fa-trash-alt"></i>
+                                ลบ
+                            </button>
+                        }
+                    </td>
+                </tr>
             }
         }
     </tbody>
@@ -1107,6 +1129,22 @@
         <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
     </ul>
 </nav>
+<input type="hidden" id="uploaded0" />
+<input type="hidden" id="uploaded1" />
+<input type="hidden" id="uploaded2" />
+<input type="hidden" id="uploaded3" />
+<input type="hidden" id="uploaded4" />
+<input type="hidden" id="uploaded5" />
+<input type="hidden" id="uploaded6" />
+<input type="hidden" id="uploaded7" />
+<input type="hidden" id="uploaded8" />
+<input type="hidden" id="uploaded9" />
+<form id="searchform" style="display:none;" method="POST" action="/SearchContract">
+    <input type="text" id="ffirstname" name="Firstname">
+    <input type="text" id="flastname" name="Lastname">
+    <input type="text" id="faddress" name="Address">
+    <input type="text" id="fidcard" name="Idcard">
+</form>
 <script type="text/javascript">
     var root = '@Url.Content("~/")';
     var useraccess = '@ViewBag.UserAccess';
@@ -1115,6 +1153,16 @@
     var audit = '@StatusUserAccess.UserAccess_Audit';
     var agent = '@StatusUserAccess.UserAccess_Agent';
     root = (root == '/' ? "" : root);
+    function search() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        $("#ffirstname").val($("#searchfname").val());
+        $("#flastname").val($("#searchlname").val());
+        $("#faddress").val($("#searchaddress").val());
+        $("#fidcard").val($("#searchidcard").val());
+        document.getElementById("searchform").submit();
+    }
     function dateStr(dat) {
         var arr = dat.split('T');
         var da = arr[0].split('-');
@@ -1122,24 +1170,7 @@
         return da[2]+'/'+da[1]+'/'+da[0]
     }
     function save() {
-        let req = new XMLHttpRequest();
-        let formData = new FormData();
-
-        formData.append("isNew", false);
-        formData.append("Id", $("#editid").val());
-        formData.append("CustomerId", $("#editcid").val());
-        formData.append("GuarantorId", $("#editgid").val());
-        formData.append("TotalAmount", $("#editconamount").val());
-        req.open("POST", '/EditContract');
-        req.send(formData);
-        req.onload = function () {
-            if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
-            } else {
-                alert(req.responseText);
-                location.reload();
-            }
-        }
+        $("#uploadfile1").fileinput("upload");
     }
     function saveadd() {
         let req = new XMLHttpRequest();
@@ -1306,8 +1337,110 @@
                             $("#addgstatus3").prop('checked', true);
                         $("#addgcustomerline").val(data.customerLineText);
 
-                        $("#addgid").val(data.id);
+                $("#addgid").val(data.id);
+            }
+        }
+    }
+    $(document).ready(function () {
+        /** /
+        $('#table').DataTable({
+            "info": true,
+            "pageLength": 10,
+            "bLengthChange": false,
+            "initComplete": function() {
+
+            }
+        });
+        /**/
+        $('#editsearchitem').on('change', function () {
+            removeShow('edit', $('#editsearchitem').val());
+        });
+        $('#addsearchitem').on('change', function () {
+            removeShow('add', $('#addsearchitem').val());
+        });
+        if (useraccess == superadmin) {
+        }
+        $('#addmodal').click(function () {
+            var dat = new Date();
+            var datstr = ('0' + dat.getDate()).slice(-2) + '/' + ('0' + (dat.getMonth()+1)).slice(-2) + '/' + dat.getFullYear();
+            $('#addcondate').val(datstr);
+            $('#addconamount').val();
+            $("#addhouse").val();
+            $("#addidcard").val();
+            $("#addfirstname").val();
+            $("#addlastname").val();
+            $("#addnickname").val();
+            $("#addphone1").val();
+            $("#addphone2").val();
+            $("#addaddress").val();
+            $("#addstatus1").prop('checked', true);
+            $("#addcustomerline").val();
+            $("#addshortaddress").val();
+            $("#addghouse").val();
+            $("#addgidcard").val();
+            $("#addgfirstname").val();
+            $("#addglastname").val();
+            $("#addgnickname").val();
+            $("#addgphone1").val();
+            $("#addgphone2").val();
+            $("#addgaddress").val();
+            $("#addgshortaddress").val();
+            $("#addgstatus1").prop('checked', true);
+            $("#addgcustomerline").val();
+        });
+        $('#editsearch').click(function () {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("Idcard", $("#editidcardsearch").val());
+            formData.append("Name", $("#editnamesearch").val());
+            req.open("POST", '/SearchCustomer');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    console.log(req.responseText);
+                    arr = JSON.parse(req.responseText);
+                    $('#editsearchitem').empty();
+                    $('#editsearchitem').append('<option value="0">-</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        /*var tmp = '<div><p>' + arr[i].firstname + ' ' + arr[i].lastname + '</p>';
+                        tmp += '<button type="button" class="btn" onclick="removeShow(\'edit\',' + i + ');">เลือก</button>';
+                        tmp += '</div>';
+                        ('#editsearchitem').append(tmp);*/
+                        $('#editsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
                     }
+                    $('#editsearchpanelchild').addClass('show');
+                    var data = JSON.parse(req.responseText);
+
+                }
+            }
+        });
+        $('#addsearch').click(function () {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("Idcard", $("#addidcardsearch").val());
+            formData.append("Name", $("#addnamesearch").val());
+            req.open("POST", '/SearchCustomer');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    console.log(req.responseText);
+                    arr = JSON.parse(req.responseText);
+                    $('#addsearchitem').empty();
+                    $('#addsearchitem').append('<option value="0">-</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        /*var tmp = '<div><p>' + arr[i].firstname +' '+arr[i].lastname+'</p>';
+                        tmp += '<button type="button" class="btn" onclick="removeShow(\'add\',' + i + ');">เลือก</button>';
+                        tmp += '</div>';
+                        $('#addsearchitem').append(tmp);*/
+                        $('#addsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                    }
+                    $('#addsearchpanelchild').addClass('show');
                 }
             }
         });
@@ -1335,7 +1468,7 @@
                             $("#viewstatus3").prop('checked', true);
                         $("#viewcustomerline").val(data.customer.customerLineText);
                         $("#viewshortaddress").val(data.customer.shortAddress);
-                        
+
                         $("#viewghouse").val(data.guaruntor.houseText);
                         $("#viewgidcard").val(data.guaruntor.idcard);
                         $("#viewgfirstname").val(data.guaruntor.firstname);
@@ -1356,6 +1489,12 @@
                         $("#viewconstatus").val(data.statusText);
                         $("#viewcondate").val(dateStr(data.createDate));
                         $("#viewconamount").val(data.totalAmount);
+                        if (data.images != null) {
+                            $('<label for="inputEmail4">รูปหลักฐาน</label><br />').appendTo($('#imgview').empty());
+                            for (var i in data.images) {
+                                $('#imgview').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
                     }
                 },
                 error: function (e) { console.log(e) }
@@ -1433,18 +1572,51 @@
             }
         });
     });
-    /*
-    $("#file-0").fileinput({
+    $("#uploadfile1").fileinput({
+        language: "th",
         theme: 'fas',
-        uploadUrl: '#'
-    }).on('filepreupload', function (event, data, previewId, index) {
-        alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
+        showCaption: false,
+        showPreview: true,
+        showUpload: true,
+        uploadAsync: false,
+        showCancel: false,
+        dropZoneEnabled: true,
+        browseOnZoneClick: true,
+        minFileCount: 1,
+        maxFileCount: 10,
+        allowedFileTypes: ['image'],
+        allowedFileExtensions: ["jpg", "png", "jpeg"],
+        initialPreviewAsData: true,
+        overwriteInitial: true,
+        uploadUrl: '/UploadFileContract',
+        deleteUrl: "/delete"
+    }).on('fileuploaderror', function (event, data, msg) {
+        console.log('File Upload Error', 'ID: ' + data.fileId + ', Thumb ID: ' + data.previewId, msg);
+    }).on('filebatchuploadsuccess', function (event, data) {
+        var form = data.form, files = data.files, extra = data.extra,
+            response = data.response, reader = data.reader;
+        if (!response.error) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append("isNew", false);
+            formData.append("Id", $("#editid").val());
+            formData.append("CustomerId", $("#editcid").val());
+            formData.append("GuarantorId", $("#editgid").val());
+            formData.append("TotalAmount", $("#editconamount").val());
+            for (var i in response.filename) {
+                $('#uploaded' + i).val(response.filename[i]);
+                formData.append("uploaded" + i, response.filename[i]);
+            }
+            req.open("POST", '/EditContract');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
     });
-    $("#file-1").fileinput({
-        theme: 'fas',
-        uploadUrl: '#'
-    }).on('filepreupload', function (event, data, previewId, index) {
-        alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
-    });
-    */
 </script>

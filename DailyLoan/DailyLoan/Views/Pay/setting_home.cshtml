@@ -1,67 +1,71 @@
 ﻿@using DailyLoan.Library.Status
 <br>
 <div class="accordion" id="accordionPanelsStayOpenExample">
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="background-color">
-                <b>บ้าน</b>
-            </button>
-        </h2>
-        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-            <div class="accordion-body">
-                <form>
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addhouse">
-                            <i class="fa fa-plus-circle"></i>
-                            เพิ่มบ้าน
-                        </button>
-                    </div>
-                    <br>
-                    <div class="form-row">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <table id="tableh" class="table table-bordered table-hover" style="text-align: center; vertical-align: middle;">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">บ้าน</th>
-                                            <th scope="col">ภาค</th>
-                                            <th scope="col">จังหวัด</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (ViewBag.House.Count > 0)
-                                        {
-                                            foreach (var items in ViewBag.House)
+    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="background-color">
+                    <b>บ้าน</b>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <form>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addhouse">
+                                <i class="fa fa-plus-circle"></i>
+                                เพิ่มบ้าน
+                            </button>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <table id="tableh" class="table table-bordered table-hover" style="text-align: center; vertical-align: middle;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">บ้าน</th>
+                                                <th scope="col">ภาค</th>
+                                                <th scope="col">จังหวัด</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.House.Count > 0)
                                             {
-                                        <tr class='clickable-row'>
-                                            <th scope="row">@items.Id</th>
-                                            <td>@items.HouseName</td>
-                                            <td>@items.Region</td>
-                                            <td>@items.Province</td>
-                                            <td>
-                                                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edithouse">
-                                                    <i class="fa fa-pen-square"></i>
-                                                    แก้ไข
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
-                                                    <i class="fa fa-trash-alt"></i>
-                                                    ลบ
-                                                </button>
-                                            </td>
-                                        </tr>
+                                                foreach (var items in ViewBag.House)
+                                                {
+                                                    <tr class='clickable-row'>
+                                                        <th scope="row">@items.Id</th>
+                                                        <td>@items.HouseName</td>
+                                                        <td>@items.Region</td>
+                                                        <td>@items.Province</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edithouse">
+                                                                <i class="fa fa-pen-square"></i>
+                                                                แก้ไข
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
+                                                                <i class="fa fa-trash-alt"></i>
+                                                                ลบ
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             }
-                                        }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
+    }
     <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingTwo_1">
             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo_1" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo_1">
@@ -86,7 +90,10 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">สาย</th>
-                                            <th scope="col">บ้าน</th>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <th scope="col">บ้าน</th>
+                                            }
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -94,27 +101,27 @@
 
                                         @if (ViewBag.PageData.Count > 0)
                                         {
-                                            for (var i=0;i<ViewBag.PageData.Count;i++)
+                                            for (var i = 0; i < ViewBag.PageData.Count; i++)
                                             {
                                                 var items = ViewBag.PageData[i];
-                                        <tr class='clickable-row'>
-                                            <th scope="row">@items.Id</th>
-                                            <td>@items.CustomerLineName</td>
-                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-                                            {
-                                                <td>@items.HouseText</td>
-                                            }
-                                            <td>
-                                                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editCustomerLine">
-                                                    <i class="fa fa-pen-square"></i>
-                                                    แก้ไข
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deleteCustomerLine">
-                                                    <i class="fa fa-trash-alt"></i>
-                                                    ลบ
-                                                </button>
-                                            </td>
-                                        </tr>
+                                                <tr class='clickable-row'>
+                                                    <th scope="row">@items.Id</th>
+                                                    <td>@items.CustomerLineName</td>
+                                                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                                    {
+                                                        <td>@items.HouseText</td>
+                                                    }
+                                                    <td>
+                                                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editCustomerLine">
+                                                            <i class="fa fa-pen-square"></i>
+                                                            แก้ไข
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deleteCustomerLine">
+                                                            <i class="fa fa-trash-alt"></i>
+                                                            ลบ
+                                                        </button>
+                                                    </td>
+                                                </tr>
                                             }
                                         }
                                     </tbody>
@@ -286,20 +293,23 @@
                 <form>
                     <div class="form-row">
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col pb-3">
-                                    <label for="houseaddlist" class="form-label">บ้าน</label>
-                                    <select class="form-select form-select-sm" id="houseaddlist" name="houseaddlist">
-                                        @if (ViewBag.House.Count > 0)
-                                        {
-                                            foreach (var items in ViewBag.House)
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <div class="row">
+                                    <div class="col pb-3">
+                                        <label for="houseaddlist" class="form-label">บ้าน</label>
+                                        <select class="form-select form-select-sm" id="houseaddlist" name="houseaddlist">
+                                            @if (ViewBag.House.Count > 0)
                                             {
-                                                <option value="@items.Id">@items.HouseName</option>
+                                                foreach (var items in ViewBag.House)
+                                                {
+                                                    <option value="@items.Id">@items.HouseName</option>
+                                                }
                                             }
-                                        }
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             <div class="row">
                                 <div class="col pb-3">
                                     <label for="customerlineadd">สาย</label>
@@ -337,20 +347,29 @@
                 <form>
                     <div class="form-row">
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col pb-3">
-                                    <label for="houseeditlist" class="form-label">บ้าน</label>
-                                    <select class="form-select form-select-sm" id="houseeditlist" name="houseeditlist">
-                                        @if (ViewBag.House.Count > 0)
-                                        {
-                                            foreach (var items in ViewBag.House)
+                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                            {
+                                <div class="row">
+                                    <div class="col pb-3">
+                                        <label for="houseeditlist" class="form-label">บ้าน</label>
+                                        <select class="form-select form-select-sm" id="houseeditlist" name="houseeditlist">
+                                            @if (ViewBag.House.Count > 0)
                                             {
-                                                <option value="@items.Id">@items.HouseName</option>
+                                                foreach (var items in ViewBag.House)
+                                                {
+                                                    <option value="@items.Id">@items.HouseName</option>
+                                                }
                                             }
-                                        }
-                                    </select>
+
+
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" id="houseeditlist" />
+                            }
                             <div class="row">
                                 <div class="col pb-3">
                                     <label for="customerlineedit">สาย</label>

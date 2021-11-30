@@ -16,7 +16,7 @@ namespace DailyLoan.Service.Interfaces
         Task<List<CustomerLine>> GetAllCustomerLineByHouseID(int hid); 
         bool UsernameIsExist(string username);
         bool IdcardIsExist(string idcard);
-
+        Task<List<ManagementUser>> SearchUser(int uid, ContractSearchRequest req);
         #region User
         Task<List<ManagementUser>> GetAllUser(int uid, int ua);
         ManagementUser GetUser(int uid);

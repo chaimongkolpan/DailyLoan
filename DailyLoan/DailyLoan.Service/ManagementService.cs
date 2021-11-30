@@ -43,7 +43,10 @@ namespace DailyLoan.Service
         {
             return _ManagementRepo.IdcardIsExist(idcard);
         }
-
+        public async Task<List<ManagementUser>> SearchUser(int uid, ContractSearchRequest req)
+        {
+            return await _ManagementRepo.SearchUser(uid, req.Firstname, req.Lastname);
+        }
         #region User
         public async Task<List<ManagementUser>> GetAllUser(int uid, int ua)
         {

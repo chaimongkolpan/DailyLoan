@@ -58,6 +58,8 @@ namespace DailyLoan
 
             #endregion
 
+            services.AddDistributedMemoryCache();
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(7200);
@@ -91,6 +93,7 @@ namespace DailyLoan
 
             app.UseAuthorization();
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

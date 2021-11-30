@@ -22,7 +22,7 @@ namespace DailyLoan.Repository.Interfaces
         Task<List<CustomerLine>> GetAllCustomerLineByHouseID(int hid);
         bool UsernameIsExist(string username);
         bool IdcardIsExist(string idcard);
-
+        Task<List<ManagementUser>> SearchUser(int uid, string firstname, string lastname);
         #region User
         Task<List<ManagementUser>> GetAllUser(int uid, int useraccess);
         ManagementUser GetUser(int uid);

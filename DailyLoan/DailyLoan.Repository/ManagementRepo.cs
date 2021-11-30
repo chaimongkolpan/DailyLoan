@@ -61,6 +61,53 @@ namespace DailyLoan.Repository
         {
             return _DailyLoanContext.Customer.Where(x => x.Idcard == idcard).FirstOrDefault() != null;
         }
+        public int GetUseraccessByUserId(int uid)
+        {
+            return (_DailyLoanContext.User.Where(x => x.Id == uid).FirstOrDefault().UserAccess);
+        }
+        public async Task<List<ManagementUser>> SearchUser(int uid, string firstname, string lastname)
+        {
+            List<ManagementUser> rtn = await (from u in _DailyLoanContext.User
+                                              join us in _DailyLoanContext.StatusUser on u.Status equals us.Id
+                                              join ua in _DailyLoanContext.UserAccess on u.UserAccess equals ua.Id
+                                              join h in _DailyLoanContext.House on u.HouseId equals h.Id
+                                              select new ManagementUser()
+                                              {
+                                                  Id = u.Id,
+                                                  Username = u.Username,
+                                                  Password = StringCipher.DecryptString(u.Password),
+                                                  UserAccess = u.UserAccess,
+                                                  Firstname = u.Firstname,
+                                                  Lastname = u.Lastname,
+                                                  Nickname = u.Nickname,
+                                                  Phone1 = u.Phone1,
+                                                  Phone2 = u.Phone2,
+                                                  Status = u.Status,
+                                                  HouseId = u.HouseId,
+                                                  CreateBy = u.CreateBy,
+                                                  CreateDate = u.CreateDate,
+                                                  UpdateBy = u.UpdateBy,
+                                                  UpdateDate = u.UpdateDate,
+                                                  StatusText = us.Status,
+                                                  AccessText = ua.UserAccess1,
+                                                  HouseText = h.HouseName
+                                              }).ToListAsync();
+            int uacc = GetUseraccessByUserId(uid);
+            if (uacc != StatusUserAccess.UserAccess_Superadmin)
+                rtn = rtn.Where(x => x.HouseId == GetHouseIdByUserId(uid)).ToList();
+            for (int i = 0; i < rtn.Count(); i++)
+            {
+                rtn[i].CustomerLineId = GetCustomerLineIdByUserId(rtn[i].Id);
+                if (rtn[i].CustomerLineId == 0) rtn[i].CustomerLineText = "-";
+                else
+                {
+                    rtn[i].CustomerLineText = _DailyLoanContext.CustomerLine.Where(x => x.Id == rtn[i].CustomerLineId).FirstOrDefault().CustomerLineName;
+                }
+            }
+            if (!String.IsNullOrEmpty(firstname)) rtn = rtn.Where(x => x.Firstname.Contains(firstname)).ToList();
+            if (!String.IsNullOrEmpty(lastname)) rtn = rtn.Where(x => x.Lastname.Contains(lastname)).ToList();
+            return rtn;
+        }
 
         #region User
         public async Task<List<ManagementUser>> GetAllUser(int uid,int useraccess)

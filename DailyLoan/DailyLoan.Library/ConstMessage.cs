@@ -14,6 +14,7 @@ namespace DailyLoan.Library
         public const string Controller_Pay = "Pay";
 
         public const string View_Index = "Index";
+
         public const string View_MNM_Config = "Config";
         public const string View_MNM_Contract = "Contract";
         public const string View_MNM_Customer = "Customer";
@@ -34,12 +35,16 @@ namespace DailyLoan.Library
 
         public const string Message_InValidID = "เลขประประชาชนไม่ถูกต้อง";
         public const string Message_DonotHavePermission = "คุณไม่มีสิทธิ์";
+        public const string Message_UploadFail = "อัพโหลดไฟล์ไม่สมบูรณ์";
         public const string Message_Successful = "สำเร็จ";
         public const string Message_SomethingWentWrong = "มีบางอย่างไม่ถูกต้อง";
         public const string Message_UsernameIsExist = "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว";
         public const string Message_PasswordNotMatch = "รหัสผ่านไม่ตรงกัน";
 
-        public const string Login_UserNamePasswordNotMatching = "User Name หรือ Password ไม่ถูกต้อง";
+        public const string Session_UserId = "UserId";
+        public const string Session_Username = "Username";
+        public const string Session_UserAccess = "UserAccess";
+        public const string Login_UserNamePasswordNotMatching = "Username หรือ Password ไม่ถูกต้อง";
 
     }
     public class InitialConfig
