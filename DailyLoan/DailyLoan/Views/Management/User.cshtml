@@ -1,9 +1,9 @@
 ﻿@using DailyLoan.Library.Status
 <div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" placeholder="ชื่อ">
-        <input type="text" class="form-control" placeholder="นามสกุล">
-        <button type="button" class="btn btn-info btn-sm">
+        <input id="searchfname" type="text" class="form-control" placeholder="ชื่อ">
+        <input id="searchlname" type="text" class="form-control" placeholder="นามสกุล">
+        <button type="button" onclick="search();" class="btn btn-info btn-sm">
             <i class="fa fa-search"></i>
             ค้นหา
         </button>
@@ -535,13 +535,24 @@
         <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
     </ul>
 </nav>
-
+<form id="searchform" style="display:none;" method="POST" action="/SearchUser">
+    <input type="text" id="ffirstname" name="Firstname">
+    <input type="text" id="flastname" name="Lastname">
+</form>
 <script type="text/javascript">
     var root = '@Url.Content("~/")';
     var useraccess = '@ViewBag.UserAccess';
     var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
     var admin = '@StatusUserAccess.UserAccess_Admin';
     root = (root == '/' ? "" : root);
+    function search() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+
+        $("#ffirstname").val($("#searchfname").val());
+        $("#flastname").val($("#searchlname").val());
+        document.getElementById("searchform").submit();
+    }
     function save() {
         let req = new XMLHttpRequest();
         let formData = new FormData();

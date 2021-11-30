@@ -8,5 +8,6 @@ namespace DailyLoan.Service.Interfaces
 {
     public interface ILogInService
     {
+        User LogIn(string username, string password);
     }
 }

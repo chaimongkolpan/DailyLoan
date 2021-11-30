@@ -35,78 +35,122 @@ namespace DailyLoan.Controllers
             return View(ConstMessage.View_Index);
         }
         #region User
-        public async Task<ActionResult> UserActionAsync()
+        public async Task<ActionResult> UserAsync()
         {
-            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
-            var UserId = "1"; 
-            var UserAccess = "1";
-            List<ManagementUser> res = await _managementService.GetAllUser(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
-            ViewBag.UserId = UserId; 
-            ViewBag.UserAccess = UserAccess;
-            if(Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
-                ViewBag.House = await _managementService.GetAllHouse();
-            ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
-            ViewBag.PageData = res;
-            ViewBag.partialView = ConstMessage.View_MNM_User;
-            return View(ConstMessage.View_Index);
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if(Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    List<ManagementUser> res = await _managementService.GetAllUser(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                    ViewBag.UserId = UserId; 
+                    ViewBag.UserAccess = UserAccess;
+                    if(Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                        ViewBag.House = await _managementService.GetAllHouse();
+                    ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
+                    ViewBag.PageData = res;
+                    ViewBag.partialView = ConstMessage.View_MNM_User;
+                    return View(ConstMessage.View_Index);
+                }else return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            }
+        }
+        [HttpPost]
+        [Route("SearchUser")]
+        public async Task<ActionResult> SearchUser(ContractSearchRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    List<ManagementUser> res = await _managementService.SearchUser(Convert.ToInt32(UserId), req);
+                    ViewBag.UserId = UserId;
+                    ViewBag.UserAccess = UserAccess;
+                    if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                        ViewBag.House = await _managementService.GetAllHouse();
+                    ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
+                    ViewBag.PageData = res;
+                    ViewBag.partialView = ConstMessage.View_MNM_User;
+                    return View(ConstMessage.View_Index);
+                }else return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            }
         }
         [HttpGet]
         [Route("GetCustomerLineAll/{hid}")]
         public async Task<ActionResult> GetCustomerLineAll(int hid)
         {
-            return Ok(await _managementService.GetAllCustomerLineByHouseID(hid));
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else return Ok(await _managementService.GetAllCustomerLineByHouseID(hid));
         }
         [HttpGet]
         [Route("GetUserDetail/{uid}")]
         public ActionResult GetUserDetail(int uid)
         {
-            return Ok(_managementService.GetUser(uid));
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else return Ok(_managementService.GetUser(uid));
         }
         [HttpGet]
         [Route("DeleteUser/{uid}")]
         public async Task<ActionResult> DeleteUser(int uid)
         {
-            var UserAccess = "1";
-            if(Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
             {
-                if(await _managementService.DeleteUser(uid))
+                if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
                 {
-                    return Ok(ConstMessage.Message_Successful);
+                    if(await _managementService.DeleteUser(uid))
+                    {
+                        return Ok(ConstMessage.Message_Successful);
+                    }
+                    else return BadRequest(ConstMessage.Message_SomethingWentWrong);
                 }
-                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+                else return BadRequest(ConstMessage.Message_DonotHavePermission);
             }
-            else return BadRequest(ConstMessage.Message_DonotHavePermission);
         }
         [HttpPost]
         [Route("EditUser")]
         public async Task<ActionResult> EditUser(EditUserRequest req)
         {
-            //var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
-            var UserId = "1";
-            if (!string.IsNullOrEmpty(req.Username))
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId)||UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
             {
-                if (validationpass(req.Password, req.ConfirmPassword))
+                if (!string.IsNullOrEmpty(req.Username))
                 {
-                    bool isExist = _managementService.UsernameIsExist(req.Username);
-                    if ((!isExist&&req.isNew)||(isExist&&!req.isNew))
+                    if (validationpass(req.Password, req.ConfirmPassword))
                     {
-                        req.Password = StringCipher.EncryptString(req.Password);
-                        if (await _managementService.EditUser(req, Convert.ToInt32(UserId)))
+                        bool isExist = _managementService.UsernameIsExist(req.Username);
+                        if ((!isExist&&req.isNew)||(isExist&&!req.isNew))
                         {
-                            return Ok(ConstMessage.Message_Successful);
+                            req.Password = StringCipher.EncryptString(req.Password);
+                            if (await _managementService.EditUser(req, Convert.ToInt32(UserId)))
+                            {
+                                return Ok(ConstMessage.Message_Successful);
+                            }
+                            else return BadRequest(ConstMessage.Message_SomethingWentWrong);
                         }
-                        else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+                        else return BadRequest(ConstMessage.Message_UsernameIsExist);
                     }
-                    else return BadRequest(ConstMessage.Message_UsernameIsExist);
+                    else
+                    {
+                        return BadRequest(ConstMessage.Message_PasswordNotMatch);
+                    }
                 }
                 else
                 {
-                    return BadRequest(ConstMessage.Message_PasswordNotMatch);
+                    return BadRequest(ConstMessage.Message_SomethingWentWrong);
                 }
-            }
-            else
-            {
-                return BadRequest(ConstMessage.Message_SomethingWentWrong);
             }
         }
         private bool validationpass(string pass, string confirm)

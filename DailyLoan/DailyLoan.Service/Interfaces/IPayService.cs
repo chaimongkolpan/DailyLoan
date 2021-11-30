@@ -11,8 +11,11 @@ namespace DailyLoan.Service.Interfaces
     {
         Task<List<User>> GetAllUserByCustomerLine(int cid);
         int GetHouseIdByUserId(int uid);
-        Task<List<ManagementCustomer>> SearchCustomer(ContractSearchRequest req);
+        Task<List<ManagementCustomer>> SearchCustomer(int uid, ContractSearchRequest req);
+        Task<List<ManagementContract>> SearchContract(int uid, ContractSearchRequest req);
         bool isExistContract(int cid);
+        string GetContractID(string idcard);
+        string GetIDcardByCustomerId(int cid);
         #region Customer
         Task<List<ManagementCustomer>> GetAllCustomer(int uid, int ua);
         ManagementCustomer GetCustomer(int cid);
