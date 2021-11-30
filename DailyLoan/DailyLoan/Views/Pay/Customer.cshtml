@@ -594,10 +594,66 @@
         document.getElementById("searchform").submit();
     }
     function save() {
-        $("#uploadfile2").fileinput("upload");
+        if ($("#uploadfile2")[0].files.length > 0) {
+            $("#uploadfile2").fileinput("upload");
+        } else {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append("isNew", false);
+            formData.append("HouseId", $("#house").val());
+            formData.append("Status", $('input[name="status"]:checked').val() != undefined ? $('input[name="status"]:checked').val() : '');
+            formData.append("Id", $("#editid").val());
+            formData.append("CustomerLineId", $("#customerline").val());
+            formData.append("Firstname", $("#firstname").val());
+            formData.append("Lastname", $("#lastname").val());
+            formData.append("Nickname", $("#nickname").val());
+            formData.append("Phone1", $("#phone1").val());
+            formData.append("Phone2", $("#phone2").val());
+            formData.append("Idcard", $("#idcard").val());
+            formData.append("Address", $("#address").val());
+            formData.append("ShortAddress", $("#shortaddress").val());
+            req.open("POST", '/EditCustomer');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
     }
     function saveadd() {
-        $("#uploadfile1").fileinput("upload");
+        if ($("#uploadfile1")[0].files.length > 0) {
+            $("#uploadfile1").fileinput("upload");
+        } else {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append("isNew", true);
+            formData.append("HouseId", 0);
+            formData.append("Status", $('input[name="addstatus"]:checked').val() != undefined ? $('input[name="addstatus"]:checked').val() : '');
+            formData.append("Id", 0);
+            formData.append("CustomerLineId", $("#addcustomerline").val());
+            formData.append("Firstname", $("#addfirstname").val());
+            formData.append("Lastname", $("#addlastname").val());
+            formData.append("Nickname", $("#addnickname").val());
+            formData.append("Phone1", $("#addphone1").val());
+            formData.append("Phone2", $("#addphone2").val());
+            formData.append("Idcard", $("#addidcard").val());
+            formData.append("Address", $("#addaddress").val());
+            formData.append("ShortAddress", $("#addshortaddress").val());
+            req.open("POST", '/EditCustomer');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        }
     }
     $(document).ready(function () {
         /** /
@@ -782,7 +838,14 @@
         theme: 'fas',
         showCaption: false,
         showPreview: true,
-        showUpload: true,
+        showUpload: false,
+        showRemove: true,
+        fileActionSettings: {
+
+            showDownload: false,
+            showUpload: false,
+            showRemove: true
+        },
         uploadAsync: false,
         showCancel: false,
         dropZoneEnabled: true,
@@ -837,7 +900,14 @@
         theme: 'fas',
         showCaption: false,
         showPreview: true,
-        showUpload: true,
+        showUpload: false,
+        showRemove: true,
+        fileActionSettings: {
+
+            showDownload: false,
+            showUpload: false,
+            showRemove: true
+        },
         showCancel: false,
         uploadAsync: false,
         dropZoneEnabled: true,

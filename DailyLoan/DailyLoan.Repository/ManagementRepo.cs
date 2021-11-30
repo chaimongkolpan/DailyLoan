@@ -35,6 +35,11 @@ namespace DailyLoan.Repository
         {
             return _DailyLoanContext.House.Where(x => x.Id == hid).FirstOrDefault().HouseName;
         }
+        public string GetIdcardByCustomerId(int cid)
+        {
+            var rtn = _DailyLoanContext.Customer.Where(x => x.Id == cid).FirstOrDefault();
+            return rtn.Idcard;
+        }
         #endregion
 
         public async Task<List<House>> GetAllHouse()
@@ -306,6 +311,19 @@ namespace DailyLoan.Repository
             if (isAdd)
             {
                 List<Config> configs = new List<Config>();
+                List<Config> init = await _DailyLoanContext.Config.Where(x => x.HouseId == 1).ToListAsync();
+                foreach (var item in init)
+                {
+                    configs.Add(new Config()
+                    {
+                        HouseId = req.Id,
+                        Name = item.Name,
+                        Value = item.Value,
+                        CreateBy = req.CreateBy,
+                        CreateDate = req.CreateDate
+                    });
+                }
+                /*   separate house    * /
                 var init = new InitialConfig();
                 foreach (var key in init.config_template.Keys)
                 {
@@ -318,6 +336,7 @@ namespace DailyLoan.Repository
                         CreateDate = req.CreateDate
                     });
                 }
+                /**/
                 await _DailyLoanContext.Config.AddRangeAsync(configs);
                 isDone = (await _DailyLoanContext.SaveChangesAsync()) > 0;
             }
