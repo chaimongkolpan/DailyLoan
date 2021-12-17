@@ -1,50 +1,43 @@
-﻿<div class="card-body bg-light p-3 rounded ">
+﻿@using DailyLoan.Library.Status;
+<div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" placeholder="เลขบัตรประชาชน">
-        <input type="text" class="form-control" placeholder="สถานที่">
-
+        <input type="text" id="searchidcard" class="form-control" placeholder="เลขบัตรประชาชน">
+        <input type="text" id="searchfnameaddress" class="form-control" placeholder="สถานที่">
     </div>
     <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" placeholder="ชื่อ">
-        <input type="text" class="form-control" placeholder="นามสกุล">
+        <input type="text" id="searchfname" class="form-control" placeholder="ชื่อ">
+        <input type="text" id="searchlname" class="form-control" placeholder="นามสกุล">
     </div>
     <div class="input-group mb-3 input-group-sm justify-content-center">
-        <button type="button" class="btn btn-info btn-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
+        <button type="button" class="btn btn-info btn-sm" onclick="search();">
+            <i class="fa fa-search"></i>
             ค้นหา
         </button>
     </div>
-
     <!-- The Modal addsig-->
     <div class="modal" id="addsig">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header" style="background-color:#ff9800;color:#000;">
-                    <h4 class="modal-title">เก็บเงิน22</h4>
+                    <h4 class="modal-title">เก็บเงิน</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form>
                         <div class="card-body bg-light p-3 rounded ">
                             <div class="input-group mb-3 input-group-sm">
-
-                                <input type="text" class="form-control" placeholder="วันที่">
-
+                                <input type="text" class="form-control" id="todaydate" placeholder="วันที่" readonly>
                             </div>
                             <div class="accordion" id="accordionPanelsStayOpenExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                             ข้อมูลเก็บเงิน
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
                                             <form>
                                                 <div class="form-row">
@@ -52,11 +45,11 @@
                                                         <div class="row">
                                                             <div class="col-md-6 pb-3">
                                                                 <label for="inputEmail4">ยอดที่ต้องเก็บ</label>
-                                                                <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่ต้องเก็บ" readonly>
+                                                                <input type="text" class="form-control form-control-sm" id="preinstallment" placeholder="ยอดที่ต้องเก็บ" readonly>
                                                             </div>
                                                             <div class="col-md-6 pb-3">
                                                                 <label for="inputEmail4">ยอดที่เก็บได้</label>
-                                                                <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่เก็บได้">
+                                                                <input type="text" class="form-control form-control-sm" id="prepay" placeholder="ยอดที่เก็บได้" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -66,51 +59,40 @@
                                                         <div class="row">
                                                             <div class="colpb-3">
                                                                 <label for="inputEmail4">หมายเหตุ</label>
-                                                                <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ">
+                                                                <input type="text" class="form-control form-control-sm" id="preremark" placeholder="หมายเหตุ" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-row">
-                                                    <div class="container-fluid">
-                                                        <div class="row">
-                                                            <div class="col pb-3">
-                                                                <label for="inputEmail4">หลักฐานการเก็บเงิน</label>
-                                                                <form enctype="multipart/form-data">
-                                                                    <div class="file-loading">
-                                                                        <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
-                                                                    </div>
-
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="container-fluid">
-                                                        <div class="row">
-                                                            <div class="col pb-3">
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <!--
+    <div class="form-row">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col pb-3">
+                    <label for="inputEmail4">หลักฐานการเก็บเงิน</label>
+                    <form enctype="multipart/form-data">
+                        <div class="file-loading">
+                            <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
+                        </div>
                     </form>
                 </div>
-
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addcollector">บันทึก</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" onclick="save()" data-bs-target="#addcollector">บันทึก</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -119,30 +101,26 @@
 <div class="modal" id="addcollector">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header" style="background-color:#ff9800;color:#000;">
                 <h4 class="modal-title">เก็บเงิน</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <form>
                     <div class="card-body bg-light p-3 rounded ">
                         <div class="input-group mb-3 input-group-sm">
-
-                            <input type="text" class="form-control" placeholder="วันที่">
-
+                            <input type="date" id="collectdate" class="form-control" placeholder="วันที่" readonly>
                         </div>
                         <div class="accordion" id="accordionPanelsStayOpenExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                         ข้อมูลเก็บเงิน
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                     <div class="accordion-body">
                                         <form>
                                             <div class="form-row">
@@ -150,11 +128,11 @@
                                                     <div class="row">
                                                         <div class="col-md-6 pb-3">
                                                             <label for="inputEmail4">ยอดที่ต้องเก็บ</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่ต้องเก็บ" readonly>
+                                                            <input type="text" class="form-control form-control-sm" id="editinstallment" placeholder="ยอดที่ต้องเก็บ" readonly>
                                                         </div>
                                                         <div class="col-md-6 pb-3">
                                                             <label for="inputEmail4">ยอดที่เก็บได้</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่เก็บได้">
+                                                            <input type="text" class="form-control form-control-sm" id="editpay" placeholder="ยอดที่เก็บได้">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,244 +142,28 @@
                                                     <div class="row">
                                                         <div class="colpb-3">
                                                             <label for="inputEmail4">หมายเหตุ</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="หมายเหตุ">
+                                                            <input type="text" class="form-control form-control-sm" id="editremark" placeholder="หมายเหตุ">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">หลักฐานการเก็บเงิน</label>
-                                                            <form enctype="multipart/form-data">
-                                                                <div class="file-loading">
-                                                                    <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
-                                                                </div>
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col pb-3">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <!--
+                        <div class="form-row">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col pb-3">
+                                        <label for="inputEmail4">หลักฐานการเก็บเงิน</label>
+                                        <form enctype="multipart/form-data">
+                                            <div class="file-loading">
+                                                <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo_1">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo_1" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo_1">
-                                        ข้อมูลคนกู้
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseTwo_1" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo_1">
-                                    <div class="accordion-body">
-                                        <form>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">ชื่อ</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อ" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">นามสกุล</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="นามสกุล" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">ชื่อเล่น</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">เบอร์โทร 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 1" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">เบอร์โทร 2</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">จังหวัด 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="จังหวัด 1" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">อำเภอ 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="อำเภอ 1" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">ตำบล 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำบล 1" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">สถานที่</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">สถานะลูกค้า</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ดี" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                            <img src="images/user.png" width="80px" class="mx-auto d-block">
-                                                        </div>
+                        </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                        ข้อมูลคนค้ำ
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div class="accordion-body">
-                                        <form>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">ชื่อ</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อ" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">นามสกุล</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="นามสกุล" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">ชื่อเล่น</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ชื่อเล่น" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">เลขบัตรประจำตัวประชาชน</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">เบอร์โทร 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 1" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">เบอร์โทร 2</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบอร์โทร 2" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">จังหวัด 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="จังหวัด 1" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">อำเภอ 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="อำเภอ 1" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">ตำบล 1</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ตำบล 1" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">สถานที่</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="สถานที่" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="inputEmail4">สถานะลูกค้า</label>
-                                                            <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ดี" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                            <img src="images/user.png" width="80px" class="mx-auto d-block">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
+                        -->
                                         </form>
                                     </div>
                                 </div>
@@ -419,11 +181,43 @@
                                                 <div class="row">
                                                     <div class="col-md-6 pb-3">
                                                         <label for="inputEmail4">วันที่เริ่มสัญญา</label>
-                                                        <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="วันที่เริ่มสัญญา" readonly>
+                                                        <input type="text" class="form-control form-control-sm" id="editcreatedate" placeholder="วันที่เริ่มสัญญา" readonly>
                                                     </div>
                                                     <div class="col-md-6 pb-3">
                                                         <label for="inputEmail4">ยอดเงินขอกู้</label>
-                                                        <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดเงินขอกู้" readonly>
+                                                        <input type="text" class="form-control form-control-sm" id="edittotalamount" placeholder="ยอดเงินขอกู้" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="inputEmail4">จำนวนการตัด</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editcutcount" placeholder="จำนวนการตัด" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="inputEmail4">ยอดจ่ายรวม</label>
+                                                        <input type="text" class="form-control form-control-sm" id="edittotalpay" placeholder="ยอดจ่ายรวม" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="inputEmail4">ยอดจ่ายรวม(วัน)</label>
+                                                        <input type="text" class="form-control form-control-sm" id="edittotalpayday" placeholder="ยอดจ่ายรวม(วัน)" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="inputEmail4">ตัด</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editcut" placeholder="ตัด" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="inputEmail4">ตัดลด</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editdec" placeholder="ตัดลด" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="inputEmail4">ตัดเพิ่ม</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editinc" placeholder="ตัดเพิ่ม" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -436,18 +230,13 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">#</th>
+                                                                    <th scope="col">วันที่</th>
                                                                     <th scope="col">ยอดที่ต้องเก็บ</th>
                                                                     <th scope="col">ยอดที่เก็บได้</th>
-
+                                                                    <th scope="col">หมายเหตุ</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th scope="row">1</th>
-                                                                    <td>1000</td>
-                                                                    <td>800</td>
-
-                                                                </tr>
+                                                            <tbody id="edithistory">
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -458,45 +247,238 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo_1">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo_1" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo_1">
+                                        ข้อมูลคนกู้
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwo_1" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo_1">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="hidden" id="editcid" />
+                                                            <label for="editfirstname">ชื่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editfirstname" placeholder="ชื่อ" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editlastname">นามสกุล</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editlastname" placeholder="นามสกุล" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnickname">ชื่อเล่น</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnickname" placeholder="ชื่อเล่น" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editidcard">เลขบัตรประจำตัวประชาชน</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editphone1">เบอร์โทร 1</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editphone1" placeholder="เบอร์โทร 1" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editphone2">เบอร์โทร 2</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editphone2" placeholder="เบอร์โทร 2" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editaddress">สถานที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editshortaddress">สถานที่ย่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editshortaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="radio" id="editstatus1" name="editstatus" value="1" disabled>
+                                                            <label for="editstatus1">ดี</label>
+                                                            <input type="radio" id="editstatus2" name="editstatus" value="2" disabled>
+                                                            <label for="editstatus2">แย่</label>
+                                                            <input type="radio" id="editstatus3" name="editstatus" value="3" disabled>
+                                                            <label for="editstatus3">เสีย</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="imgview" class="col pb-3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                        ข้อมูลคนค้ำ
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="hidden" id="editgid" />
+                                                            <label for="editfirstname">ชื่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgfirstname" placeholder="ชื่อ" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editlastname">นามสกุล</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editglastname" placeholder="นามสกุล" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnickname">ชื่อเล่น</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgnickname" placeholder="ชื่อเล่น" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editidcard">เลขบัตรประจำตัวประชาชน</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editphone1">เบอร์โทร 1</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgphone1" placeholder="เบอร์โทร 1" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editphone2">เบอร์โทร 2</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgphone2" placeholder="เบอร์โทร 2" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editaddress">สถานที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editshortaddress">สถานที่ย่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editgshortaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="radio" id="editgstatus1" name="editgstatus" value="1" disabled>
+                                                            <label for="editgstatus1">ดี</label>
+                                                            <input type="radio" id="editgstatus2" name="editgstatus" value="2" disabled>
+                                                            <label for="editgstatus2">แย่</label>
+                                                            <input type="radio" id="editgstatus3" name="editgstatus" value="3" disabled>
+                                                            <label for="editgstatus3">เสีย</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="gimgview" class="col pb-3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
+                    </div>
                 </form>
             </div>
-
+            <input type="hidden" id="editid" />
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addsig">บันทึก</button>
+                <button type="button" class="btn btn-success" onclick="presave();" data-bs-toggle="modal" data-bs-target="#addsig">ส่งข้อมูล</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
             </div>
-
         </div>
     </div>
 </div>
-	</div>
 <!--end -->
-
-<table class="table table-hover" style="text-align: center; vertical-align: middle;">
+<table id="table" class="table table-hover" style="text-align: center; vertical-align: middle;">
     <thead>
         <tr>
+            <th style="display:none;" scope="col">#</th>
             <th scope="col">#</th>
             <th scope="col">ชื่อ</th>
             <th scope="col">นามสกุล</th>
             <th scope="col">สถานที่</th>
-            <th scope="col">บ้าน</th>
-            <th scope="col">สาย</th>
+            <!--
+    <th scope="col">บ้าน</th>
+    <th scope="col">สาย</th>
+
+    -->
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>A</td>
-            <td>B</td>
-            <td>สถานที่1</td>
-            <td>บ้าน1</td>
-            <td>สาย1</td>
+        @if (ViewBag.PageData.Count > 0)
+        {
+            var i = 1;
+            foreach (var items in ViewBag.PageData)
+            {
+        <tr class='clickable-row'>
+            <th style="display:none;" scope="row">@items.Id</th>
+            <th>@i</th>
+            <td>@items.Customer.Firstname</td>
+            <td>@items.Customer.Lastname</td>
+            <td>@items.Customer.Address</td>
+            <!--
+    <td>บ้าน1</td>
+    <td>สาย1</td>
+    -->
             <td>
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addcollector">
+                <button type="button" class="btn btn-primary btn-sm btn-add" data-bs-toggle="modal" data-bs-target="#addcollector">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z" />
                         <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z" />
@@ -507,29 +489,166 @@
                 </button>
             </td>
         </tr>
+                i++;
+            }
+        }
     </tbody>
 </table>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination ">
-        <li class="page-item"><a class="page-link" href="#">ก่อนหน้า</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
-    </ul>
-</nav>
+<form id="searchform" style="display:none;" method="POST" action="/SearchCollector">
+    <input type="text" id="ffirstname" name="Firstname">
+    <input type="text" id="flastname" name="Lastname">
+    <input type="text" id="fidcard" name="Idcard">
+    <input type="text" id="faddress" name="Address">
+</form>
 <script type="text/javascript">
-    $("#file-0").fileinput({
-        theme: 'fas',
-        uploadUrl: '#'
-    }).on('filepreupload', function (event, data, previewId, index) {
-        alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
-    });
-    $("#file-1").fileinput({
-        theme: 'fas',
-        uploadUrl: '#'
-    }).on('filepreupload', function (event, data, previewId, index) {
-        alert('The description entered is:\n\n' + ($('#description').val() || ' NULL'));
+    var root = '@Url.Content("~/")';
+    var useraccess = '@ViewBag.UserAccess';
+    var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
+    var admin = '@StatusUserAccess.UserAccess_Admin';
+    root = (root == '/' ? "" : root);
+    function dateData(dat) {
+        return dat.getFullYear() + '-' + ('0' + (dat.getMonth() + 1)).slice(-2) + '-' + ('0' + dat.getDate()).slice(-2);
+    }
+    function dateStr(dat) {
+        var da = dat.split('-');
+        return da[2] + '/' + da[1] + '/' + da[0]
+    }
+    function dateStr1(dat) {
+        var arr = dat.split('T');
+        return arr[0]
+    }
+    function search() {
+        $("#ffirstname").val($("#searchfname").val());
+        $("#flastname").val($("#searchlname").val());
+        $("#fidcard").val($("#searchidcard").val());
+        $("#faddress").val($("#searchaddress").val());
+        document.getElementById("searchform").submit();
+    }
+    function presave() {
+        $("#preinstallment").val($("#editinstallment").val());
+        $("#todaydate").val(dateStr($("#collectdate").val()));
+        $("#prepay").val($("#editpay").val());
+        $("#preremark").val( $("#editremark").val());
+    }
+    function save() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("ContractId", $("#editid").val());
+        formData.append("Amount", $("#editpay").val());
+        formData.append("Remark", $("#editremark").val());
+        req.open("POST", '/Collect');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    $(document).ready(function () {
+        /**/
+        $('#table').DataTable({
+            "ordering": false,
+            "dom": 't<"bottom"p>',
+            "info": false,
+            "pageLength": 15,
+            "bLengthChange": false,
+            "language": {
+                "paginate": {
+                    "previous": "ก่อนหน้า",
+                    "next": "ถัดไป",
+                }
+            },
+            "initComplete": function () {
+
+            }
+        });
+        /**/
+        $('table tbody').on('click', '.btn-add', function () {
+            $("#editid").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetCollectDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        console.log(data);
+                        $("#editidcard").val(data.customer.idcard);
+                        $("#editfirstname").val(data.customer.firstname);
+                        $("#editlastname").val(data.customer.lastname);
+                        $("#editnickname").val(data.customer.nickname);
+                        $("#editphone1").val(data.customer.phone1);
+                        $("#editphone2").val(data.customer.phone2);
+                        $("#editaddress").val(data.customer.address);
+                        if (data.customer.status == 1)
+                            $("#editstatus1").prop('checked', true);
+                        else if (data.customer.status == 2)
+                            $("#editstatus2").prop('checked', true);
+                        else if (data.customer.status == 3)
+                            $("#editstatus3").prop('checked', true);
+                        //$("#edithouse").val(data.customer.houseText);
+                        //$("#editcustomerline").val(data.customer.customerLineText);
+                        //$("#editshortaddress").val(data.customer.shortAddress);
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgview').empty());
+                        if (data.customer.images != null) {
+                            for (var i in data.customer.images) {
+                                $('#imgview').append('<img src="/upload/' + data.customer.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                        $("#editinstallment").val(data.customer.installment);
+
+                        $("#editgidcard").val(data.guaruntor.idcard);
+                        $("#editgfirstname").val(data.guaruntor.firstname);
+                        $("#editglastname").val(data.guaruntor.lastname);
+                        $("#editgnickname").val(data.guaruntor.nickname);
+                        $("#editgphone1").val(data.guaruntor.phone1);
+                        $("#editgphone2").val(data.guaruntor.phone2);
+                        $("#editgaddress").val(data.guaruntor.address);
+                        if (data.guaruntor.status == 1)
+                            $("#editgstatus1").prop('checked', true);
+                        else if (data.guaruntor.status == 2)
+                            $("#editgstatus2").prop('checked', true);
+                        else if (data.guaruntor.status == 3)
+                            $("#editgstatus3").prop('checked', true);
+                        //$("#editghouse").val(data.guaruntor.houseText);
+                        //$("#editgcustomerline").val(data.guaruntor.customerLineText);
+                        //$("#editgshortaddress").val(data.guaruntor.shortAddress);
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#gimgview').empty());
+                        if (data.guaruntor.images != null) {
+                            for (var i in data.guaruntor.images) {
+                                $('#gimgview').append('<img src="/upload/' + data.guaruntor.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                        $("#editcutcount").val(data.cutCount);
+
+                        if (data.canCut) $("#editcut").val('ตัดได้'); else $("#editcut").val('อีก'+data.remainCut);
+                        if (data.canIncCut) $("#editinc").val('ตัดเพิ่มได้'); else $("#editinc").val('อีก' + data.remainIncCut + 'ตัด/' + data.remainCut);
+                        if (data.canDecCut) $("#editdec").val('ตัดลดได้'); else $("#editdec").val('อีก'+data.remainDecCut);
+
+                        $("#editcreatedate").val(dateStr1(data.createDate));
+                        $("#edittotalamount").val(data.totalAmount);
+                        $("#edittotalpay").val(data.totalPay);
+                        var payday = parseInt(data.totalPay / data.customer.installment);
+                        var payp = parseInt(data.totalPay % data.customer.installment);
+                        $("#edittotalpayday").val(payday+'วัน/'+payp);
+                        if (data.history != null) {
+                            $('#edithistory').empty();
+                            for (var i in data.history) {
+                                $('#edithistory').append('<tr><th scope="row">' + (parseInt(i) + 1) + '</th><td>' + dateStr(dateStr1(data.history[i].createDate)) + '</td><td>' + data.customer.installment + '</td><td>' + data.history[i].amount + '</td><td>' + data.history[i].remark + '</td></tr>');
+                            }
+                        }
+                        $("#editpay").val(0);
+                        $("#editremark").val('');
+                        $('#collectdate').val(dateData(new Date()));
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
     });
 </script>

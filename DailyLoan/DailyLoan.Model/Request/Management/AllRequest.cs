@@ -92,6 +92,7 @@ namespace DailyLoan.Model.Request.Management
             {
                 u.CreateBy = uid;
                 u.CreateDate = DateTime.Now;
+                u.Installment = 0;
             }
             else
             {
@@ -123,7 +124,10 @@ namespace DailyLoan.Model.Request.Management
                 Id = this.Id,
                 CustomerId = this.CustomerId,
                 GuarantorId = this.GuarantorId,
-                TotalAmount = this.TotalAmount
+                TotalAmount = this.TotalAmount,
+                Remark = this.Remark
+                
+                
             };
             if (this.isNew)
             {
@@ -133,7 +137,7 @@ namespace DailyLoan.Model.Request.Management
                 u.TotalPay = 0;
                 u.SpecialRateCount = 0;
                 u.CutCount = 0;
-                u.ContractId = idcard + "-" + DateTime.Now.ToString("yyyyMMdd"); 
+                u.ContractId = idcard + "-" + DateTime.Now.ToString("yyyyMMddhhmmssfff"); 
                 u.ApproverId = uid;
             }
             else
@@ -224,6 +228,7 @@ namespace DailyLoan.Model.Request.Management
                 HouseId = this.HouseId,
                 StartDate = this.StartDate,
                 EndDate = this.EndDate,
+                OpenDate = this.OpenDate,
                 CustomerRate = this.CustomerRate,
                 AgentRate = this.AgentRate,
                 HouseRate = this.HouseRate,
@@ -241,6 +246,24 @@ namespace DailyLoan.Model.Request.Management
                 u.UpdateBy = uid;
                 u.UpdateDate = DateTime.Now;
             }
+            return u;
+        }
+    }
+    public class AddCollectRequest : Transaction
+    {
+        public Transaction ToTransaction(int uid,int customerline,int type)
+        {
+            Transaction u = new Transaction()
+            {
+                Id = this.Id,
+                ContractId = this.ContractId,
+                CustomerLineId = customerline,
+                Type = type,
+                Amount = this.Amount,
+                Remark = this.Remark,
+                CreateBy = uid,
+                CreateDate = this.CreateDate
+            };
             return u;
         }
     }
@@ -267,9 +290,25 @@ namespace DailyLoan.Model.Request.Management
         public string Lastname { get; set; }
         public string Address { get; set; }
     }
+    public class DailyReportSearchRequest
+    {
+        public DateTime date { get; set; }
+    }
+    public class DailyCostSearchRequest
+    {
+        public int clid { get; set; }
+        public DateTime date { get; set; }
+    }
+    public class CutRequest
+    {
+        public int contractid { get; set; }
+        public double amount { get; set; }
+        public int type { get; set; }
+    }
     public class UploadPic
     {
         public List<IFormFile> uploadfile1 { get; set; }
         public List<IFormFile> uploadfile2 { get; set; }
+        public string uploadsign { get; set; }
     }
 }

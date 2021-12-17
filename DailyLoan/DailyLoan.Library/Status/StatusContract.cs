@@ -14,5 +14,12 @@ namespace DailyLoan.Library.Status
         public const int StatusContract_Loss = 6;
         public const int StatusContract_Dead = 7;
         public const int StatusContract_Closed = 8;
+        public const int StatusContract_NotApprove = 9;
+    }
+    public class CustomerStatus
+    {
+        public const int StatusCustomer_Good = 1;
+        public const int StatusCustomer_Bad = 2;
+        public const int StatusCustomer_Loos = 3;
     }
 }

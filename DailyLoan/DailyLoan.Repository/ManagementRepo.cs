@@ -153,6 +153,7 @@ namespace DailyLoan.Repository
                     rtn[i].CustomerLineText = _DailyLoanContext.CustomerLine.Where(x => x.Id == rtn[i].CustomerLineId).FirstOrDefault().CustomerLineName;
                 }
             }
+            rtn = rtn.OrderBy(x => x.HouseId).ThenBy(x => x.CustomerLineId).ToList();
             return rtn;
         }
         public ManagementUser GetUser(int uid)
@@ -467,6 +468,7 @@ namespace DailyLoan.Repository
                 }
                 special.StartDate = req.StartDate;
                 special.EndDate = req.EndDate;
+                special.OpenDate = req.OpenDate;
                 special.CustomerRate = req.CustomerRate;
                 special.AgentRate = req.AgentRate;
                 special.HouseRate = req.HouseRate;

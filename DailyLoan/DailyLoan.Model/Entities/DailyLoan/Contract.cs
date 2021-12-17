@@ -23,5 +23,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public int? UpdateBy { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string ContractId { get; set; }
+        public string Remark { get; set; }
+        public double? ExContractPay { get; set; }
+        public int? Type { get; set; }
     }
 }

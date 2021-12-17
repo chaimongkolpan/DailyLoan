@@ -35,24 +35,27 @@
                                         <tbody>
                                             @if (ViewBag.House.Count > 0)
                                             {
+                                                var j = 1;
                                                 foreach (var items in ViewBag.House)
                                                 {
-                                                    <tr class='clickable-row'>
-                                                        <th scope="row">@items.Id</th>
-                                                        <td>@items.HouseName</td>
-                                                        <td>@items.Region</td>
-                                                        <td>@items.Province</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edithouse">
-                                                                <i class="fa fa-pen-square"></i>
-                                                                แก้ไข
-                                                            </button>
-                                                            <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
-                                                                <i class="fa fa-trash-alt"></i>
-                                                                ลบ
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                            <tr class='clickable-row'>
+                                                <th style="display:none;" scope="row">@items.Id</th>
+                                                <th>@j</th>
+                                                <td>@items.HouseName</td>
+                                                <td>@items.Region</td>
+                                                <td>@items.Province</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edithouse">
+                                                        <i class="fa fa-pen-square"></i>
+                                                        แก้ไข
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
+                                                        <i class="fa fa-trash-alt"></i>
+                                                        ลบ
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                                    j++;
                                                 }
                                             }
                                         </tbody>
@@ -101,27 +104,28 @@
 
                                         @if (ViewBag.PageData.Count > 0)
                                         {
-                                            for (var i = 0; i < ViewBag.PageData.Count; i++)
+                                            for (var i = 1; i <= ViewBag.PageData.Count; i++)
                                             {
-                                                var items = ViewBag.PageData[i];
-                                                <tr class='clickable-row'>
-                                                    <th scope="row">@items.Id</th>
-                                                    <td>@items.CustomerLineName</td>
-                                                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-                                                    {
-                                                        <td>@items.HouseText</td>
-                                                    }
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editCustomerLine">
-                                                            <i class="fa fa-pen-square"></i>
-                                                            แก้ไข
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deleteCustomerLine">
-                                                            <i class="fa fa-trash-alt"></i>
-                                                            ลบ
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                var items = ViewBag.PageData[i-1];
+                                        <tr class='clickable-row'>
+                                            <th style="display:none;" scope="row">@items.Id</th>
+                                            <th>@i</th>
+                                            <td>@items.CustomerLineName</td>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <td>@items.HouseText</td>
+                                            }
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editCustomerLine">
+                                                    <i class="fa fa-pen-square"></i>
+                                                    แก้ไข
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deleteCustomerLine">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                    ลบ
+                                                </button>
+                                            </td>
+                                        </tr>
                                             }
                                         }
                                     </tbody>
@@ -449,7 +453,8 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -471,7 +476,8 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -492,7 +498,8 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -513,7 +520,8 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -583,7 +591,8 @@
             req.send();
             req.onload = function () {
                 if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
+                    alert(req.responseText);
+                //$("#msg").text(req.responseText);
                 } else {
                     alert(req.responseText);
                     location.reload();
@@ -596,7 +605,8 @@
             req.send();
             req.onload = function () {
                 if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
+                    alert(req.responseText);
+                //$("#msg").text(req.responseText);
                 } else {
                     alert(req.responseText);
                     location.reload();

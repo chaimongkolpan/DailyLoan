@@ -20,7 +20,8 @@
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <script src="~/lib/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <!--<script src="~/lib/js/jquery-3.6.0.min.js" type="text/javascript"></script> -->
+    <script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="~/lib/jquery/bootstrap-table/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/jquery/bootstrap-table/js/dataTables.bootstrap.min.js"></script>
@@ -56,64 +57,72 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Audit)
+                        @{
+                            //if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Audit)
+                        }
+
+                        @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Admin)
                         {
-                            @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Admin)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Management" asp-action="User">ผู้ใช้งาน</a>
-                                </li>
-                            }
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Pay" asp-action="Customer">ลูกค้า</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Pay" asp-action="Contract">สัญญากู้</a>
+                                <a id="userlink" class="nav-link" asp-controller="Management" asp-action="User">ผู้ใช้งาน</a>
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Pay" asp-action="History">ประวัติ</a>
+                            <a id="customerlink" class="nav-link" asp-controller="Pay" asp-action="Customer">ลูกค้า</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contractlink" class="nav-link" asp-controller="Pay" asp-action="Contract">
+                                สัญญากู้&nbsp;&nbsp;&nbsp;
+                                <span id="contractcount" class="position-absolute translate-middle badge rounded-pill bg-danger" style="display:none;">
+
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="historylink" class="nav-link" asp-controller="Pay" asp-action="History">ประวัติ</a>
                         </li>
                         @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) == StatusUserAccess.UserAccess_Agent)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Pay" asp-action="Collector">เก็บเงิน</a>
+                                <a id="collectlink" class="nav-link" asp-controller="Pay" asp-action="Collector">เก็บเงิน</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Pay" asp-action="DailyReport">สรุปรายวัน</a>
+                                <a id="dailyreportlink" class="nav-link" asp-controller="Pay" asp-action="DailyReport">สรุปรายวัน</a>
                             </li>
                         }
                         @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Admin)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdownsetting" data-bs-toggle="dropdown" aria-expanded="false">ตั้งค่า</a>
+                                <a id="settinglink" class="nav-link dropdown-toggle" href="#" id="dropdownsetting" data-bs-toggle="dropdown" aria-expanded="false">ตั้งค่า</a>
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownsetting">
-                                    @if (Convert.ToInt32(Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess))) == StatusUserAccess.UserAccess_Superadmin)
+                                    @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) == StatusUserAccess.UserAccess_Superadmin)
                                     {
-                                        <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_system">ระบบ</a></li>
+                                        <li><a id="settingsystemlink" class="dropdown-item" asp-controller="Pay" asp-action="setting_system">ตั้งค่าระบบ</a></li>
                                     }
-                                    <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_home">บ้าน</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Pay" asp-action="setting_daily">ประจำวัน</a></li>
+                                    <li><a id="settinghomelink" class="dropdown-item" asp-controller="Pay" asp-action="setting_home">ตั้งค่าบ้าน</a></li>
+                                    <li><a id="settingdailylink" class="dropdown-item" asp-controller="Pay" asp-action="setting_daily">ค่าใช้จ่ายประจำวัน</a></li>
                                 </ul>
                             </li>
                         }
                     </ul>
                     <form class="d-flex">
-                        <a asp-controller="Pay" asp-action="Warn">
-                            <button type="button" class="btn btn-dark btn-sm position-relative rounded-pill" style="width:75px;">
+                        @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Audit)
+                        {
+                            <a class="btn btn-dark btn-sm position-relative rounded-pill" style="width:75px;" asp-controller="Pay" asp-action="Warn">
                                 แจ้งเตือน
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    4
-                                    <span class="visually-hidden">unread messages</span>
+                                <span id="alertcount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">
+
+                                    <!-- <span class="visually-hidden">unread messages</span> -->
                                 </span>
-                            </button>
-                        </a>
-                        <div class="dropdown" style="padding-left:1em ">
+                            </a>
+                        }
+                        <div class="dropdown" style="padding-left:1em;min-width:8rem;">
                             <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <strong>@HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_Username)</strong>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="LogIn">Sign out</a></li>
+                            <ul style="min-width:8rem;" class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="LogIn">ออกจากระบบ</a></li>
                             </ul>
                         </div>
                     </form>

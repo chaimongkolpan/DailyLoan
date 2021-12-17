@@ -1,11 +1,13 @@
 ﻿
 <div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
-        <input type="date" class="form-control" placeholder="วันที่">
-        <button type="button" class="btn btn-info btn-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
+        @{ 
+            var dateStr = ViewBag.PageData.date.ToString("yyyy'-'MM'-'dd");
+
+        }
+        <input type="date" class="form-control" id="searchdate" placeholder="วันที่" value="@dateStr">
+        <button type="button" class="btn btn-info btn-sm" onclick="search();">
+            <i class="fa fa-search"></i>
             ค้นหา
         </button>
 
@@ -15,7 +17,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="background-color">
-                <b>รายจ่าย</b>
+                <b>คนเก็บ</b>
             </button>
         </h2>
         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
@@ -26,11 +28,11 @@
                             <div class="row">
                                 <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">ค่าหัว</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ค่าหัว" value="200" readonly>
+                                    <input type="text" class="form-control form-control-sm" id="bounty" placeholder="ค่าหัว" value="@ViewBag.PageData.bounty" readonly>
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">เบี้ยเลี้ยง</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="เบี้ยเลี้ยง" value="10" readonly>
+                                    <input type="text" class="form-control form-control-sm" id="allowance" placeholder="เบี้ยเลี้ยง" value="@ViewBag.PageData.allowance" readonly>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +44,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingTwo_1">
             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo_1" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo_1">
-                <b>รายรับ</b>
+                <b>ลูกค้า</b>
             </button>
         </h2>
         <div id="panelsStayOpen-collapseTwo_1" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo_1">
@@ -52,8 +54,12 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6 pb-3">
+                                    <label for="inputEmail4">ยอดจ่ายลูกค้า</label>
+                                    <input type="text" class="form-control form-control-sm" id="payto" placeholder="ยอดจ่ายลูกค้า" value="@ViewBag.PageData.paytocustomer" readonly>
+                                </div>
+                                <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">ยอดที่เก็บได้</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่เก็บได้" value="1000" readonly>
+                                    <input type="text" class="form-control form-control-sm" id="amount" placeholder="ยอดที่เก็บได้" value="@ViewBag.PageData.collect" readonly>
                                 </div>
                             </div>
                         </div>
@@ -76,20 +82,28 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">ยอดที่ต้องเก็บได้</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่ต้องเก็บได้" value="1500" readonly>
+                                    <label for="inputEmail4">เงินออกจากบ้าน</label>
+                                    <input type="text" class="form-control form-control-sm" id="housepayout" placeholder="เงินออกจากบ้าน" value="@ViewBag.PageData.housepayout" readonly>
                                 </div>
                                 <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">ยอดที่เก็บได้</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดที่เก็บได้" value="1000" readonly>
+                                    <label for="inputEmail4">ยอดที่ต้องเก็บได้</label>
+                                    <input type="text" class="form-control form-control-sm" id="totalamount" placeholder="ยอดที่ต้องเก็บได้" value="@ViewBag.PageData.mustcollect" readonly>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="container-fluid">
-                            <div class="row">
+                                <div class="col-md-6 pb-3">
+                                    <label for="inputEmail4">ยอดที่เก็บได้จริง</label>
+                                    <input type="text" class="form-control form-control-sm" id="collectedall" placeholder="ยอดที่เก็บได้" value="@ViewBag.PageData.collect" readonly>
+                                </div>
+                                <div class="col-md-6 pb-3">
+                                    <label for="inputEmail4">ยอดที่เก็บได้(รวม เปิด+ตัด)</label>
+                                    <input type="text" class="form-control form-control-sm" id="collected" placeholder="ยอดที่เก็บได้" value="@ViewBag.PageData.collectall" readonly>
+                                </div>
+                                <div class="col-md-6 pb-3">
+                                    <label for="inputEmail4">รวมค่าใช้จ่าย</label>
+                                    <input type="text" class="form-control form-control-sm" id="sumexpense" placeholder="รวมค่าใช้จ่าย" value="@ViewBag.PageData.sumexpense" readonly>
+                                </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">ยอดคงเหลือ</label>
-                                    <input type="text" class="form-control form-control-sm" id="inputEmail4" placeholder="ยอดคงเหลือ" value="150" readonly>
+                                    <input type="text" class="form-control form-control-sm" id="remainamount" placeholder="ยอดคงเหลือ" value="@ViewBag.PageData.mustreturn" readonly>
                                 </div>
                             </div>
                         </div>
@@ -98,4 +112,162 @@
             </div>
         </div>
     </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headPolice">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePolice" aria-expanded="false" aria-controls="collapsePolice">
+                ตำรวจ
+            </button>
+        </h2>
+        <div id="collapsePolice" class="accordion-collapse collapse" aria-labelledby="headPolice">
+            <div class="accordion-body">
+                <div class="form-row">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 pb-3">
+                                <label for="police1">ตำรวจ 1</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Police1" id="police1" placeholder="ตำรวจ 1">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="policeremark1">หมายเหตุตำรวจ 1</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.PoliceRemark1" id="policeremark1" placeholder="หมายเหตุตำรวจ 1">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="police2">ตำรวจ 2</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Police2" id="police2" placeholder="ตำรวจ 2 ">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="policeremark2">หมายเหตุตำรวจ 2</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.PoliceRemark2" id="policeremark2" placeholder="หมายเหตุตำรวจ 2">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="police3">ตำรวจ 3</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Police3" id="police3" placeholder="ตำรวจ 3 ">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="policeremark3">หมายเหตุตำรวจ 3</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.PoliceRemark3" id="policeremark3" placeholder="หมายเหตุตำรวจ 3">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="caught">โดนจับ</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Caught" id="caught" placeholder="โดนจับ">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headOther">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
+                อื่นๆ
+            </button>
+        </h2>
+        <div id="collapseOther" class="accordion-collapse collapse" aria-labelledby="headOther">
+            <div class="accordion-body">
+                <div class="form-row">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 pb-3">
+                                <label for="gas">น้ำมัน</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Gas" id="gas" placeholder="น้ำมัน">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="topup">เติมเงิน</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Topup" id="topup" placeholder="เติมเงิน ">
+                            </div>
+                            <!-- -- >
+                            <div class="col-md-6 pb-3">
+                                <label for="paperink">หมึก+กระดาษ</label>
+                                <input type="text" class="form-control form-control-sm" id="paperink" placeholder="หมึก+กระดาษ">
+                            </div>
+                            <!-- -->
+                            <div class="col-md-6 pb-3">
+                                <label for="bikemaintenance">ค่าบำรุงรักษารถ</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.BikeMaintenance" id="bikemaintenance" placeholder="ค่าบำรุงรักษารถ">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="other">ค่าใช้จ่ายอื่นๆ</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Other" id="other" placeholder="ค่าใช้จ่ายอื่นๆ">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="otherremark">หมายเหตุค่าใช้จ่ายอื่นๆ</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.OtherDetail" id="otherremark" placeholder="หมายเหตุค่าใช้จ่ายอื่นๆ">
+                            </div>
+                            <div class="col-md-12 pb-3">
+                                <label for="remark">รายละเอียดเพิ่มเติม</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Remark" id="remark" placeholder="รายละเอียดเพิ่มเติม">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <input type="hidden" value="@ViewBag.House" id="house">
+    <input type="hidden" value="@ViewBag.CustomerLine" id="customerline" >
+    <div class="justify-content-center text-center">
+        <button type="button" onclick="save();" class="btn btn-success" data-bs-dismiss="modal">บันทึก</button>
+    </div>
 </div>
+<form id="searchform" style="display:none;" method="POST" action="/SearchDailyReport">
+    <input type="text" id="date" name="Date">
+</form>
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+
+    function save() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("Id", 0);
+        formData.append("HouseId", $("#house").val());
+        formData.append("CustomerLineId", $("#customerline").val());
+        formData.append("Date", ($("#searchdate").val()));
+
+        formData.append("Gas", $("#gas").val());
+        formData.append("Topup", $("#topup").val());
+
+        formData.append("Police1", $("#police1").val());
+        formData.append("PoliceRemark1", $("#policeremark1").val());
+        formData.append("Police2", $("#police2").val());
+        formData.append("PoliceRemark2", $("#policeremark2").val());
+        formData.append("Police3", $("#police3").val());
+        formData.append("PoliceRemark3", $("#policeremark3").val());
+
+        //formData.append("PaperInk", $("#paperink").val());
+        formData.append("Caught", $("#caught").val());
+
+        formData.append("BikeMaintenance", $("#bikemaintenance").val());
+
+        formData.append("Other", $("#other").val());
+        formData.append("OtherDetail", $("#otherremark").val());
+
+        formData.append("PayOut", $("#payout").val());
+        formData.append("Receive", $("#receive").val());
+        formData.append("Allowance", $("#allowance").val());
+
+        formData.append("OtherIncome", $("#otherincome").val());
+        formData.append("OtherIncomeRemark", $("#otherincomeremark").val());
+
+        formData.append("Remark", $("#remark").val());
+        req.open("POST", '/SaveDailyCost');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function search() {
+        $("#date").val($("#searchdate").val());
+        document.getElementById("searchform").submit();
+    }
+</script>

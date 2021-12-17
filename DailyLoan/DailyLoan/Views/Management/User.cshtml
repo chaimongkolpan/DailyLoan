@@ -27,7 +27,7 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
-                                            <input type="radio" id="addstatus1" name="addstatus" value="1">
+                                            <input type="radio" id="addstatus1" checked="checked" name="addstatus" value="1">
                                             <label for="addstatus1">ใช้งาน</label>
                                             <input type="radio" id="addstatus2" name="addstatus" value="2">
                                             <label for="addstatus2">ไม่ใช้งาน</label>
@@ -97,7 +97,7 @@
                                 <div class="form-row">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-md-6 pb-3">
+                                            <div id="addcustomerlinepane" class="col-md-6 pb-3">
                                                 <label for="addcustomerline" class="form-label">สาย</label>
                                                 <select class="form-select form-select-sm" id="addcustomerline" name="addcustomerline">
                                                     <option value="0">-</option>
@@ -122,11 +122,11 @@
                                 <div class="form-row">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-md-6 pb-3">
+                                            <div id="addcustomerlinepane" class="col-md-6 pb-3">
                                                 <label for="addcustomerline" class="form-label">สาย</label>
                                                 <select class="form-select form-select-sm" id="addcustomerline" name="addcustomerline">
                                                     <option value="0">-</option>
-                                                    @if (ViewBag.CustomerLine.Count() > 0)
+                                                    @if (ViewBag.CustomerLine.Count > 0)
                                                     {
                                                         @foreach (var item in ViewBag.CustomerLine)
                                                         {
@@ -363,10 +363,9 @@
                                 <div class="form-row">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-md-6 pb-3">
+                                            <div id="customerlinepane" class="col-md-6 pb-3">
                                                 <label for="customerline" class="form-label">สาย</label>
                                                 <select class="form-select form-select-sm" id="customerline" name="customerline">
-                                                    <option value="0">-</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 pb-3">
@@ -390,11 +389,10 @@
                                 <div class="form-row">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-md-6 pb-3">
+                                            <div id="customerlinepane" class="col-md-6 pb-3">
                                                 <label for="customerline" class="form-label">สาย</label>
                                                 <select class="form-select form-select-sm" id="customerline" name="customerline">
-                                                    <option value="0">-</option>
-                                                    @if (ViewBag.CustomerLine.Count() > 0)
+                                                    @if (ViewBag.CustomerLine.Count > 0)
                                                     {
                                                         @foreach (var item in ViewBag.CustomerLine)
                                                         {
@@ -447,6 +445,7 @@
 <table id="table" class="table table-hover" style="text-align: center; vertical-align: middle;">
     <thead>
         <tr>
+            <th style="display:none;" scope="col">#</th>
             <th scope="col">#</th>
             <th scope="col">ชื่อผู้ใช้งาน</th>
             <th scope="col">ชื่อ</th>
@@ -466,37 +465,44 @@
     <tbody>
         @if (ViewBag.PageData.Count > 0)
         {
+            var i = 1;
             foreach (var items in ViewBag.PageData)
             {
-                <tr class='clickable-row'>
-                    <th scope="row">@items.Id</th>
-                    <td>@items.Username</td>
-                    <td>@items.Firstname</td>
-                    <td>@items.Lastname</td>
-                    <td>@items.AccessText</td>
-                    @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+        <tr class='clickable-row'>
+            <th style="display:none;" scope="row">@items.Id</th>
+            <th>@i</th>
+            <td>@items.Username</td>
+            <td>@items.Firstname</td>
+            <td>@items.Lastname</td>
+            <td>@items.AccessText</td>
+            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+            {
+                <td>@items.HouseText</td>
+            }
+            @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+            {
+                <td>@items.CustomerLineText</td>
+            }
+        <td>
+            <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewuser">
+                <i class="fa fa-eye"></i>
+                ดู
+            </button>
+            <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edituser">
+                <i class="fa fa-pen-square"></i>
+                แก้ไข
+            </button>
+            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
                     {
-                        <td>@items.HouseText</td>
+        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deluser">
+            <i class="fa fa-trash-alt"></i>
+            ลบ
+        </button>
                     }
-                    @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
-                    {
-                        <td>@items.CustomerLineText</td>
-                    }
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewuser">
-                            <i class="fa fa-eye"></i>
-                            ดู
-                        </button>
-                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edituser">
-                            <i class="fa fa-pen-square"></i>
-                            แก้ไข
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deluser">
-                            <i class="fa fa-trash-alt"></i>
-                            ลบ
-                        </button>
-                    </td>
-                </tr>
+                
+        </td>
+        </tr>
+                i++;
             }
         }
     </tbody>
@@ -526,15 +532,7 @@
     </div>
 </div>
 <!--end -->
-<nav aria-label="Page navigation">
-    <ul class="pagination ">
-        <li class="page-item"><a class="page-link" href="#">ก่อนหน้า</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
-    </ul>
-</nav>
+
 <form id="searchform" style="display:none;" method="POST" action="/SearchUser">
     <input type="text" id="ffirstname" name="Firstname">
     <input type="text" id="flastname" name="Lastname">
@@ -544,11 +542,9 @@
     var useraccess = '@ViewBag.UserAccess';
     var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
     var admin = '@StatusUserAccess.UserAccess_Admin';
+    var agent = '@StatusUserAccess.UserAccess_Agent';
     root = (root == '/' ? "" : root);
     function search() {
-        let req = new XMLHttpRequest();
-        let formData = new FormData();
-
         $("#ffirstname").val($("#searchfname").val());
         $("#flastname").val($("#searchlname").val());
         document.getElementById("searchform").submit();
@@ -575,7 +571,8 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -604,27 +601,54 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
             }
         }
     }
+
     $(document).ready(function () {
-        /** /
+
+        $('#addcustomerlinepane').hide();
+        $('#customerlinepane').hide();
+        $("#addhouse").prop('disabled', true);
+        $("#addhouse").val(1);
+        /**/
         $('#table').DataTable({
-            "info": true,
-            "pageLength": 10,
+            "ordering": false,
+            "dom": 't<"bottom"p>',
+            "info": false,
+            "pageLength": 15,
             "bLengthChange": false,
+            "language": {
+                "paginate": {
+                    "previous": "ก่อนหน้า",
+                    "next": "ถัดไป",
+                }
+            },
             "initComplete": function() {
 
             }
         });
         /**/
+        $('#adduseraccess').on('change', function () {
+            if ($('#adduseraccess').val() != agent) $('#addcustomerlinepane').hide();
+            else $('#addcustomerlinepane').show();
+            if ($('#adduseraccess').val() != superadmin) $("#addhouse").prop('disabled', false);
+            else { $("#addhouse").prop('disabled', true); $("#addhouse").val(1);}
+        });
+        $('#useraccess').on('change', function () {
+            if ($('#useraccess').val() != agent) $('#customerlinepane').hide();
+            else $('#customerlinepane').show();
+            if ($('#useraccess').val() != superadmin) $("#house").prop('disabled', false);
+            else { $("#house").prop('disabled', true); $("#house").val(1); }
+        });
         if (useraccess == superadmin) {
             $('#house').on('change', function () {
-                $('<option value="0">-</option>').appendTo($('#customerline').empty());
+                $('#customerline').empty();
                 $.ajax({
                     type: "GET",
                     url: root + "/GetCustomerLineAll/" + $("#house").val(),
@@ -658,7 +682,7 @@
                 });
             }
             $('#addhouse').on('change', function () {
-                $('<option value="0">-</option>').appendTo($('#addcustomerline').empty());
+                $('#addcustomerline').empty();
                 $.ajax({
                     type: "GET",
                     url: root + "/GetCustomerLineAll/" + $("#addhouse").val(),
@@ -719,6 +743,7 @@
             });
         });
         $('table tbody').on('click', '.btn-edit', function () {
+            $('#customerlinepane').hide();
             $("#editid").val($(this).closest('tr').find('th').eq(0).text());
             $.ajax({
                 type: "GET",
@@ -736,12 +761,14 @@
                         $("#phone1").val(data.phone1);
                         $("#phone2").val(data.phone2);
                         $("#useraccess").val(data.userAccess);
+                        if ($('#useraccess').val() != agent) $('#customerlinepane').hide();
+                        else $('#customerlinepane').show();
                         if (data.status == 1)
                             $("#status1").prop('checked', true);
                         else if (data.status == 2)
                             $("#status2").prop('checked', true);
                         $("#house").val(data.houseId);
-                        $('<option value="0">-</option>').appendTo($('#customerline').empty());
+                        $('#customerline').empty();
                         $.ajax({
                             type: "GET",
                             url: root + "/GetCustomerLineAll/" + $("#house").val(),
@@ -772,7 +799,8 @@
             req.send();
             req.onload = function () {
                 if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
+                    alert(req.responseText);
+                //$("#msg").text(req.responseText);
                 } else {
                     alert(req.responseText);
                     location.reload();

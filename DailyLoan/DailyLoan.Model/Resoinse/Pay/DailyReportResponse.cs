@@ -10,8 +10,12 @@ namespace DailyLoan.Model.Resoinse.Pay
         public DateTime date { get; set; }
         public double? bounty { get; set; }
         public double? allowance { get; set; }
+        public double? collectall { get; set; }
         public double? collect { get; set; }
+        public double? housepayout { get; set; }
+        public double? paytocustomer { get; set; }
         public double? mustcollect { get; set; }
-        public double? balance { get { return collect - (bounty + allowance); } }
+        public double? sumexpense { get; set; }
+        public double? mustreturn { get; set; }
     }
 }

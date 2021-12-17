@@ -72,29 +72,34 @@
                                             <th scope="col">#</th>
                                             <th scope="col">วันที่เริ่มต้น</th>
                                             <th scope="col">วันที่สิ้นสุด</th>
+                                            <th scope="col">วันที่เปิดงาน</th>
                                             <th scope="col">ดอกเบี้ย(%)</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @{ var i = 1; }
                                             @foreach (var items in ViewBag.PageData.SpecialRates)
                                             {
-                                                <tr class='clickable-row'>
-                                                    <th scope="row">@items.Id</th>
-                                                    <td>@items.StartDate.ToString("dd/MM")</td>
-                                                    <td>@items.EndDate.ToString("dd/MM")</td>
-                                                    <td>@items.HouseRate</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editspecial">
-                                                            <i class="fa fa-pen-square"></i>
-                                                            แก้ไข
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delspecial">
-                                                            <i class="fa fa-trash-alt"></i>
-                                                            ลบ
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                        <tr class='clickable-row'>
+                                            <th style="display:none;" scope="row">@items.Id</th>
+                                            <th>@i</th>
+                                            <td>@items.StartDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@items.EndDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@items.OpenDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@items.HouseRate</td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editspecial">
+                                                    <i class="fa fa-pen-square"></i>
+                                                    แก้ไข
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delspecial">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                    ลบ
+                                                </button>
+                                            </td>
+                                        </tr>
+                                                i++;
                                             }
                                     </tbody>
                                 </table>
@@ -150,6 +155,10 @@
                                     <label for="addenddate">วันที่สิ้นสุด</label>
                                     <input type="date" class="form-control form-control-sm" id="addenddate" placeholder="วันที่สิ้นสุด">
                                 </div>
+                                <div class="col-md-6 pb-3">
+                                    <label for="addopendate">วันที่เปิดงาน</label>
+                                    <input type="date" class="form-control form-control-sm" id="addopendate" placeholder="วันที่เปิดงาน">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,6 +208,10 @@
                                 <div class="col-md-6 pb-3">
                                     <label for="editenddate">วันที่สิ้นสุด</label>
                                     <input type="date" class="form-control form-control-sm" id="editenddate" placeholder="วันที่สิ้นสุด">
+                                </div>
+                                <div class="col-md-6 pb-3">
+                                    <label for="editopendate">วันที่เปิดงาน</label>
+                                    <input type="date" class="form-control form-control-sm" id="editopendate" placeholder="วันที่เปิดงาน">
                                 </div>
                             </div>
                         </div>
@@ -273,7 +286,8 @@
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -293,11 +307,13 @@
         formData.append("MinCutDay", 6);
         formData.append("StartDate", $("#addstartdate").val());
         formData.append("EndDate", $("#addenddate").val());
+        formData.append("OpenDate", $("#addopendate").val());
         req.open("POST", '/EditSpecialRate');
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -317,11 +333,13 @@
         formData.append("MinCutDay", $("#editmincutday").val());
         formData.append("StartDate", $("#editstartdate").val());
         formData.append("EndDate", $("#editenddate").val());
+        formData.append("OpenDate", $("#editopendate").val());
         req.open("POST", '/EditSpecialRate');
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
@@ -345,6 +363,7 @@
                         $("#editmincutday").val(data.minCutDay);
                         $("#editstartdate").val(dateStr(data.startDate));
                         $("#editenddate").val(dateStr(data.endDate));
+                        $("#editopendate").val(dateStr(data.openDate));
                     }
                 },
                 error: function (e) { console.log(e) }

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DailyLoan.Controllers
 {
@@ -29,6 +30,21 @@ namespace DailyLoan.Controllers
             Environment = _environment;
             _managementService = managementService;
             _payService = payService;
+        }
+
+        [HttpGet]
+        [Route("GetAlert")]
+        public async Task<ActionResult> GetAlert()
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                var rtn = await _payService.GetAlert(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                rtn.Add(Convert.ToInt32(UserAccess)==StatusUserAccess.UserAccess_Agent?0:1);
+                return Ok(rtn);
+            }
         }
         #region system_setting
         public async Task<ActionResult> setting_systemAsync()
@@ -144,7 +160,7 @@ namespace DailyLoan.Controllers
                         ViewBag.House = await _managementService.GetAllHouse();
                     else
                         ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
-                    ViewBag.PageData = 35000;
+                    //ViewBag.PageData = 35000;
                     ViewBag.partialView = ConstMessage.View_PAY_setting_daily;
                     return View(ConstMessage.View_Index);
                 }
@@ -152,6 +168,27 @@ namespace DailyLoan.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("GetMustReturn")]
+        public async Task<ActionResult> GetMustReturn(DailyCostSearchRequest req)
+        {
+            var rtn = await _payService.GetMustReturn(req.clid, req.date);
+            return Ok(rtn);
+        }
+        [HttpPost]
+        [Route("GetPayToCustomer")]
+        public async Task<ActionResult> GetPayToCustomer(DailyCostSearchRequest req)
+        {
+            var rtn = await _payService.GetPayToCustomer(req.clid, req.date);
+            return Ok(rtn);
+        }
+        [HttpPost]
+        [Route("GetDailyCost")]
+        public ActionResult GetDailyCost(DailyCostSearchRequest req)
+        {
+            var rtn = _payService.GetDailyCost(req.clid,req.date);
+            return Ok(rtn);
+        }
         [HttpGet]
         [Route("GetAllUserByCustomerLine/{cid}")]
         public async Task<List<User>> GetAllUserByCustomerLine(int cid)
@@ -169,9 +206,7 @@ namespace DailyLoan.Controllers
             var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
             else { 
-                req.CreateBy = Convert.ToInt32(UserId);
-                req.CreateDate = DateTime.Now;
-                if (await _payService.SaveDailyCost(req))
+                if (await _payService.SaveDailyCost(req,Convert.ToInt32(UserId)))
                 {
                     return Ok(ConstMessage.Message_Successful);
                 }
@@ -396,8 +431,21 @@ namespace DailyLoan.Controllers
                         }
                         else return BadRequest(ConstMessage.Message_SomethingWentWrong);
                     }
-                    else return BadRequest(ConstMessage.Message_UsernameIsExist);
+                    else return BadRequest(ConstMessage.Message_IdcardIsExist);
                 } 
+            }
+        }
+        [HttpPost]
+        [Route("MoveCustomer")]
+        public async Task<ActionResult> MoveCustomer(EditCustomerRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (await _payService.MoveCustomer(req, Convert.ToInt32(UserId))) return Ok(ConstMessage.Message_Successful);
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
             }
         }
         [HttpPost]
@@ -516,8 +564,25 @@ namespace DailyLoan.Controllers
                 string idcard = _payService.GetIDcardByCustomerId(rtn.CustomerId);
                 string userpath = Path.Combine(Environment.WebRootPath, "upload", idcard);
                 if (Directory.Exists(userpath))
-                    rtn.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("contract" + rtn.ContractId)).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
-                else rtn.Images = null;
+                {
+                    rtn.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("contract" + idcard + rtn.Id.ToString())).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
+                    rtn.Customer.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("idcard" + idcard)).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
+                }
+                else 
+                {
+                    rtn.Images = null;
+                    rtn.Customer.Images = null;
+                }
+                string gidcard = _payService.GetIDcardByCustomerId(rtn.GuarantorId);
+                string guapath = Path.Combine(Environment.WebRootPath, "upload", gidcard);
+                if (Directory.Exists(guapath))
+                {
+                    rtn.Guaruntor.Images = Directory.GetFiles(guapath).Where(file => Path.GetFileName(file).Contains("idcard" + gidcard)).Select(file => gidcard + "/" + Path.GetFileName(file)).ToArray();
+                }
+                else
+                {
+                    rtn.Guaruntor.Images = null;
+                }
                 return Ok(rtn); 
             }
         }
@@ -554,16 +619,16 @@ namespace DailyLoan.Controllers
                     string idcard = _payService.GetIDcardByCustomerId(req.CustomerId);
                     string userpath = Path.Combine(Environment.WebRootPath, "upload", idcard);
                     if (!Directory.Exists(userpath)) Directory.CreateDirectory(userpath);
-                    if (req.uploaded0 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded0), Path.Combine(userpath, "contract" + req.ContractId + "-0.jpg"), true);
-                    if (req.uploaded1 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded1), Path.Combine(userpath, "contract" + req.ContractId + "-1.jpg"), true);
-                    if (req.uploaded2 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded2), Path.Combine(userpath, "contract" + req.ContractId + "-2.jpg"), true);
-                    if (req.uploaded3 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded3), Path.Combine(userpath, "contract" + req.ContractId + "-3.jpg"), true);
-                    if (req.uploaded4 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded4), Path.Combine(userpath, "contract" + req.ContractId + "-4.jpg"), true);
-                    if (req.uploaded5 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded5), Path.Combine(userpath, "contract" + req.ContractId + "-5.jpg"), true);
-                    if (req.uploaded6 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded6), Path.Combine(userpath, "contract" + req.ContractId + "-6.jpg"), true);
-                    if (req.uploaded7 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded7), Path.Combine(userpath, "contract" + req.ContractId + "-7.jpg"), true);
-                    if (req.uploaded8 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded8), Path.Combine(userpath, "contract" + req.ContractId + "-8.jpg"), true);
-                    if (req.uploaded9 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded9), Path.Combine(userpath, "contract" + req.ContractId + "-9.jpg"), true);
+                    if (req.uploaded0 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded0), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-0.jpg"), true);
+                    if (req.uploaded1 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded1), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-1.jpg"), true);
+                    if (req.uploaded2 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded2), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-2.jpg"), true);
+                    if (req.uploaded3 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded3), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-3.jpg"), true);
+                    if (req.uploaded4 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded4), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-4.jpg"), true);
+                    if (req.uploaded5 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded5), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-5.jpg"), true);
+                    if (req.uploaded6 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded6), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-6.jpg"), true);
+                    if (req.uploaded7 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded7), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-7.jpg"), true);
+                    if (req.uploaded8 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded8), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-8.jpg"), true);
+                    if (req.uploaded9 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded9), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-9.jpg"), true);
                     return Ok(ConstMessage.Message_Successful);
                 }
                 else return BadRequest(ConstMessage.Message_SomethingWentWrong); 
@@ -599,6 +664,13 @@ namespace DailyLoan.Controllers
                 var rtn = await _payService.SearchCustomer(Convert.ToInt32(UserId),req);
                 if (rtn != null)
                 {
+                    for(int i = 0; i < rtn.Count; i++)
+                    {
+                        string userpath = Path.Combine(Environment.WebRootPath, "upload", rtn[i].Idcard);
+                        if (Directory.Exists(userpath))
+                            rtn[i].Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("idcard" + rtn[i].Idcard)).Select(file => rtn[i].Idcard + "/" + Path.GetFileName(file)).ToArray();
+                        else rtn[i].Images = null;
+                    }
                     return Ok(rtn);
                 }
                 else return BadRequest(ConstMessage.Message_SomethingWentWrong); 
@@ -631,7 +703,14 @@ namespace DailyLoan.Controllers
             try
             {
                 if (req.uploadfile1 == null && req.uploadfile2 == null)
-                    return BadRequest(ConstMessage.Message_UploadFail);
+                {
+                    UploadFileResponse err = new UploadFileResponse()
+                    {
+                        error = ConstMessage.Message_UploadFail,
+                        message = ""
+                    };
+                    return BadRequest(err);
+                }
 
                 string uploadpath = Path.Combine(Environment.WebRootPath, "upload", "tmp");
                 if (!Directory.Exists(uploadpath))
@@ -656,13 +735,28 @@ namespace DailyLoan.Controllers
                     i++;
 
                 }
+                if (req.uploadfile2 != null)
+                {
+                    i = 0;
+                    foreach (var f in req.uploadfile2)
+                    {
+                        string fileLocation = Path.Combine(uploadpath, filename + "-" + i.ToString());
+                        filenames.Add(filename + "-" + i.ToString());
+                        using (Stream fileStream = new FileStream(fileLocation, FileMode.Create))
+                        {
+                            await f.CopyToAsync(fileStream);
+                        }
+                    }
+                    i++;
+
+                }
                 UploadFileResponse rtn = new UploadFileResponse()
                 {
                     path = "/upload/tmp",
                     filename = filenames.ToArray(),
                     message = ConstMessage.Message_Successful
                 };
-                return Ok(ConstMessage.Message_Successful);
+                return Ok(rtn);
             }
             catch (Exception ex)
             {
@@ -675,31 +769,293 @@ namespace DailyLoan.Controllers
                 return BadRequest(rtn);
             }
         }
-        #endregion
+        [HttpPost]
+        [Route("UploadSign")]
+        public async Task<IActionResult> UploadSign(UploadPic req)
+        {
+            try
+            {
+                if (req.uploadsign == null)
+                {
+                    UploadFileResponse err = new UploadFileResponse()
+                    {
+                        error = ConstMessage.Message_UploadFail,
+                        message = ""
+                    };
+                    return BadRequest(err);
+                }
 
-        #region Collector
-        public ActionResult Collector()
+                string uploadpath = Path.Combine(Environment.WebRootPath, "upload", "tmp");
+                if (!Directory.Exists(uploadpath))
+                {
+                    Directory.CreateDirectory(uploadpath);
+                }
+                string filename = DateTime.Now.ToString("'evidence-'yyyyMMddHHmmssfff");
+                if (req.uploadsign != null)
+                {
+                    string fileLocation = Path.Combine(uploadpath, filename);
+                    string[] arr = req.uploadsign.Split("base64,");
+                    if(arr.Length != 2)
+                    {
+                        UploadFileResponse rtn1 = new UploadFileResponse()
+                        {
+                            error = ConstMessage.Message_UploadFail,
+                            message = "ข้อมูลผิดพลาด"
+                        };
+                        return BadRequest(rtn1);
+                    }
+                    req.uploadsign = arr[1];
+                    byte[] bytes = Convert.FromBase64String(req.uploadsign);
+                    using (Stream fileStream = new FileStream(fileLocation, FileMode.Create))
+                    {
+                        await fileStream.WriteAsync(bytes);
+                    }
+
+                }
+                var tmp = new List<string>();
+                tmp.Add(filename);
+                UploadFileResponse rtn = new UploadFileResponse()
+                {
+                    path = "/upload/tmp",
+                    filename = tmp.ToArray(),
+                    message = ConstMessage.Message_Successful
+                };
+                return Ok(rtn);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                UploadFileResponse rtn = new UploadFileResponse()
+                {
+                    error = ConstMessage.Message_UploadFail,
+                    message = ex.Message
+                };
+                return BadRequest(rtn);
+            }
+        }
+        [HttpPost]
+        [Route("UploadContract")]
+        public ActionResult UploadContract(EditContractRequest req)
         {
             var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
             var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
             else
             {
-                ViewBag.partialView = ConstMessage.View_PAY_Collector;
-                return View(ConstMessage.View_Index);
+                string uploadpath = Path.Combine(Environment.WebRootPath, "upload", "tmp");
+                string idcard = _payService.GetIDcardByCustomerId(req.CustomerId);
+                string userpath = Path.Combine(Environment.WebRootPath, "upload", idcard);
+                if (!Directory.Exists(userpath)) Directory.CreateDirectory(userpath);
+                if (req.uploaded0 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded0), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-0.jpg"), true);
+                if (req.uploaded1 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded1), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-1.jpg"), true);
+                if (req.uploaded2 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded2), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-2.jpg"), true);
+                if (req.uploaded3 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded3), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-3.jpg"), true);
+                if (req.uploaded4 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded4), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-4.jpg"), true);
+                if (req.uploaded5 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded5), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-5.jpg"), true);
+                if (req.uploaded6 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded6), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-6.jpg"), true);
+                if (req.uploaded7 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded7), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-7.jpg"), true);
+                if (req.uploaded8 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded8), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-8.jpg"), true);
+                if (req.uploaded9 != null) System.IO.File.Move(Path.Combine(uploadpath, req.uploaded9), Path.Combine(userpath, "contract" + idcard + req.Id.ToString() + "-9.jpg"), true);
+                
+                /*UploadFileResponse rtn = new UploadFileResponse()
+                {
+                    path = "/upload/tmp",
+                    filename = null,
+                    message = ConstMessage.Message_Successful
+                };*/
+                return Ok(ConstMessage.Message_Successful);
             }
         }
-        #endregion
-        #region Warning
-        public ActionResult Warn()
+        [HttpPost]
+        [Route("Approve")]
+        public async Task<ActionResult> Approve(EditContractRequest req)
         {
             var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
             var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
-            else 
-            { 
+            else
+            {
+                if (await _payService.Approve(Convert.ToInt32(req.Id), Convert.ToInt32(UserId)))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+        }
+        [HttpPost]
+        [Route("Deny")]
+        public async Task<ActionResult> Deny(EditContractRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                
+                if (await _payService.Deny(Convert.ToInt32(req.Id),req.Remark))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+        }
+        #endregion
+
+        #region Collector
+        public async Task<ActionResult> Collector()
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                List<ManagementContract> res = await _payService.GetAllContract(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                ViewBag.UserId = UserId;
+                ViewBag.UserAccess = UserAccess;
+                //if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                //    ViewBag.House = await _managementService.GetAllHouse();
+                //ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
+                ViewBag.PageData = res.Where(x => x.Status != ContractStatus.StatusContract_Closed
+                                                &&x.Status != ContractStatus.StatusContract_WaitConfirm
+                                                &&x.Status != ContractStatus.StatusContract_NotApprove ).ToList();
+                ViewBag.partialView = ConstMessage.View_PAY_Collector;
+                return View(ConstMessage.View_Index);
+            }
+        }
+        [HttpPost]
+        [Route("SearchCollector")]
+        public async Task<ActionResult> SearchCollector(ContractSearchRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                List<ManagementContract> res = await _payService.SearchContract(Convert.ToInt32(UserId), req);
+                ViewBag.UserId = UserId;
+                ViewBag.UserAccess = UserAccess;
+                ViewBag.PageData = res.Where(x => x.Status != ContractStatus.StatusContract_Closed
+                                                && x.Status != ContractStatus.StatusContract_WaitConfirm
+                                                && x.Status != ContractStatus.StatusContract_NotApprove).ToList(); ;
+                ViewBag.partialView = ConstMessage.View_PAY_Collector;
+                return View(ConstMessage.View_Index);
+            }
+        }
+        [HttpGet]
+        [Route("GetCollectDetail/{cid}")]
+        public async Task<ActionResult> GetCollectDetail(int cid)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                var rtn = await _payService.GetCollector(cid);
+                string idcard = _payService.GetIDcardByCustomerId(rtn.CustomerId);
+                string userpath = Path.Combine(Environment.WebRootPath, "upload", idcard);
+                if (Directory.Exists(userpath))
+                {
+                    rtn.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("contract" +idcard + rtn.Id.ToString())).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
+                    rtn.Customer.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("idcard" + idcard)).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
+                }
+                else
+                {
+                    rtn.Images = null;
+                    rtn.Customer.Images = null;
+                }
+                string gidcard = _payService.GetIDcardByCustomerId(rtn.GuarantorId);
+                string guapath = Path.Combine(Environment.WebRootPath, "upload", gidcard);
+                if (Directory.Exists(guapath))
+                {
+                    rtn.Guaruntor.Images = Directory.GetFiles(guapath).Where(file => Path.GetFileName(file).Contains("idcard" + gidcard)).Select(file => gidcard + "/" + Path.GetFileName(file)).ToArray();
+                }
+                else
+                {
+                    rtn.Guaruntor.Images = null;
+                }
+                return Ok(rtn);
+            }
+        }
+        [HttpPost]
+        [Route("Collect")]
+        public async Task<ActionResult> Collect(Transaction req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (await _payService.CollectCustomer(req, Convert.ToInt32(UserId)))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+        }
+        #endregion
+        #region Warn
+        public async Task<ActionResult> WarnAsync()
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                List<ManagementWarn> res = await _payService.GetAllWarn(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                ViewBag.UserId = UserId;
+                ViewBag.UserAccess = UserAccess;
+                ViewBag.PageData = res;
                 ViewBag.partialView = ConstMessage.View_PAY_Warn;
                 return View(ConstMessage.View_Index);
+            }
+        }
+        [HttpGet]
+        [Route("GetWarnDetail/{nid}")]
+        public async Task<ActionResult> GetWarnDetail(int nid)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                var rtn = await _payService.GetWarn(nid);
+                return Ok(rtn);
+            }
+        }
+        [HttpGet]
+        [Route("DeleteWarn/{nid}")]
+        public async Task<ActionResult> DeleteWarn(int nid)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    if (await _payService.DeleteNotification(nid))
+                    {
+                        return Ok(ConstMessage.Message_Successful);
+                    }
+                    else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+                }
+                else return BadRequest(ConstMessage.Message_DonotHavePermission);
+            }
+        }
+        [HttpPost]
+        [Route("EditWarn")]
+        public async Task<ActionResult> EditWarn(Notification req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (await _payService.EditNotification(req, Convert.ToInt32(UserId)))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
             }
         }
         #endregion
@@ -709,8 +1065,36 @@ namespace DailyLoan.Controllers
             var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
             var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
-            else { return View(); }
-            
+            else 
+            {
+                DailyReportResponse res = await _payService.GetDailyReport(Convert.ToInt32(UserId), DateTime.Now);
+                ViewBag.PageData = res;
+                var clid = _payService.GetCustomerLineIdByUserId(Convert.ToInt32(UserId));
+                ViewBag.House = _payService.GetHouseIdByUserId(Convert.ToInt32(UserId));
+                ViewBag.CustomerLine = clid;
+                ViewBag.PageDataCost  = _payService.GetDailyCost(clid, DateTime.Now);
+                ViewBag.partialView = ConstMessage.View_PAY_DailyReport;
+                return View(ConstMessage.View_Index);
+            }
+        }
+        [HttpPost]
+        [Route("SearchDailyReport")]
+        public async Task<ActionResult> SearchDailyReport(DailyReportSearchRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                DailyReportResponse res = await _payService.GetDailyReport(Convert.ToInt32(UserId), req.date);
+                ViewBag.PageData = res;
+                var clid = _payService.GetCustomerLineIdByUserId(Convert.ToInt32(UserId));
+                ViewBag.House = _payService.GetHouseIdByUserId(Convert.ToInt32(UserId));
+                ViewBag.CustomerLine = clid;
+                ViewBag.PageDataCost = _payService.GetDailyCost(clid, req.date);
+                ViewBag.partialView = ConstMessage.View_PAY_DailyReport;
+                return View(ConstMessage.View_Index);
+            }
         }
         #endregion
         #region History
@@ -719,8 +1103,102 @@ namespace DailyLoan.Controllers
             var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
             var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
-            else { return View(); }
-            
+            else
+            {
+                List<ManagementHistory> res = await _payService.GetAllHistory(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                ViewBag.UserId = UserId;
+                ViewBag.UserAccess = UserAccess;
+                ViewBag.PageData = res;
+                ViewBag.partialView = ConstMessage.View_PAY_History;
+                return View(ConstMessage.View_Index);
+            }
+        }
+        [HttpGet]
+        [Route("GetHistoryDetail/{cid}")]
+        public async Task<ActionResult> GetHistoryDetail(int cid)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                var rtn = await _payService.GetHistory(cid);
+                string idcard = _payService.GetIDcardByCustomerId(rtn.CustomerId);
+                string userpath = Path.Combine(Environment.WebRootPath, "upload", idcard);
+                if (Directory.Exists(userpath))
+                {
+                    rtn.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("contract" + idcard + cid.ToString())).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
+                    rtn.Customer.Images = Directory.GetFiles(userpath).Where(file => Path.GetFileName(file).Contains("idcard" + idcard)).Select(file => idcard + "/" + Path.GetFileName(file)).ToArray();
+                }
+                else
+                {
+                    rtn.Images = null;
+                    rtn.Customer.Images = null;
+                }
+                string gidcard = _payService.GetIDcardByCustomerId(rtn.GuarantorId);
+                string guapath = Path.Combine(Environment.WebRootPath, "upload", gidcard);
+                if (Directory.Exists(guapath))
+                {
+                    rtn.Guaruntor.Images = Directory.GetFiles(guapath).Where(file => Path.GetFileName(file).Contains("idcard" + gidcard)).Select(file => gidcard + "/" + Path.GetFileName(file)).ToArray();
+                }
+                else
+                {
+                    rtn.Guaruntor.Images = null;
+                }
+                return Ok(rtn);
+            }
+        }
+        [HttpGet]
+        [Route("GetCutDetail/{cid}")]
+        public async Task<ActionResult> GetCutDetail(int cid)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                var rtn = await _payService.GetCutDetail(cid);
+                return Ok(rtn);
+            }
+        }
+        [HttpPost]
+        [Route("Cut")]
+        public async Task<ActionResult> Cut(CutRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                //bool isExist = _payService.isExistRequest(req.contractid,req.type);
+                bool isExist = false;
+                if (!isExist)
+                {
+                    if (await _payService.CutRequest(req.contractid,req.amount, Convert.ToInt32(UserId),req.type))
+                    {
+                        return Ok(ConstMessage.Message_Successful);
+                    }
+                    else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+        }
+        [HttpPost]
+        [Route("SearchHistory")]
+        public async Task<ActionResult> SearchHistory(ContractSearchRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                List<ManagementHistory> res = await _payService.SearchHistory(Convert.ToInt32(UserId), req);
+                ViewBag.UserId = UserId;
+                ViewBag.UserAccess = UserAccess;
+                ViewBag.PageData = res;
+                ViewBag.partialView = ConstMessage.View_PAY_History;
+                return View(ConstMessage.View_Index);
+            }
         }
         #endregion
     }

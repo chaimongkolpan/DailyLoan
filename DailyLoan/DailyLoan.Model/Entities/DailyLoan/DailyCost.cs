@@ -16,16 +16,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public double? PayOut { get; set; }
         public double? Receive { get; set; }
         public double? Allowance { get; set; }
-        public int? SalaryReceived1 { get; set; }
-        public double? Salary1 { get; set; }
-        public int? SalaryReceived2 { get; set; }
-        public double? Salary2 { get; set; }
-        public int? SalaryReceived3 { get; set; }
-        public double? Salary3 { get; set; }
-        public int? SalaryReceived4 { get; set; }
-        public double? Salary4 { get; set; }
-        public int? SalaryReceived5 { get; set; }
-        public double? Salary5 { get; set; }
         public double? Police1 { get; set; }
         public string PoliceRemark1 { get; set; }
         public double? Police2 { get; set; }
@@ -34,7 +24,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public string PoliceRemark3 { get; set; }
         public double? Gas { get; set; }
         public double? Topup { get; set; }
-        public double? PaperInk { get; set; }
         public double? Caught { get; set; }
         public double? BikeMaintenance { get; set; }
         public double? Other { get; set; }

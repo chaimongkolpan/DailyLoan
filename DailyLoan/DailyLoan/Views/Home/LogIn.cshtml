@@ -50,5 +50,21 @@
             </div>
         </div>
     </section>
+    <script>
+        $(document).ready(function () {
+            $('.toggle-password').on('click', function (e) {
+                const type = $($('.toggle-password').attr('toggle')).attr('type') === 'password' ? 'text' : 'password';
+                const eye = $($('.toggle-password').attr('toggle')).attr('type') === 'password' ? 'fa-eye-slash' : 'fa-eye';
+                $($('.toggle-password').attr('toggle')).attr('type', type);
+                if (type == 'password') {
+                    $('.toggle-password').removeClass('fa-eye-slash');
+                    $('.toggle-password').addClass('fa-eye');
+                } else {
+                    $('.toggle-password').removeClass('fa-eye');
+                    $('.toggle-password').addClass('fa-eye-slash');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
