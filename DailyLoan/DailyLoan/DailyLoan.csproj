@@ -24,6 +24,11 @@
     <ProjectReference Include="..\DailyLoan.Library\DailyLoan.Library.csproj" />
     <ProjectReference Include="..\DailyLoan.Model\DailyLoan.Model.csproj" />
     <ProjectReference Include="..\DailyLoan.Service\DailyLoan.Service.csproj" />
+    <ProjectReference Include="..\ScheduleTask\ScheduleTask.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\upload\tmp\" />
   </ItemGroup>
 
 </Project>

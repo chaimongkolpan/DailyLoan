@@ -1,7 +1,6 @@
 using DailyLoan.Model.Entities.DailyLoan;
 using DailyLoan.Repository;
 using DailyLoan.Repository.Interfaces;
-using DailyLoan.Repository.Interfaces;
 using DailyLoan.Service;
 using DailyLoan.Service.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +39,7 @@ namespace DailyLoan
                     options.UseSqlServer(Configuration.GetConnectionString("DailyLoanConnection")));
 
 
-            //services.Configure<AppsettingModel>(Configuration.GetSection("AppsettingModel"));
+            services.Configure<AppsettingModel>(Configuration.GetSection("AppsettingModel"));
             
             #region DependencyInjectionConfig
 

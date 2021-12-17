@@ -44,6 +44,7 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public virtual DbSet<UserAccess> UserAccess { get; set; }
         public virtual DbSet<UserPermission> UserPermission { get; set; }
 
+
         private readonly string _connectionString;
 
         public DailyLoanContext(string connectionString)
@@ -102,6 +103,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
 
                 entity.Property(e => e.GuarantorId).HasColumnName("GuarantorID");
+
+                entity.Property(e => e.Remark).HasMaxLength(200);
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });
@@ -201,6 +204,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.ContractId).HasColumnName("ContractID");
+
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CustomerLineId).HasColumnName("CustomerLineID");
@@ -262,6 +267,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.HouseId).HasColumnName("HouseID");
 
                 entity.Property(e => e.MinCutDay).HasColumnName("MinCut(Day)");
+
+                entity.Property(e => e.OpenDate).HasColumnType("date");
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
@@ -380,7 +387,13 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+
                 entity.Property(e => e.CustomerLineId).HasColumnName("CustomerLineID");
+
+                entity.Property(e => e.FromContractId).HasColumnName("FromContractID");
+
+                entity.Property(e => e.PayDate).HasColumnType("date");
 
                 entity.Property(e => e.Remark).HasMaxLength(500);
             });

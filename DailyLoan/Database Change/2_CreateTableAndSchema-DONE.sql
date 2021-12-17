@@ -1,3 +1,7 @@
+CREATE DATABASE DailyLoan
+COLLATE Thai_CI_AS
+Go
+/******create db end ******/
 USE [DailyLoan]
 GO
 /****** Object:  Table [dbo].[Config]    Script Date: 11/24/2021 21:34:12 ******/
@@ -67,6 +71,8 @@ CREATE TABLE [dbo].[Customer](
 	[CreateDate] [datetime] NOT NULL,
 	[UpdateBy] [int] NULL,
 	[UpdateDate] [datetime] NULL,
+	DailyCollect float(53) NULL,
+	Installment float(53) NULL
  CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -130,6 +136,8 @@ CREATE TABLE [dbo].[DailyCost](
 	[BikeMaintenance] [float] NULL,
 	[Other] [float] NULL,
 	[OtherDetail] [nvarchar](500) NULL,
+	[OtherIncome] float(53) NULL,
+	[OtherIncomeRemark] nvarchar(100) NULL,
 	[Remark] [nvarchar](500) NULL,
 	[CreateBy] [int] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
@@ -149,10 +157,8 @@ GO
 CREATE TABLE [dbo].[House](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[HouseName] [nvarchar](200) NOT NULL,
+	[Region] [nvarchar](100) NULL,
 	[Province] [nvarchar](100) NULL,
-	[District] [nvarchar](100) NULL,
-	[SubDistrict] [nvarchar](100) NULL,
-	[Address] [nvarchar](500) NULL,
 	[Status] [int] NOT NULL,
 	[Remark] [nvarchar](500) NULL,
 	[CreateBy] [int] NOT NULL,
@@ -182,6 +188,7 @@ CREATE TABLE [dbo].[Notification](
 	[UpdateDate] [datetime] NULL,
 	[HouseID] [int] NOT NULL,
 	[CustomerLineID] [int] NOT NULL,
+	[ContractID] [int] NOT NULL
  CONSTRAINT [PK_Notification] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -383,7 +390,7 @@ GO
 CREATE TABLE [dbo].[Transaction](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[ContractID] [int] NOT NULL,
-	[AgentID] [int] NOT NULL,
+	[CustomerLineID] [int] NOT NULL,
 	[Amount] [float] NULL,
 	[Type] [int] NOT NULL,
 	[Remark] [nvarchar](500) NULL,

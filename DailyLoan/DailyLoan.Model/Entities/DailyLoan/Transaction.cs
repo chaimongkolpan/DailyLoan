@@ -17,5 +17,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public string Remark { get; set; }
         public int CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
+        public DateTime? PayDate { get; set; }
+        public int? FromContractId { get; set; }
+        public int? CustomerId { get; set; }
     }
 }

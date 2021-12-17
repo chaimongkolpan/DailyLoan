@@ -69,3 +69,100 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.container {
+    overflow-x: scroll
+}
+
+
+.paginate_button a {
+    position: relative;
+    display: block;
+    color: #0d6efd;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: 0.375rem 0.75rem;
+}
+    .paginate_button a:hover {
+        z-index: 2;
+        color: #fff;
+        text-decoration: none;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    .paginate_button a:focus {
+        z-index: 3;
+        color: #fff;
+        background-color: #e9ecef;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(255,255,255,0.7);
+    }
+
+
+
+
+.paginate_button:not(:first-child) a {
+    margin-left: -1px;
+}
+
+.paginate_button.active a {
+    border-color: #dee2e6;
+    z-index: 3;
+    color: #000;
+    background-color: #ff9800;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(17 17 18 / 25%);
+}
+
+.paginate_button.disabled a {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.flex-row {
+    display: flex;
+}
+
+canvas#signature-pad {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    min-width: 310px !important;
+    min-height: 250px !important;
+}
+
+button#clear {
+    height: 100%;
+    background: #4b00ff;
+    border: 1px solid transparent;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+    button#clear span {
+        transform: rotate(90deg);
+        display: block;
+    }
+
+.fullscreen {
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 1900px !important;
+}

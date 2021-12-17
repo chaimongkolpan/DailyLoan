@@ -20,5 +20,6 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public DateTime? UpdateDate { get; set; }
         public int HouseId { get; set; }
         public int CustomerLineId { get; set; }
+        public int? ContractId { get; set; }
     }
 }

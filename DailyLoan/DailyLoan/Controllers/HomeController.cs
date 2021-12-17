@@ -1,5 +1,6 @@
 ﻿using DailyLoan.Models;
 using DailyLoan.Library;
+using DailyLoan.Library.Status;
 using DailyLoan.Model.Request.Home;
 using DailyLoan.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +50,12 @@ namespace DailyLoan.Controllers
                 HttpContext.Session.SetString(ConstMessage.Session_UserId, result.Id.ToString());
                 HttpContext.Session.SetString(ConstMessage.Session_Username, result.Username);
                 HttpContext.Session.SetString(ConstMessage.Session_UserAccess, result.UserAccess.ToString());
-                return RedirectToAction(ConstMessage.View_MNM_User, ConstMessage.Controller_Management);
+                if (result.UserAccess <= StatusUserAccess.UserAccess_Admin)
+                    return RedirectToAction(ConstMessage.View_MNM_User, ConstMessage.Controller_Management);
+                else if(result.UserAccess == StatusUserAccess.UserAccess_Audit)
+                    return RedirectToAction(ConstMessage.View_PAY_Customer, ConstMessage.Controller_Pay);
+                else
+                    return RedirectToAction(ConstMessage.View_PAY_Collector, ConstMessage.Controller_Pay);
             }
             else
             {

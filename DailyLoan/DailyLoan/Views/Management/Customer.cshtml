@@ -51,7 +51,7 @@
         <label for="isNew">เพิ่มลูกค้าใหม่</label>
     </div>
     <div class="col-sm-11 pt-1">
-        <input type="radio" id="status1" name="status" value="1">
+        <input type="radio" id="status1" checked="checked" name="status" value="1">
         <label for="status1">ดี</label>
         <input type="radio" id="status2" name="status" value="2">
         <label for="status2">แย่</label>
@@ -340,7 +340,8 @@
                 req.send(formData);
                 req.onload = function () {
                     if (req.readyState != 4 || req.status != 200) {
-                        $("#msg").text(req.responseText)
+                        alert(req.responseText);
+                        //$("#msg").text(req.responseText);
                     } else {
                         alert(req.responseText);
                         location.reload();
@@ -357,7 +358,8 @@
                 req.send();
                 req.onload = function () {
                     if (req.readyState != 4 || req.status != 200) {
-                        $("#msg").text(req.responseText)
+                        alert(req.responseText);
+                        //$("#msg").text(req.responseText)
                     } else {
                         alert(req.responseText);
                         location.reload();
@@ -459,7 +461,8 @@ else
                 req.send(formData);
                 req.onload = function () {
                     if (req.readyState != 4 || req.status != 200) {
-                        $("#msg").text(req.responseText)
+                        alert(req.responseText);
+                        //$("#msg").text(req.responseText)
                     } else {
                         alert(req.responseText);
                         location.reload();
@@ -476,7 +479,8 @@ else
                 req.send();
                 req.onload = function () {
                     if (req.readyState != 4 || req.status != 200) {
-                        $("#msg").text(req.responseText)
+                        alert(req.responseText);
+                        //$("#msg").text(req.responseText);
                     } else {
                         alert(req.responseText);
                         location.reload();

@@ -34,6 +34,7 @@ namespace DailyLoan.Library
         public const string View_PAY_Warn = "Warn";
 
         public const string Message_InValidID = "เลขประประชาชนไม่ถูกต้อง";
+        public const string Message_IdcardIsExist = "เลขประประชาชนนี้ถูกใช้ไปแล้ว";
         public const string Message_DonotHavePermission = "คุณไม่มีสิทธิ์";
         public const string Message_UploadFail = "อัพโหลดไฟล์ไม่สมบูรณ์";
         public const string Message_Successful = "สำเร็จ";
@@ -54,8 +55,8 @@ namespace DailyLoan.Library
             { "AgentRate", "5" },
             { "HouseRate", "5" },
             { "MinCutDay", "6" },
-            { "IncCutCriteria", "3" },
-            { "DecCutCriteria", "3" },
+            { "IncCutCriteria", "4" },
+            { "DecCutCriteria", "4" },
             { "DecCutPercen", "80" },
             { "SpecialRateCriteria", "3" },
             { "TotalProfit", "20" },

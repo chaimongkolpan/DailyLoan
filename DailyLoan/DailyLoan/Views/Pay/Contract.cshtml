@@ -21,10 +21,13 @@
             <i class="fa fa-search"></i>
             ค้นหา
         </button>
-        <button type="button" id="addmodal" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addcontract">
-            <i class="fa fa-plus-circle"></i>
-            เพิ่มสัญญากู้
-        </button>
+        @if (ViewBag.UserAccess != StatusUserAccess.UserAccess_Audit.ToString())
+        {
+            <button type="button" id="addmodal" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addcontract">
+                <i class="fa fa-plus-circle"></i>
+                เพิ่มสัญญากู้
+            </button>
+        }
     </div>
     <!-- The Modal addcustomer -->
     <div class="modal" id="addcontract">
@@ -62,14 +65,40 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="accordion" id="accordionPanelsStayOpenExampleAdd">
                                 <div class="accordion-item">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingThreeAdd">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeAdd" aria-expanded="true" aria-controls="panelsStayOpen-collapseThreeAdd">
+                                            ข้อมูลสัญญา
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseThreeAdd" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThreeAdd">
+                                        <div class="accordion-body">
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="addcondate">วันที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="addcondate" placeholder="วันที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="addconamount">ยอดเงินขอกู้</label>
+                                                            <input type="text" class="form-control form-control-sm" id="addconamount" placeholder="ยอดเงินขอกู้" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOneAdd">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneAdd" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneAdd">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneAdd" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneAdd">
                                             ข้อมูลคนกู้
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOneAdd" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOneAdd">
+                                    <div id="panelsStayOpen-collapseOneAdd" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOneAdd">
                                         <div class="accordion-body">
                                             <form>
                                                 <div class="form-row">
@@ -177,8 +206,8 @@
                                                     <div class="container-fluid">
                                                         <div class="row">
                                                             <div class="col pb-3">
-                                                                <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                                <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                                <div id="imgcadd" class="col pb-3">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -301,38 +330,13 @@
                                                     <div class="container-fluid">
                                                         <div class="row">
                                                             <div class="col pb-3">
-                                                                <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                                <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                                <div id="imggadd" class="col pb-3">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="panelsStayOpen-headingThreeAdd">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeAdd" aria-expanded="false" aria-controls="panelsStayOpen-collapseThreeAdd">
-                                            ข้อมูลสัญญา
-                                        </button>
-                                    </h2>
-                                    <div id="panelsStayOpen-collapseThreeAdd" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThreeAdd">
-                                        <div class="accordion-body">
-                                            <div class="form-row">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="addcondate">วันที่</label>
-                                                            <input type="text" class="form-control form-control-sm" id="addcondate" placeholder="วันที่" readonly>
-                                                        </div>
-                                                        <div class="col-md-6 pb-3">
-                                                            <label for="addconamount">ยอดเงินขอกู้</label>
-                                                            <input type="text" class="form-control form-control-sm" id="addconamount" placeholder="ยอดเงินขอกู้">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -365,12 +369,81 @@
                     <div class="card-body bg-light p-3 rounded ">
                         <div class="accordion" id="accordionPanelsStayOpenExampleView">
                             <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThreeView">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeView" aria-expanded="true" aria-controls="panelsStayOpen-collapseThreeView">
+                                        ข้อมูลสัญญา
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThreeView" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThreeView">
+                                    <div class="accordion-body">
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="viewcondate">วันที่</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewcondate" placeholder="วันที่" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="viewconamout">ยอดเงินขอกู้</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewconamount" placeholder="ยอดเงินขอกู้" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalpaytocustomer">จ่ายลูกค้า</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewpaytocustomer" placeholder="จ่ายลูกค้า" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalbounty">ค่าหัว</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewbounty" placeholder="ค่าหัว" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalcollect">หักเข้าบ้าน</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewcollect" placeholder="หักเข้าบ้าน" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalspecial">หักดอกพิเศษ</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewspecial" placeholder="หักดอกพิเศษ" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="viewconstatus">สถานะสัญญา</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewconstatus" placeholder="สถานนะสัญญา" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="viewconremark">หมายเหตุ</label>
+                                                        <input type="text" class="form-control form-control-sm" id="viewconremark" placeholder="หมายเหตุ" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div id="imgview" class="col pb-3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingOneView">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneView" aria-expanded="true" aria-controls="panelsStayOpen-collapseOneView">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneView" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneView">
                                         ข้อมูลคนกู้
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseOneView" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOneView">
+                                <div id="panelsStayOpen-collapseOneView" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOneView">
                                     <div class="accordion-body">
                                         <form>
                                             <div class="form-row">
@@ -476,9 +549,7 @@
                                             <div class="form-row">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                            <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                        <div id="imgcview" class="col pb-3">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -599,57 +670,12 @@
                                             <div class="form-row">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                            <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                        <div id="imggview" class="col pb-3">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingThreeView">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeView" aria-expanded="false" aria-controls="panelsStayOpen-collapseThreeView">
-                                        ข้อมูลสัญญา
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseThreeView" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThreeView">
-                                    <div class="accordion-body">
-                                        <div class="form-row">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-6 pb-3">
-                                                        <label for="viewcondate">วันที่</label>
-                                                        <input type="text" class="form-control form-control-sm" id="viewcondate" placeholder="วันที่" readonly>
-                                                    </div>
-                                                    <div class="col-md-6 pb-3">
-                                                        <label for="viewconamout">ยอดเงินขอกู้</label>
-                                                        <input type="text" class="form-control form-control-sm" id="viewconamount" placeholder="ยอดเงินขอกู้" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div id="imgview" class="col pb-3">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-6 pb-3">
-                                                        <label for="viewconstatus">สถานะสัญญา</label>
-                                                        <input type="text" class="form-control form-control-sm" id="viewconstatus" placeholder="สถานนะสัญญา" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -705,12 +731,97 @@
                         </div>
                         <div class="accordion" id="accordionPanelsStayOpenExampleEdit">
                             <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThreeEdit">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeEdit" aria-expanded="true" aria-controls="panelsStayOpen-collapseThreeEdit">
+                                        ข้อมูลสัญญา
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThreeEdit" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThreeEdit">
+                                    <div class="accordion-body">
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editcondate">วันที่</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editcondate" placeholder="วันที่" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editconamount">ยอดเงินขอกู้</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editconamount" placeholder="ยอดเงินขอกู้">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editconstatus">สถานะสัญญา</label>
+                                                        <select class="form-select form-select-sm" id="editconstatus" name="editconstatus" placeholder="สถานะสัญญา">
+                                                            <option value="1">รอยืนยัน</option>
+                                                            <option value="2">แจ้งเตือน</option>
+                                                            <option value="3">ปกติ</option>
+                                                            <option value="4">รอตรวจสอบผิดชำระ</option>
+                                                            <option value="5">ตรวจสอบ</option>
+                                                            <option value="6">เสีย</option>
+                                                            <option value="7">ตาย</option>
+                                                            <option value="8">ปิดสัญญา</option>
+                                                            <option value="9">ไม่อนุมัติ</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editconremark">หมายเหตุ</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editconremark" placeholder="หมายเหตุ">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalpaytocustomer">จ่ายลูกค้า</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editpaytocustomer" placeholder="จ่ายลูกค้า" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalbounty">ค่าหัว</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editbounty" placeholder="ค่าหัว" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalcollect">หักเข้าบ้าน</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editcollect" placeholder="หักเข้าบ้าน" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalspecial">หักดอกพิเศษ</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editspecial" placeholder="หักดอกพิเศษ" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col pb-3">
+                                                        <label for="inputEmail4">รูปหลักฐาน</label>
+                                                        <form enctype="multipart/form-data">
+                                                            <div class="file-loading">
+                                                                <input id="uploadfile1" name="uploadfile1" class="file" type="file" multiple>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingOneEdit">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneEdit" aria-expanded="true" aria-controls="panelsStayOpen-collapseOneEdit">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneEdit" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneEdit">
                                         ข้อมูลคนกู้
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseOneEdit" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOneEdit">
+                                <div id="panelsStayOpen-collapseOneEdit" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOneEdit">
                                     <div class="accordion-body">
                                         <form>
                                             <div class="form-row">
@@ -817,11 +928,8 @@
                                             <div class="form-row">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                            <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                        <div id="imgcedit" class="col pb-3">
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -939,66 +1047,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="form-row">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <div class="col pb-3">
-                                                            <label for="inputEmail4">รูปบัตรประชาชน</label>
-                                                            <img src="~/lib/images/user.png" style="width:80px;" class="mx-auto d-block">
+                                                        <div id="imggedit" class="col pb-3">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingThreeEdit">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeEdit" aria-expanded="false" aria-controls="panelsStayOpen-collapseThreeEdit">
-                                        ข้อมูลสัญญา
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseThreeEdit" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThreeEdit">
-                                    <div class="accordion-body">
-                                        <div class="form-row">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-6 pb-3">
-                                                        <label for="editcondate">วันที่</label>
-                                                        <input type="text" class="form-control form-control-sm" id="editcondate" placeholder="วันที่" readonly>
-                                                    </div>
-                                                    <div class="col-md-6 pb-3">
-                                                        <label for="editconamount">ยอดเงินขอกู้</label>
-                                                        <input type="text" class="form-control form-control-sm" id="editconamount" placeholder="ยอดเงินขอกู้">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-md-6 pb-3">
-                                                        <label for="editconstatus">สถานะสัญญา</label>
-                                                        <input type="text" class="form-control form-control-sm" id="editconstatus" placeholder="สถานะสัญญา" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col pb-3">
-                                                        <label for="inputEmail4">รูปหลักฐาน</label>
-                                                        <form enctype="multipart/form-data">
-                                                            <div class="file-loading">
-                                                                <input id="uploadfile1" name="uploadfile1" class="file" type="file" multiple>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1016,15 +1074,768 @@
     </div>
 </div>
 <!--end -->
-<table class="table table-hover" style="text-align: center; vertical-align: middle;">
+<!-- The Modal editcontract -->
+<div class="modal" id="editcontractwait">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:#ff9800;color:#000;">
+                <h4 class="modal-title">แก้ไขสัญญากู้</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="card-body bg-light p-3 rounded ">
+                        <!--
+                        <div class="input-group mb-3 input-group-sm">
+                            <select class="form-select form-select-sm" id="editwaitcustype" name="editwaitcustype" style="width: 90px !important; min-width:90px; max-width: 90px;">
+                                <option value="1">คนกู้</option>
+                                <option value="2">คนค้ำ</option>
+                            </select>
+                            <input type="text" class="form-control" id="editwaitidcardsearch" placeholder="เลขบัตรประชาชน">
+                            <input type="text" class="form-control" id="editwaitnamesearch" placeholder="ชื่อ-นามสกุล">
+                            <button type="button" class="btn btn-info btn-sm" id="editwaitsearch">
+                                <i class="fa fa-search"></i>
+                                ค้นหา
+                            </button>
+                        </div>
+                        <div class="accordion" id="editwaitsearchpanel">
+                            <div class="accordion-item">
+                                <div id="editwaitsearchpanelchild" class="accordion-collapse collapse" aria-labelledby="editwaitsearchitem">
+                                    <div id="editwaitsearchitem" class="accordion-body">
+                                    </div>
+                                    <label for="inputEmail4">เลือกลูกค้า</label>
+                                    <select class="form-select form-select-sm" id="editwaitsearchitem" name="editwaitsearchitem">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        <div class="accordion" id="accordionPanelsStayOpenExampleEdit">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThreeEdit">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeEdit" aria-expanded="true" aria-controls="panelsStayOpen-collapseThreeEdit">
+                                        ข้อมูลสัญญา
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThreeEdit" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThreeEdit">
+                                    <div class="accordion-body">
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editwaitcondate">วันที่</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editwaitcondate" placeholder="วันที่" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editwaitconamount">ยอดเงินขอกู้</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editwaitconamount" placeholder="ยอดเงินขอกู้" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editwaitconstatus">สถานะสัญญา</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editwaitconstatus" placeholder="สถานะสัญญา" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editwaitcontype">ประเภทสัญญา</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editwaitcontype" placeholder="ประเภทสัญญา" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingOneEdit">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneEdit" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneEdit">
+                                        ข้อมูลคนกู้
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOneEdit" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOneEdit">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="hidden" id="editwaitcid" />
+                                                            <label for="editwaitfirstname">ชื่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitfirstname" placeholder="ชื่อ" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitlastname">นามสกุล</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitlastname" placeholder="นามสกุล" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitnickname">ชื่อเล่น</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitnickname" placeholder="ชื่อเล่น" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitidcard">เลขบัตรประจำตัวประชาชน</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitphone1">เบอร์โทร 1</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitphone1" placeholder="เบอร์โทร 1" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitphone2">เบอร์โทร 2</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitphone2" placeholder="เบอร์โทร 2" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editwaithouse">บ้าน</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editwaithouse" placeholder="" readonly>
+                                                            </div>
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editwaitcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editwaitcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editwaitcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editwaitcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitaddress">สถานที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitshortaddress">สถานที่ย่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitshortaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="radio" id="editwaitstatus1" name="editwaitstatus" value="1" disabled>
+                                                            <label for="editwaitstatus1">ดี</label>
+                                                            <input type="radio" id="editwaitstatus2" name="editwaitstatus" value="2" disabled>
+                                                            <label for="editwaitstatus2">แย่</label>
+                                                            <input type="radio" id="editwaitstatus3" name="editwaitstatus" value="3" disabled>
+                                                            <label for="editwaitstatus3">เสีย</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="imgceditwait" class="col pb-3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingTwoEdit">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwoEdit" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwoEdit">
+                                        ข้อมูลคนค้ำ
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwoEdit" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwoEdit">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="hidden" id="editwaitgid" />
+                                                            <label for="editwaitfirstname">ชื่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgfirstname" placeholder="ชื่อ" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitlastname">นามสกุล</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitglastname" placeholder="นามสกุล" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitnickname">ชื่อเล่น</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgnickname" placeholder="ชื่อเล่น" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitidcard">เลขบัตรประจำตัวประชาชน</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitphone1">เบอร์โทร 1</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgphone1" placeholder="เบอร์โทร 1" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitphone2">เบอร์โทร 2</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgphone2" placeholder="เบอร์โทร 2" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editwaithouse">บ้าน</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editwaitghouse" placeholder="" readonly>
+                                                            </div>
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editwaitcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editwaitgcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editwaitcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editwaitgcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitaddress">สถานที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editwaitshortaddress">สถานที่ย่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editwaitgshortaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="radio" id="editwaitgstatus1" name="editwaitgstatus" value="1" disabled>
+                                                            <label for="editwaitgstatus1">ดี</label>
+                                                            <input type="radio" id="editwaitgstatus2" name="editwaitgstatus" value="2" disabled>
+                                                            <label for="editwaitgstatus2">แย่</label>
+                                                            <input type="radio" id="editwaitgstatus3" name="editwaitgstatus" value="3" disabled>
+                                                            <label for="editwaitgstatus3">เสีย</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="imggeditwait" class="col pb-3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <input type="hidden" id="editwaitid" />
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="approve();">
+                    อนุมัติ
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#denymodal">
+                    ไม่อนุมัติ
+                </button>&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end -->
+<!-- The Modal denymodal -->
+<div class="modal" id="denymodal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:#ff9800;color:#000;">
+                <h4 class="modal-title">ไม่อนุมัติสัญญา</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 pb-3">
+                                <label for="editnormalconstatus">เหตุผลการปฏิเสธ</label>
+                                <input type="text" class="form-control form-control-sm" id="denyremark" placeholder="เหตุผลการปฏิเสธ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="deny()" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- The Modal editnormalcontract -->
+<div class="modal" id="editcontractnormal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:#ff9800;color:#000;">
+                <h4 class="modal-title">แก้ไขสัญญากู้</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="card-body bg-light p-3 rounded ">
+                        <div class="accordion" id="accordionPanelsStayOpenExampleEdit">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThreeEdit">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThreeEdit" aria-expanded="true" aria-controls="panelsStayOpen-collapseThreeEdit">
+                                        ข้อมูลสัญญา
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThreeEdit" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThreeEdit">
+                                    <div class="accordion-body">
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editnormalcondate">วันที่</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalcondate" placeholder="วันที่" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editnormalconamount">ยอดเงินขอกู้</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalconamount" placeholder="ยอดเงินขอกู้" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editnormalconstatus">สถานะสัญญา</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalconstatus" placeholder="สถานะสัญญา" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 pb-3">
+                                                        <label for="editnormalconremark">หมายเหตุ</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalconremark" placeholder="หมายเหตุ" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalpaytocustomer">จ่ายลูกค้า</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalpaytocustomer" placeholder="จ่ายลูกค้า" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalbounty">ค่าหัว</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalbounty" placeholder="ค่าหัว" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalcollect">หักเข้าบ้าน</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalcollect" placeholder="หักเข้าบ้าน" readonly>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-4 pb-3">
+                                                        <label for="editnormalspecial">หักดอกพิเศษ</label>
+                                                        <input type="text" class="form-control form-control-sm" id="editnormalspecial" placeholder="หักดอกพิเศษ" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-12 pb-3">
+                                                        <label for="inputEmail4">รูปหลักฐาน</label>
+                                                        <form enctype="multipart/form-data">
+                                                            <div class="file-loading">
+                                                                <input id="uploadfile2" name="uploadfile2" class="file" type="file" multiple>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-12 pb-3">
+                                                        <img id="sign" style="width:90%;display:none;" />
+                                                        <button type="button" id="opensign" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signature">เพิ่มลายเซ็นต์</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingOneEdit">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOneEdit" aria-expanded="false" aria-controls="panelsStayOpen-collapseOneEdit">
+                                        ข้อมูลคนกู้
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOneEdit" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOneEdit">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="hidden" id="editnormalcid" />
+                                                            <label for="editnormalfirstname">ชื่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalfirstname" placeholder="ชื่อ" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormallastname">นามสกุล</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormallastname" placeholder="นามสกุล" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalnickname">ชื่อเล่น</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalnickname" placeholder="ชื่อเล่น" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalidcard">เลขบัตรประจำตัวประชาชน</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalphone1">เบอร์โทร 1</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalphone1" placeholder="เบอร์โทร 1" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalphone2">เบอร์โทร 2</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalphone2" placeholder="เบอร์โทร 2" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editnormalhouse">บ้าน</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editnormalhouse" placeholder="" readonly>
+                                                            </div>
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editnormalcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editnormalcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editnormalcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editnormalcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormaladdress">สถานที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormaladdress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalshortaddress">สถานที่ย่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalshortaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="radio" id="editnormalstatus1" name="editnormalstatus" value="1" disabled>
+                                                            <label for="editnormalstatus1">ดี</label>
+                                                            <input type="radio" id="editnormalstatus2" name="editnormalstatus" value="2" disabled>
+                                                            <label for="editnormalstatus2">แย่</label>
+                                                            <input type="radio" id="editnormalstatus3" name="editnormalstatus" value="3" disabled>
+                                                            <label for="editnormalstatus3">เสีย</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="imgceditnormal" class="col pb-3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingTwoEdit">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwoEdit" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwoEdit">
+                                        ข้อมูลคนค้ำ
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwoEdit" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwoEdit">
+                                    <div class="accordion-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="hidden" id="editnormalgid" />
+                                                            <label for="editnormalfirstname">ชื่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgfirstname" placeholder="ชื่อ" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormallastname">นามสกุล</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalglastname" placeholder="นามสกุล" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalnickname">ชื่อเล่น</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgnickname" placeholder="ชื่อเล่น" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalidcard">เลขบัตรประจำตัวประชาชน</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgidcard" placeholder="เลขบัตรประจำตัวประชาชน" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalphone1">เบอร์โทร 1</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgphone1" placeholder="เบอร์โทร 1" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalphone2">เบอร์โทร 2</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgphone2" placeholder="เบอร์โทร 2" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editnormalhouse">บ้าน</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editnormalghouse" placeholder="" readonly>
+                                                            </div>
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editnormalcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editnormalgcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+                                            {
+                                                <div class="form-row">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb-3">
+                                                                <label for="editnormalcustomerline">สาย</label>
+                                                                <input type="text" class="form-control form-control-sm" id="editnormalgcustomerline" placeholder="" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormaladdress">สถานที่</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                        <div class="col-md-6 pb-3">
+                                                            <label for="editnormalshortaddress">สถานที่ย่อ</label>
+                                                            <input type="text" class="form-control form-control-sm" id="editnormalgshortaddress" placeholder="สถานที่" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6 pb-3">
+                                                            <input type="radio" id="editnormalgstatus1" name="editnormalgstatus" value="1" disabled>
+                                                            <label for="editnormalgstatus1">ดี</label>
+                                                            <input type="radio" id="editnormalgstatus2" name="editnormalgstatus" value="2" disabled>
+                                                            <label for="editnormalgstatus2">แย่</label>
+                                                            <input type="radio" id="editnormalgstatus3" name="editnormalgstatus" value="3" disabled>
+                                                            <label for="editnormalgstatus3">เสีย</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="imggeditnormal" class="col pb-3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <input type="hidden" id="editnormalid" />
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="savenormal()" data-bs-dismiss="modal">บันทึก</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end -->
+<div class="modal" id="signature">
+    <div class="modal-dialog fullscreen">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:#ff9800;color:#000;">
+                <h4 class="modal-title">ลายเซ็นต์</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="flex-row">
+                    <div style="border: 1px solid #4b00ff; border-right: 0; width: 100%; height: 100%;">
+                        <canvas id="signature-pad" ></canvas>
+                    </div>
+                    <div class="clear-btn">
+                        <button id="clear"><span> ล้าง </span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="savesignature" data-bs-toggle="modal" data-bs-target="#editcontractnormal">บันทึก</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#editcontractnormal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div><!--end signature -->
+<table id="table" class="table table-hover" style="text-align: center; vertical-align: middle;">
     <thead>
         <tr>
+            <th style="display:none;" scope="col">#</th>
             <th scope="col">#</th>
             <th scope="col">เลขที่สัญญา</th>
             <th scope="col">ชื่อ</th>
             <th scope="col">นามสกุล</th>
             <th scope="col">สถานที่</th>
             <th scope="col">สถานะ</th>
+            <th scope="col">ประเภท</th>
             @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
             {
                 <th scope="col">บ้าน</th>
@@ -1039,15 +1850,19 @@
     <tbody>
         @if (ViewBag.PageData.Count > 0)
         {
+            var i = 1;
             foreach (var items in ViewBag.PageData)
             {
-                <tr class='clickable-row'>
-                    <th scope="row">@items.Id</th>
+                var redcard = (items.Status == ContractStatus.StatusContract_WaitConfirm ? "btn-danger" : "");
+                <tr class='clickable-row @redcard'>
+                    <th style="display:none;" scope="row">@items.Id</th>
+                    <th>@i</th>
                     <td>@items.ContractId</td>
                     <td>@items.Customer.Firstname</td>
                     <td>@items.Customer.Lastname</td>
                     <td>@items.Customer.Address</td>
                     <td>@items.StatusText</td>
+                    <td>@items.TypeText</td>
                     @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
                     {
                         <td>@items.Customer.HouseText</td>
@@ -1057,40 +1872,41 @@
                         <td>@items.Customer.CustomerLineText</td>
                     }
                     <td>
-                        <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewcontract">
+                        <button type="button" class="btn btn-primary btn-sm btn-view" style="border:solid 1px #fff;" data-bs-toggle="modal" data-bs-target="#viewcontract">
                             <i class="fa fa-eye"></i>
                             ดู
                         </button>
-                        @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                        @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin && ContractStatus.StatusContract_WaitConfirm != items.Status)
                         {
-                            <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#editcontract">
+                            <button type="button" class="btn btn-warning btn-sm btn-edit" style="border:solid 1px #fff;" data-bs-toggle="modal" data-bs-target="#editcontract">
                                 <i class="fa fa-pen-square"></i>
                                 แก้ไข
                             </button>
                         }
-                        @if (int.Parse(ViewBag.UserAccess) == StatusUserAccess.UserAccess_Agent && ContractStatus.StatusContract_WaitConfirm == items.Status)
+                        @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin && ContractStatus.StatusContract_WaitConfirm == items.Status)
                         {
-                            <button type="button" class="btn btn-warning btn-sm btn-editcontractwait" data-bs-toggle="modal" data-bs-target="#editcontractwait">
+                            <button type="button" class="btn btn-warning btn-sm btn-editcontractwait" style="border:solid 1px #fff;" data-bs-toggle="modal" data-bs-target="#editcontractwait">
                                 <i class="fa fa-pen-square"></i>
-                                แก้ไข
+                                ดูคำขอ
                             </button>
                         }
                         @if (int.Parse(ViewBag.UserAccess) == StatusUserAccess.UserAccess_Agent && ContractStatus.StatusContract_Normal == items.Status)
                         {
-                            <button type="button" class="btn btn-warning btn-sm btn-editcontractnormal" data-bs-toggle="modal" data-bs-target="#editcontractnormal">
+                            <button type="button" class="btn btn-warning btn-sm btn-editcontractnormal" style="border:solid 1px #fff;" data-bs-toggle="modal" data-bs-target="#editcontractnormal">
                                 <i class="fa fa-pen-square"></i>
-                                แก้ไข
+                                ใส่หลักฐาน
                             </button>
                         }
-                        @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                        @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
                         {
-                            <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#delcontract">
+                            <button type="button" class="btn btn-danger btn-sm btn-delete" style="border:solid 1px #fff;" data-bs-toggle="modal" data-bs-target="#delcontract">
                                 <i class="fa fa-trash-alt"></i>
                                 ลบ
                             </button>
                         }
                     </td>
                 </tr>
+                i++;
             }
         }
     </tbody>
@@ -1120,15 +1936,7 @@
     </div>
 </div>
 <!--end -->
-<nav aria-label="Page navigation">
-    <ul class="pagination ">
-        <li class="page-item"><a class="page-link" href="#">ก่อนหน้า</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">ถัดไป</a></li>
-    </ul>
-</nav>
+
 <input type="hidden" id="uploaded0" />
 <input type="hidden" id="uploaded1" />
 <input type="hidden" id="uploaded2" />
@@ -1145,6 +1953,7 @@
     <input type="text" id="faddress" name="Address">
     <input type="text" id="fidcard" name="Idcard">
 </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.3.5/signature_pad.min.js" integrity="sha512-kw/nRM/BMR2XGArXnOoxKOO5VBHLdITAW00aG8qK4zBzcLVZ4nzg7/oYCaoiwc8U9zrnsO9UHqpyljJ8+iqYiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
     var root = '@Url.Content("~/")';
     var useraccess = '@ViewBag.UserAccess';
@@ -1152,11 +1961,40 @@
     var admin = '@StatusUserAccess.UserAccess_Admin';
     var audit = '@StatusUserAccess.UserAccess_Audit';
     var agent = '@StatusUserAccess.UserAccess_Agent';
+    var normal = @ContractStatus.StatusContract_Normal;
+    var isSign = false;
+    var isSave = false;
     root = (root == '/' ? "" : root);
-    function search() {
-        let req = new XMLHttpRequest();
-        let formData = new FormData();
+    var canvas = document.getElementById("signature-pad");
+    
+    function resizeCanvas() {
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+    
+    var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(250,250,250)'
+    });
 
+    document.getElementById("clear").addEventListener('click', function () {
+        signaturePad.clear();
+    });
+    document.getElementById("savesignature").addEventListener('click', function () {
+        canvas = document.getElementById('signature-pad');
+
+        if (!canvas || !canvas.getContext) {
+            canvas.parentNode.removeChild(canvas);
+        } else {
+            $("#sign").attr("src", canvas.toDataURL());
+            $("#sign").show();
+            isSign = true;
+        }
+    });
+    function search() {
         $("#ffirstname").val($("#searchfname").val());
         $("#flastname").val($("#searchlname").val());
         $("#faddress").val($("#searchaddress").val());
@@ -1179,12 +2017,14 @@
             formData.append("Id", $("#editid").val());
             formData.append("CustomerId", $("#editcid").val());
             formData.append("GuarantorId", $("#editgid").val());
+            formData.append("Status", $("#editconstatus").val());
             formData.append("TotalAmount", $("#editconamount").val());
+            formData.append("Remark", $("#editconremark").val());
             req.open("POST", '/EditContract');
             req.send(formData);
             req.onload = function () {
                 if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
+                    alert(req.responseText);
                 } else {
                     alert(req.responseText);
                     location.reload();
@@ -1192,23 +2032,105 @@
             }
         }
     }
-    function saveadd() {
+    function approve() {
         let req = new XMLHttpRequest();
         let formData = new FormData();
-
-        formData.append("isNew", true);
-        formData.append("CustomerId", $("#addcid").val());
-        formData.append("GuarantorId", $("#addgid").val());
-        formData.append("TotalAmount", $("#addconamount").val());
-        req.open("POST", '/AddContract');
+        formData.append("Id", $("#editwaitid").val());
+        req.open("POST", '/Approve');
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {
-                $("#msg").text(req.responseText)
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
                 location.reload();
             }
+        }
+    }
+    function deny() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("Id", $("#editwaitid").val());
+        formData.append("Remark", $("#denyremark").val());
+        req.open("POST", '/Deny');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    function savenormal() {
+        if (isSign) {
+            $.ajax({
+                type: "POST",
+                url: "/UploadSign",
+                data: {
+                    uploadsign: canvas.toDataURL()
+                }
+            }).done(function (res) {
+                if ($("#uploadfile2")[0].files.length > 0) {
+                    isSave = true;
+                    $("#uploaded9").val(res.filename[0]);
+                    $("#uploadfile2").fileinput("upload");
+                } else {
+                    let req = new XMLHttpRequest();
+                    let formData = new FormData();
+                    formData.append("isNew", false);
+                    formData.append("Id", $("#editnormalid").val());
+                    formData.append("CustomerId", $("#editnormalcid").val());
+                    formData.append("uploaded9", res.filename[0]);
+                    req.open("POST", '/UploadContract');
+                    req.send(formData);
+                    req.onload = function () {
+                        if (req.readyState != 4 || req.status != 200) {
+                            alert(req.responseText);
+                            //$("#msg").text(req.responseText);
+                        } else {
+                            alert(req.responseText);
+                            location.reload();
+                        }
+                    }
+                }
+            });
+        } else if ($("#uploadfile2")[0].files.length > 0) {
+            $("#uploadfile2").fileinput("upload");
+        } else {
+            alert("กรุณาใส่รูปก่อนบันทึก");
+        }
+    }
+    function saveadd() {
+        var allfill = false;
+        $('input[required]').each(function () {
+            allfill = this.value != '';
+            console.log(this.value);
+        });
+        if (allfill) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("isNew", true);
+            formData.append("CustomerId", $("#addcid").val());
+            formData.append("GuarantorId", $("#addgid").val());
+            formData.append("TotalAmount", $("#addconamount").val());
+            req.open("POST", '/AddContract');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    alert(req.responseText);
+                    //$("#msg").text(req.responseText)
+                } else {
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+        } else {
+            alert('กรุณาใส่ข้อมูลให้ครบ');
         }
     }
     var arr = null;
@@ -1235,6 +2157,12 @@
                 $("#editcustomerline").val(data.customerLineText);
                 $("#editshortaddress").val(data.shortAddress);
                 $("#editcid").val(data.id);
+                $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgcedit').empty());
+                if (data.images != null) {
+                    for (var i in data.images) {
+                        $('#imgcedit').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                    }
+                }
             } else {
                 $("#editghouse").val(data.houseText);
                 $("#editgidcard").val(data.idcard);
@@ -1253,8 +2181,66 @@
                     $("#editgstatus3").prop('checked', true);
                 $("#editgcustomerline").val(data.customerLineText);
                 $("#editgid").val(data.id);
+                $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggedit').empty());
+                if (data.images != null) {
+                    for (var i in data.images) {
+                        $('#imggedit').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                    }
+                }
             }
-        } else {
+        } else if (mode == 'editwait') {
+            $('#editwaitsearchpanelchild').removeClass('show');
+            $('#editwaitsearchitem').empty();
+            if ($('#editwaitcustype').val() == '1') {
+                $("#editwaithouse").val(data.houseText);
+                $("#editwaitidcard").val(data.idcard);
+                $("#editwaitfirstname").val(data.firstname);
+                $("#editwaitlastname").val(data.lastname);
+                $("#editwaitnickname").val(data.nickname);
+                $("#editwaitphone1").val(data.phone1);
+                $("#editwaitphone2").val(data.phone2);
+                $("#editwaitaddress").val(data.address);
+                if (data.status == 1)
+                    $("#editwaitstatus1").prop('checked', true);
+                else if (data.status == 2)
+                    $("#editwaitstatus2").prop('checked', true);
+                else if (data.status == 3)
+                    $("#editwaitstatus3").prop('checked', true);
+                $("#editwaitcustomerline").val(data.customerLineText);
+                $("#editwaitshortaddress").val(data.shortAddress);
+                $("#editwaitcid").val(data.id);
+                $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgceditwait').empty());
+                if (data.images != null) {
+                    for (var i in data.images) {
+                        $('#imgceditwait').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                    }
+                }
+            } else {
+                $("#editwaitghouse").val(data.houseText);
+                $("#editwaitgidcard").val(data.idcard);
+                $("#editwaitgfirstname").val(data.firstname);
+                $("#editwaitglastname").val(data.lastname);
+                $("#editwaitgnickname").val(data.nickname);
+                $("#editwaitgphone1").val(data.phone1);
+                $("#editwaitgphone2").val(data.phone2);
+                $("#editwaitgaddress").val(data.address);
+                $("#editwaitgshortaddress").val(data.shortAddress);
+                if (data.status == 1)
+                    $("#editwaitgstatus1").prop('checked', true);
+                else if (data.status == 2)
+                    $("#editwaitgstatus2").prop('checked', true);
+                else if (data.status == 3)
+                    $("#editwaitgstatus3").prop('checked', true);
+                $("#editwaitgcustomerline").val(data.customerLineText);
+                $("#editwaitgid").val(data.id);
+                $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggeditwait').empty());
+                if (data.images != null) {
+                    for (var i in data.images) {
+                        $('#imggeditwait').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                    }
+                }
+            }
+        }  else {
             $('#addsearchpanelchild').removeClass('show');
             $('#addsearchitem').empty();
             if ($('#addcustype').val() == '1') {
@@ -1276,6 +2262,12 @@
                 $("#addshortaddress").val(data.shortAddress);
 
                 $("#addcid").val(data.id);
+                $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgcadd').empty());
+                if (data.images != null) {
+                    for (var i in data.images) {
+                        $('#imgcadd').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                    }
+                }
             } else {
                 $("#addghouse").val(data.houseText);
                 $("#addgidcard").val(data.idcard);
@@ -1295,22 +2287,44 @@
                 $("#addgcustomerline").val(data.customerLineText);
 
                 $("#addgid").val(data.id);
+
+                $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggadd').empty());
+                if (data.images != null) {
+                    for (var i in data.images) {
+                        $('#imggadd').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                    }
+                }
             }
         }
     }
     $(document).ready(function () {
-        /** /
+        /**/
         $('#table').DataTable({
-            "info": true,
-            "pageLength": 10,
+            "ordering": false,
+            "dom": 't<"bottom"p>',
+            "info": false,
+            "pageLength": 15,
             "bLengthChange": false,
-            "initComplete": function() {
+            "language": {
+                "paginate": {
+                    "previous": "ก่อนหน้า",
+                    "next": "ถัดไป",
+                }
+            },
+            "initComplete": function () {
 
             }
         });
         /**/
+        
+        $('#signature').on('shown.bs.modal', function () {
+            resizeCanvas();
+        })
         $('#editsearchitem').on('change', function () {
             removeShow('edit', $('#editsearchitem').val());
+        });
+        $('#editwaitsearchitem').on('change', function () {
+            removeShow('editwait', $('#editwaitsearchitem').val());
         });
         $('#addsearchitem').on('change', function () {
             removeShow('add', $('#addsearchitem').val());
@@ -1366,9 +2380,47 @@
                         tmp += '<button type="button" class="btn" onclick="removeShow(\'edit\',' + i + ');">เลือก</button>';
                         tmp += '</div>';
                         ('#editsearchitem').append(tmp);*/
-                        $('#editsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        if (useraccess == agent) {
+                            $('#editsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        } else {
+                            $('#editsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + ' (สาย ' + arr[i].customerLineText + ')</option>');
+                        }
                     }
                     $('#editsearchpanelchild').addClass('show');
+                    var data = JSON.parse(req.responseText);
+
+                }
+            }
+        });
+        $('#editwaitsearch').click(function () {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append("Idcard", $("#editwaitidcardsearch").val());
+            formData.append("Name", $("#editwaitnamesearch").val());
+            req.open("POST", '/SearchCustomer');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    $("#msg").text(req.responseText)
+                } else {
+                    console.log(req.responseText);
+                    arr = JSON.parse(req.responseText);
+                    $('#editwaitsearchitem').empty();
+                    $('#editwaitsearchitem').append('<option value="0">-</option>');
+                    for (var i = 0; i < arr.length; i++) {
+                        /*var tmp = '<div><p>' + arr[i].firstname + ' ' + arr[i].lastname + '</p>';
+                        tmp += '<button type="button" class="btn" onclick="removeShow(\'editwait\',' + i + ');">เลือก</button>';
+                        tmp += '</div>';
+                        ('#editwaitsearchitem').append(tmp);*/
+                        //$('#editwaitsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        if (useraccess == agent) {
+                            $('#editwaitsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        } else {
+                            $('#editwaitsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + ' (สาย ' + arr[i].customerLineText + ')</option>');
+                        }
+                    }
+                    $('#editwaitsearchpanelchild').addClass('show');
                     var data = JSON.parse(req.responseText);
 
                 }
@@ -1395,7 +2447,12 @@
                         tmp += '<button type="button" class="btn" onclick="removeShow(\'add\',' + i + ');">เลือก</button>';
                         tmp += '</div>';
                         $('#addsearchitem').append(tmp);*/
-                        $('#addsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        //$('#addsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        if (useraccess == agent) {
+                            $('#addsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + '</option>');
+                        } else {
+                            $('#addsearchitem').append('<option value="' + i + '">' + arr[i].firstname + ' ' + arr[i].lastname + ' (สาย ' + arr[i].customerLineText + ')</option>');
+                        }
                     }
                     $('#addsearchpanelchild').addClass('show');
                 }
@@ -1409,6 +2466,7 @@
                 dataType: "json",
                 success: function (data) {
                     if (data != undefined) {
+                        //console.log(data);
                         $("#viewhouse").val(data.customer.houseText);
                         $("#viewidcard").val(data.customer.idcard);
                         $("#viewfirstname").val(data.customer.firstname);
@@ -1444,12 +2502,33 @@
                         $("#viewgcustomerline").val(data.guaruntor.customerLineText);
 
                         $("#viewconstatus").val(data.statusText);
+                        $("#viewconremark").val(data.remark);
                         $("#viewcondate").val(dateStr(data.createDate));
                         $("#viewconamount").val(data.totalAmount);
+                        $("#viewpaytocustomer").val(data.paytoCustomer);
+                        $("#viewbounty").val(data.bounty);
+                        $("#viewcollect").val(data.collect);
+                        $("#viewspecial").val(data.special);
+                        $('<label for="inputEmail4">รูปหลักฐาน</label><br />').appendTo($('#imgview').empty());
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgcview').empty());
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggview').empty());
                         if (data.images != null) {
-                            $('<label for="inputEmail4">รูปหลักฐาน</label><br />').appendTo($('#imgview').empty());
                             for (var i in data.images) {
-                                $('#imgview').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                                if (data.images[i].includes("-9.jpg")) {
+                                    $('#imgview').append('<img src="/upload/' + data.images[i] + '" style="width:200px;margin-left:20px;">');
+                                } else {
+                                    $('#imgview').append('<img src="/upload/' + data.images[i] + '" style="width:100px;margin-left:20px;">');
+                                }
+                            }
+                        }
+                        if (data.customer.images != null) {
+                            for (var i in data.customer.images) {
+                                $('#imgcview').append('<img src="/upload/' + data.customer.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                        if (data.guaruntor.images != null) {
+                            for (var i in data.guaruntor.images) {
+                                $('#imggview').append('<img src="/upload/' + data.guaruntor.images[i] + '" style="width:100px;margin-left:20px;">');
                             }
                         }
                     }
@@ -1503,9 +2582,164 @@
                             $("#editgstatus3").prop('checked', true);
                         $("#editgcustomerline").val(data.guaruntor.customerLineText);
 
-                        $("#editconstatus").val(data.statusText);
+                        $("#editconstatus").val(data.status);
+                        $("#editconremark").val(data.remark);
                         $("#editcondate").val(dateStr(data.createDate));
                         $("#editconamount").val(data.totalAmount);
+                        $("#editpaytocustomer").val(data.paytoCustomer);
+                        $("#editbounty").val(data.bounty);
+                        $("#editcollect").val(data.collect);
+                        $("#editspecial").val(data.special);
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgcedit').empty());
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggedit').empty());
+                        if (data.customer.images != null) {
+                            for (var i in data.customer.images) {
+                                $('#imgcedit').append('<img src="/upload/' + data.customer.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                        if (data.guaruntor.images != null) {
+                            for (var i in data.guaruntor.images) {
+                                $('#imggedit').append('<img src="/upload/' + data.guaruntor.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('table tbody').on('click', '.btn-editcontractwait', function () {
+            $("#editwaitid").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetContractDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#editwaithouse").val(data.customer.houseText);
+                        $("#editwaitidcard").val(data.customer.idcard);
+                        $("#editwaitfirstname").val(data.customer.firstname);
+                        $("#editwaitlastname").val(data.customer.lastname);
+                        $("#editwaitnickname").val(data.customer.nickname);
+                        $("#editwaitphone1").val(data.customer.phone1);
+                        $("#editwaitphone2").val(data.customer.phone2);
+                        $("#editwaitaddress").val(data.customer.address);
+                        if (data.customer.status == 1)
+                            $("#editwaitstatus1").prop('checked', true);
+                        else if (data.customer.status == 2)
+                            $("#editwaitstatus2").prop('checked', true);
+                        else if (data.customer.status == 3)
+                            $("#editwaitstatus3").prop('checked', true);
+                        $("#editwaitcustomerline").val(data.customer.customerLineText);
+                        $("#editwaitshortaddress").val(data.customer.shortAddress);
+
+                        $("#editwaitcid").val(data.customer.id);
+                        $("#editwaitgid").val(data.guaruntor.id);
+
+                        $("#editwaitghouse").val(data.guaruntor.houseText);
+                        $("#editwaitgidcard").val(data.guaruntor.idcard);
+                        $("#editwaitgfirstname").val(data.guaruntor.firstname);
+                        $("#editwaitglastname").val(data.guaruntor.lastname);
+                        $("#editwaitgnickname").val(data.guaruntor.nickname);
+                        $("#editwaitgphone1").val(data.guaruntor.phone1);
+                        $("#editwaitgphone2").val(data.guaruntor.phone2);
+                        $("#editwaitgaddress").val(data.guaruntor.address);
+                        $("#editwaitgshortaddress").val(data.guaruntor.shortAddress);
+                        if (data.guaruntor.status == 1)
+                            $("#editwaitgstatus1").prop('checked', true);
+                        else if (data.guaruntor.status == 2)
+                            $("#editwaitgstatus2").prop('checked', true);
+                        else if (data.guaruntor.status == 3)
+                            $("#editwaitgstatus3").prop('checked', true);
+                        $("#editwaitgcustomerline").val(data.guaruntor.customerLineText);
+
+                        $("#editwaitconstatus").val(data.statusText);
+                        $("#editwaitcontype").val(data.typeText);
+                        $("#editwaitcondate").val(dateStr(data.createDate));
+                        $("#editwaitconamount").val(data.totalAmount);
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgceditwait').empty());
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggeditwait').empty());
+                        if (data.customer.images != null) {
+                            for (var i in data.customer.images) {
+                                $('#imgceditwait').append('<img src="/upload/' + data.customer.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                        if (data.guaruntor.images != null) {
+                            for (var i in data.guaruntor.images) {
+                                $('#imggeditwait').append('<img src="/upload/' + data.guaruntor.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                    }
+                },
+                error: function (e) { console.log(e) }
+            });
+        });
+        $('table tbody').on('click', '.btn-editcontractnormal', function () {
+            $("#editnormalid").val($(this).closest('tr').find('th').eq(0).text());
+            $.ajax({
+                type: "GET",
+                url: root + "/GetContractDetail/" + $(this).closest('tr').find('th').eq(0).text(),
+                contentType: "application/json; charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                    if (data != undefined) {
+                        $("#editnormalhouse").val(data.customer.houseText);
+                        $("#editnormalidcard").val(data.customer.idcard);
+                        $("#editnormalfirstname").val(data.customer.firstname);
+                        $("#editnormallastname").val(data.customer.lastname);
+                        $("#editnormalnickname").val(data.customer.nickname);
+                        $("#editnormalphone1").val(data.customer.phone1);
+                        $("#editnormalphone2").val(data.customer.phone2);
+                        $("#editnormaladdress").val(data.customer.address);
+                        if (data.customer.status == 1)
+                            $("#editnormalstatus1").prop('checked', true);
+                        else if (data.customer.status == 2)
+                            $("#editnormalstatus2").prop('checked', true);
+                        else if (data.customer.status == 3)
+                            $("#editnormalstatus3").prop('checked', true);
+                        $("#editnormalcustomerline").val(data.customer.customerLineText);
+                        $("#editnormalshortaddress").val(data.customer.shortAddress);
+
+                        $("#editnormalcid").val(data.customer.id);
+                        $("#editnormalgid").val(data.guaruntor.id);
+
+                        $("#editnormalghouse").val(data.guaruntor.houseText);
+                        $("#editnormalgidcard").val(data.guaruntor.idcard);
+                        $("#editnormalgfirstname").val(data.guaruntor.firstname);
+                        $("#editnormalglastname").val(data.guaruntor.lastname);
+                        $("#editnormalgnickname").val(data.guaruntor.nickname);
+                        $("#editnormalgphone1").val(data.guaruntor.phone1);
+                        $("#editnormalgphone2").val(data.guaruntor.phone2);
+                        $("#editnormalgaddress").val(data.guaruntor.address);
+                        $("#editnormalgshortaddress").val(data.guaruntor.shortAddress);
+                        if (data.guaruntor.status == 1)
+                            $("#editnormalgstatus1").prop('checked', true);
+                        else if (data.guaruntor.status == 2)
+                            $("#editnormalgstatus2").prop('checked', true);
+                        else if (data.guaruntor.status == 3)
+                            $("#editnormalgstatus3").prop('checked', true);
+                        $("#editnormalgcustomerline").val(data.guaruntor.customerLineText);
+
+                        $("#editnormalconstatus").val(data.statusText);
+                        $("#editnormalconremark").val(data.remark);
+                        $("#editnormalcondate").val(dateStr(data.createDate));
+                        $("#editnormalconamount").val(data.totalAmount);
+                        $("#editnormalpaytocustomer").val(data.paytoCustomer);
+                        $("#editnormalbounty").val(data.bounty);
+                        $("#editnormalcollect").val(data.collect);
+                        $("#editnormalspecial").val(data.special);
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imgceditnormal').empty());
+                        $('<label for="inputEmail4">รูปบัตรประชาชน</label><br />').appendTo($('#imggeditnormal').empty());
+                        if (data.customer.images != null) {
+                            for (var i in data.customer.images) {
+                                $('#imgceditnormal').append('<img src="/upload/' + data.customer.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
+                        if (data.guaruntor.images != null) {
+                            for (var i in data.guaruntor.images) {
+                                $('#imggeditnormal').append('<img src="/upload/' + data.guaruntor.images[i] + '" style="width:100px;margin-left:20px;">');
+                            }
+                        }
                     }
                 },
                 error: function (e) { console.log(e) }
@@ -1546,7 +2780,7 @@
         dropZoneEnabled: true,
         browseOnZoneClick: true,
         minFileCount: 1,
-        maxFileCount: 10,
+        maxFileCount: 9,
         allowedFileTypes: ['image'],
         allowedFileExtensions: ["jpg", "png", "jpeg"],
         initialPreviewAsData: true,
@@ -1566,6 +2800,8 @@
             formData.append("CustomerId", $("#editcid").val());
             formData.append("GuarantorId", $("#editgid").val());
             formData.append("TotalAmount", $("#editconamount").val());
+            formData.append("Status", $("#editconstatus").val());
+            formData.append("Remark", $("#editconremark").val());
             for (var i in response.filename) {
                 $('#uploaded' + i).val(response.filename[i]);
                 formData.append("uploaded" + i, response.filename[i]);
@@ -1574,12 +2810,69 @@
             req.send(formData);
             req.onload = function () {
                 if (req.readyState != 4 || req.status != 200) {
-                    $("#msg").text(req.responseText)
+                    alert(req.responseText);
+                //$("#msg").text(req.responseText);
                 } else {
                     alert(req.responseText);
                     location.reload();
                 }
             }
+        }
+    });
+    $("#uploadfile2").fileinput({
+        language: "th",
+        theme: 'fas',
+        showCaption: false,
+        showPreview: true,
+        showUpload: false,
+        showRemove: true,
+        fileActionSettings: {
+            showDownload: false,
+            showUpload: false,
+            showRemove: true
+        },
+        uploadAsync: false,
+        showCancel: false,
+        dropZoneEnabled: true,
+        browseOnZoneClick: true,
+        minFileCount: 1,
+        maxFileCount: 9,
+        allowedFileTypes: ['image'],
+        allowedFileExtensions: ["jpg", "png", "jpeg"],
+        initialPreviewAsData: true,
+        overwriteInitial: true,
+        uploadUrl: '/UploadFileContract',
+        deleteUrl: "/delete"
+    }).on('fileuploaderror', function (event, data, msg) {
+        console.log('File Upload Error', 'ID: ' + data.fileId + ', Thumb ID: ' + data.previewId, msg);
+    }).on('filebatchuploadsuccess', function (event, data) {
+        var form = data.form, files = data.files, extra = data.extra,
+            response = data.response, reader = data.reader;
+        if (!response.error) {
+            let req = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append("isNew", false);
+            formData.append("Id", $("#editnormalid").val());
+            formData.append("CustomerId", $("#editnormalcid").val());
+            for (var i in response.filename) {
+                $('#uploaded' + i).val(response.filename[i]);
+                formData.append("uploaded" + i, response.filename[i]);
+            }
+            if (isSave) formData.append("uploaded9", $("#uploaded9").val());
+            req.open("POST", '/UploadContract');
+            req.send(formData);
+            req.onload = function () {
+                if (req.readyState != 4 || req.status != 200) {
+                    alert(req.responseText);
+                //$("#msg").text(req.responseText);
+                } else {
+                    //upload sign
+                    alert(req.responseText);
+                    location.reload();
+                }
+            }
+            //alert('สำเร็จ');
+            //location.reload();
         }
     });
 </script>
