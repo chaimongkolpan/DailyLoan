@@ -803,18 +803,19 @@ namespace DailyLoan.Repository
             var result = new DailyReportResponse();
             var data = await (from tran in _DailyLoanContext.Transaction.Where(x => x.CreateDate.Date == date.Date && x.CustomerLineId == uid)
                                 select tran ).ToListAsync();
-            double total = 0;
+            double total = 0, sumexpense = 0;
             if (cost != null)
             {
                 total = (double)(cost.PayOut == null ? 0 : cost.PayOut);
-                total -= (double)(cost.Police1 == null ? 0 : cost.Police1);
-                total -= (double)(cost.Police2 == null ? 0 : cost.Police2);
-                total -= (double)(cost.Police3 == null ? 0 : cost.Police3);
-                total -= (double)(cost.Other == null ? 0 : cost.Other);
-                total -= (double)(cost.Caught == null ? 0 : cost.Caught);
-                total -= (double)(cost.Topup == null ? 0 : cost.Topup);
-                total -= (double)(cost.Gas == null ? 0 : cost.Gas);
-                total -= (double)(cost.BikeMaintenance == null ? 0 : cost.BikeMaintenance);
+                sumexpense += (double)(cost.Police1 == null ? 0 : cost.Police1);
+                sumexpense += (double)(cost.Police2 == null ? 0 : cost.Police2);
+                sumexpense += (double)(cost.Police3 == null ? 0 : cost.Police3);
+                sumexpense += (double)(cost.Other == null ? 0 : cost.Other);
+                sumexpense += (double)(cost.Caught == null ? 0 : cost.Caught);
+                sumexpense += (double)(cost.Topup == null ? 0 : cost.Topup);
+                sumexpense += (double)(cost.Gas == null ? 0 : cost.Gas);
+                sumexpense += (double)(cost.BikeMaintenance == null ? 0 : cost.BikeMaintenance);
+                total -= sumexpense;
             }
             var collect = await (from con in _DailyLoanContext.Contract
                                  join cus in _DailyLoanContext.Customer on con.CustomerId equals cus.Id
@@ -842,7 +843,8 @@ namespace DailyLoan.Repository
                     collect = collectfrom,
                     collectall = data.Where(x => x.Type == TransactionType_Status.CollectFromCustomer|| x.Type == TransactionType_Status.CollectFromCustomerCut || x.Type == TransactionType_Status.SaveCollectFromCustomer).Select(x => x.Amount).Sum(),
                     mustcollect = collect.Select(x => x.Installment).Sum(),
-                    mustreturn = total
+                    mustreturn = total,
+                    sumexpense = sumexpense
                 };
             }
             return result;

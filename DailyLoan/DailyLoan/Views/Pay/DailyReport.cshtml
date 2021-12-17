@@ -90,12 +90,16 @@
                                     <input type="text" class="form-control form-control-sm" id="totalamount" placeholder="ยอดที่ต้องเก็บได้" value="@ViewBag.PageData.mustcollect" readonly>
                                 </div>
                                 <div class="col-md-6 pb-3">
+                                    <label for="inputEmail4">ยอดที่เก็บได้จริง</label>
+                                    <input type="text" class="form-control form-control-sm" id="collectedall" placeholder="ยอดที่เก็บได้" value="@ViewBag.PageData.collect" readonly>
+                                </div>
+                                <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">ยอดที่เก็บได้(รวม เปิด+ตัด)</label>
                                     <input type="text" class="form-control form-control-sm" id="collected" placeholder="ยอดที่เก็บได้" value="@ViewBag.PageData.collectall" readonly>
                                 </div>
                                 <div class="col-md-6 pb-3">
-                                    <label for="inputEmail4">ยอดที่เก็บได้จริง</label>
-                                    <input type="text" class="form-control form-control-sm" id="collected" placeholder="ยอดที่เก็บได้" value="@ViewBag.PageData.collect" readonly>
+                                    <label for="inputEmail4">รวมค่าใช้จ่าย</label>
+                                    <input type="text" class="form-control form-control-sm" id="sumexpense" placeholder="รวมค่าใช้จ่าย" value="@ViewBag.PageData.sumexpense" readonly>
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">ยอดคงเหลือ</label>

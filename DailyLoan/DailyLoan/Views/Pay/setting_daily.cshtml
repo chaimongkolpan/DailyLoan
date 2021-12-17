@@ -90,6 +90,20 @@
                                         <input type="text" class="form-control form-control-sm" id="bounty" placeholder="ค่าเบี้ยเลี้ยงสาย" readonly>
                                     </div>
                                     <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">ยอดที่ต้องเก็บได้</label>
+                                        <input type="text" class="form-control form-control-sm" id="mustcollect" placeholder="ยอดที่ต้องเก็บได้" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">ยอดที่เก็บได้(รวม เปิด+ตัด)</label>
+                                        <input type="text" class="form-control form-control-sm" id="collectall" placeholder="ยอดที่เก็บได้" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">ยอดที่เก็บได้จริง</label>
+                                        <input type="text" class="form-control form-control-sm" id="collect" placeholder="ยอดที่เก็บได้" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
                                         <label for="allowance">รวมรายจ่าย</label>
                                         <input type="text" class="form-control form-control-sm" id="sumexpense" placeholder="รวมรายจ่าย" readonly>
                                     </div>
@@ -358,6 +372,9 @@
                             $("#bounty").val(data1.bounty);
                             $("#sumexpense").val(data1.sumexpense);
                             $("#paytocustomer").val(data1.paytocustomer);
+                            $("#mustcollect").val(data1.mustcollect);
+                            $("#collectall").val(data1.collectall);
+                            $("#collect").val(data1.collect);
                             $('#inputpane').show();
                             /*
                             $('#salaryremark1').empty();
@@ -448,6 +465,9 @@
                                 $("#bounty").val(data1.bounty);
                                 $("#sumexpense").val(data1.sumexpense);
                                 $("#paytocustomer").val(data1.paytocustomer);
+                                $("#mustcollect").val(data1.mustcollect);
+                                $("#collectall").val(data1.collectall);
+                                $("#collect").val(data1.collect);
                                 $('#inputpane').show();
                                 /*
                                 $('#salaryremark1').empty();
