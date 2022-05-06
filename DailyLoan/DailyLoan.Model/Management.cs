@@ -32,6 +32,7 @@ namespace DailyLoan.Model
     }
     public class ManagementContract : Contract
     {
+        public bool iscollect { get; set; }
         public string StatusText { get; set; }
         public string TypeText { get; set; }
         public double Bounty { get; set; }
@@ -137,5 +138,66 @@ namespace DailyLoan.Model
     {
         public Dictionary<string,string> Configs { get; set; }
         public List<SpecialRate> SpecialRates { get; set; }
+    }
+    public class MonthlyInput : MonthlyCost
+    {
+        public List<UserSalary> Users { get; set; }
+        public string jsonUser { get; set; }
+    }
+    public class UserSalary
+    {
+        public int HouseId { get; set; }
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public int Useraccess { get; set; }
+        public string UseraccessText { get; set; }
+        public int Workdays { get; set; }
+        public double TotalCollect { get; set; }
+        public double Salary { get; set; }
+        public double Performance { get; set; }
+    }
+    public class MonthlyReport
+    {
+        public string Name { get; set; }
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
+        public double salary { get; set; }
+        public double houserent { get; set; }
+        public double water { get; set; }
+        public double electric { get; set; }
+        public double internet { get; set; }
+        public double paperink { get; set; }
+        public double godfee { get; set; }
+        public double banquet { get; set; }
+        public double vehicle { get; set; }
+        public double other { get; set; }
+        public double totalhouseexpenses { get; set; }
+        public List<CustomerLineMonthly> customerlines { get; set; }
+    }
+    public class CustomerLineMonthly
+    {
+        public string Name { get; set; }
+        public double paytocustomer { get; set; }
+        public double mustcollect { get; set; }
+        public double collect { get; set; }
+        public double otherincome { get; set; }
+        public double loss { get; set; }
+        public double profit { get; set; }
+        public double allowance { get; set; }
+        public double bounty { get; set; }
+        public double salary1 { get; set; }
+        public double salary2 { get; set; }
+        public double totalemploy { get; set; }
+        public double bike { get; set; }
+        public double gas { get; set; }
+        public double topup { get; set; }
+        public double police { get; set; }
+        public double caught { get; set; }
+        public double other { get; set; }
+        public double totalexpenses { get; set; }
+        public double cut { get; set; }
+        public double open { get; set; }
+        public double close { get; set; }
+        public double grandtotal { get; set; }
     }
 }

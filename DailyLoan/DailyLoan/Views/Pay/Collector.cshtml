@@ -1,8 +1,13 @@
 ﻿@using DailyLoan.Library.Status;
+<style>
+    .iscollect{
+        background-color : #00ff90;
+    }
+</style>
 <div class="card-body bg-light p-3 rounded ">
     <div class="input-group mb-3 input-group-sm">
         <input type="text" id="searchidcard" class="form-control" placeholder="เลขบัตรประชาชน">
-        <input type="text" id="searchfnameaddress" class="form-control" placeholder="สถานที่">
+        <input type="text" id="searchaddress" class="form-control" placeholder="สถานที่">
     </div>
     <div class="input-group mb-3 input-group-sm">
         <input type="text" id="searchfname" class="form-control" placeholder="ชื่อ">
@@ -467,7 +472,8 @@
             var i = 1;
             foreach (var items in ViewBag.PageData)
             {
-        <tr class='clickable-row'>
+                var iscol = items.iscollect ? "iscollect" : "";
+        <tr class='clickable-row @iscol'>
             <th style="display:none;" scope="row">@items.Id</th>
             <th>@i</th>
             <td>@items.Customer.Firstname</td>
@@ -502,6 +508,7 @@
     <input type="text" id="faddress" name="Address">
 </form>
 <script type="text/javascript">
+    var table = null;
     var root = '@Url.Content("~/")';
     var useraccess = '@ViewBag.UserAccess';
     var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
@@ -518,17 +525,30 @@
         var arr = dat.split('T');
         return arr[0]
     }
+    function getQuery() {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        if (params.searchfname != null && params.searchfname != undefined) $("#searchfname").val(params.searchfname);
+        if (params.searchlname != null && params.searchlname != undefined) $("#searchlname").val(params.searchlname);
+        if (params.searchidcard != null && params.searchidcard != undefined) $("#searchidcard").val(params.searchidcard);
+        if (params.searchaddress != null && params.searchaddress != undefined) $("#searchaddress").val(params.searchaddress);
+        if (params.page != null && params.page != undefined) table.page(parseInt(params.page)).draw(false);
+    }
     function search() {
         $("#ffirstname").val($("#searchfname").val());
         $("#flastname").val($("#searchlname").val());
         $("#fidcard").val($("#searchidcard").val());
         $("#faddress").val($("#searchaddress").val());
+        var page = table.page.info().page;
+        $('#searchform').attr('action', '/SearchCollector' + '?searchfname=' + $("#searchfname").val() + '&searchlname=' + $("#searchlname").val() + '&searchidcard=' + $("#searchidcard").val() + '&searchaddress=' + $("#searchaddress").val()+'&page='+page);
         document.getElementById("searchform").submit();
     }
     function presave() {
         $("#preinstallment").val($("#editinstallment").val());
         $("#todaydate").val(dateStr($("#collectdate").val()));
-        $("#prepay").val($("#editpay").val());
+        console.log($("#editpay").val(), $("#editpay").val() == null, $("#editpay").val() == undefined);
+        var pay = ($("#editpay").val() == null || $("#editpay").val() == undefined || $("#editpay").val() == '') ? 0 : $("#editpay").val();
+        $("#prepay").val(pay);
         $("#preremark").val( $("#editremark").val());
     }
     function save() {
@@ -545,17 +565,21 @@
                 //$("#msg").text(req.responseText);
             } else {
                 alert(req.responseText);
-                location.reload();
+
+                var page = table.page.info().page;
+                $('#searchform').attr('action', '/SearchCollector' + '?searchfname=' + $("#searchfname").val() + '&searchlname=' + $("#searchlname").val() + '&searchidcard=' + $("#searchidcard").val() + '&searchaddress=' + $("#searchaddress").val() + '&page=' + page);
+                document.getElementById("searchform").submit();
+                //location.reload();
             }
         }
     }
     $(document).ready(function () {
         /**/
-        $('#table').DataTable({
+        table = $('#table').DataTable({
             "ordering": false,
             "dom": 't<"bottom"p>',
             "info": false,
-            "pageLength": 15,
+            "pageLength": 25,
             "bLengthChange": false,
             "language": {
                 "paginate": {
@@ -567,6 +591,8 @@
 
             }
         });
+
+        getQuery();
         /**/
         $('table tbody').on('click', '.btn-add', function () {
             $("#editid").val($(this).closest('tr').find('th').eq(0).text());
@@ -642,7 +668,7 @@
                                 $('#edithistory').append('<tr><th scope="row">' + (parseInt(i) + 1) + '</th><td>' + dateStr(dateStr1(data.history[i].createDate)) + '</td><td>' + data.customer.installment + '</td><td>' + data.history[i].amount + '</td><td>' + data.history[i].remark + '</td></tr>');
                             }
                         }
-                        $("#editpay").val(0);
+                        //$("#editpay").val(0);
                         $("#editremark").val('');
                         $('#collectdate').val(dateData(new Date()));
                     }

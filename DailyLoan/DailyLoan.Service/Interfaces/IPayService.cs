@@ -38,9 +38,11 @@ namespace DailyLoan.Service.Interfaces
         Task<bool> SaveDailyCost(DailyCost req,int uid);
         DailyCost GetDailyCost(int clid, DateTime date);
         Task<DailyReportResponse> GetMustReturn(int clid, DateTime date);
+        Task<DailyReportResponse> GetMustReturnDaily(int clid, DateTime date);
         Task<double> GetPayToCustomer(int clid, DateTime date);
         #endregion
         #region Collector
+        Task<List<ManagementContract>> SearchContractCollect(int uid, ContractSearchRequest req);
         Task<ManagementCollector> GetCollector(int cid);
         Task<bool> CollectCustomer(Transaction req,int uid);
 
@@ -54,6 +56,7 @@ namespace DailyLoan.Service.Interfaces
         Task<List<ManagementHistory>> SearchHistory(int uid, ContractSearchRequest req);
         #endregion
         #region DailyReport
+        Task<bool> SaveDailyCostAgent(DailyCost req, int uid);
         Task<DailyReportResponse> GetDailyReport(int uid, DateTime date);
         #endregion
         #region Warn
@@ -62,5 +65,9 @@ namespace DailyLoan.Service.Interfaces
         Task<bool> EditNotification(Notification req, int uid);
         Task<bool> DeleteNotification(int nid);
         #endregion
+
+        Task<MonthlyInput> GetMonthlyCost(int m, int y, int hid, int uid);
+        Task<bool> SaveMonthlyCost(MonthlyInput req, int uid);
+        Task<MonthlyReport> GetMonthlyReport(DateTime start, DateTime end, int hid, int uid);
     }
 }

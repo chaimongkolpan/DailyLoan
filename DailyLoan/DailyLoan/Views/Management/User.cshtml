@@ -481,26 +481,33 @@
             }
             @if (int.Parse(ViewBag.UserAccess) <= StatusUserAccess.UserAccess_Admin)
             {
-                <td>@items.CustomerLineText</td>
+                @if (items.UserAccess == StatusUserAccess.UserAccess_Agent)
+                {
+                    <td>@items.CustomerLineText</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
             }
-        <td>
-            <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewuser">
-                <i class="fa fa-eye"></i>
-                ดู
-            </button>
-            <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edituser">
-                <i class="fa fa-pen-square"></i>
-                แก้ไข
-            </button>
-            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
-                    {
-        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deluser">
-            <i class="fa fa-trash-alt"></i>
-            ลบ
-        </button>
-                    }
-                
-        </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm btn-view" data-bs-toggle="modal" data-bs-target="#viewuser">
+                    <i class="fa fa-eye"></i>
+                    ดู
+                </button>
+                <button type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal" data-bs-target="#edituser">
+                    <i class="fa fa-pen-square"></i>
+                    แก้ไข
+                </button>
+                @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString() && items.Id != 1)
+                {
+                    <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deluser">
+                        <i class="fa fa-trash-alt"></i>
+                        ลบ
+                    </button>
+                }
+
+            </td>
         </tr>
                 i++;
             }
@@ -584,7 +591,7 @@
         let formData = new FormData();
 
         formData.append("isNew", true);
-        formData.append("HouseId", 0);
+        formData.append("HouseId", $("#addhouse").val());
         formData.append("Status", $('input[name="addstatus"]:checked').val() != undefined ? $('input[name="addstatus"]:checked').val() : '');
         formData.append("UserAccess", $('#adduseraccess').val());
         formData.append("Id", 0);

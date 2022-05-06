@@ -166,3 +166,10 @@ button#clear {
     height: 100% !important;
     max-width: 1900px !important;
 }
+.salaryunder:not(:last-child) {
+    border-bottom:solid 1px black;
+    padding-bottom:10px;
+}
+.salaryunder:not(:first-child) {
+    padding-top:20px;
+}

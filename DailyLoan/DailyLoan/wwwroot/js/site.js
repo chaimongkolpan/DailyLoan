@@ -90,6 +90,16 @@ $(document).ready(function () {
         $('#settinglink').addClass('active');
         $('#settingdailylink').addClass('active');
     }
+    if (pathname == '/Pay/setting_monthly') {
+        $('#settinglink').addClass('active');
+        $('#settingmonthlylink').addClass('active');
+    }
+    if (pathname == '/Pay/MonthlyReport') {
+        $('#monthlyreportlink').addClass('active');
+    }
+    if (pathname == '/Pay/AdminReportDaily') {
+        $('#adminreportdailylink').addClass('active');
+    }
 
     if (pathname == '/Pay/Collector') {
         $('#collectlink').addClass('active');

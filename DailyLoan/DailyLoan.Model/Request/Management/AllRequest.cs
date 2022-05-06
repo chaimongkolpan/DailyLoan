@@ -311,4 +311,16 @@ namespace DailyLoan.Model.Request.Management
         public List<IFormFile> uploadfile2 { get; set; }
         public string uploadsign { get; set; }
     }
+    public class MonthlyRequest
+    {
+        public int m { get; set; }
+        public int y { get; set; }
+        public int hid { get; set; }
+    }
+    public class MonthlyReportRequest
+    {
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
+        public int hid { get; set; }
+    }
 }

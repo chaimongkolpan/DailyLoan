@@ -88,7 +88,7 @@
                                 <a id="collectlink" class="nav-link" asp-controller="Pay" asp-action="Collector">เก็บเงิน</a>
                             </li>
                             <li class="nav-item">
-                                <a id="dailyreportlink" class="nav-link" asp-controller="Pay" asp-action="DailyReport">สรุปรายวัน</a>
+                                <a id="dailyreportlink" class="nav-link" asp-controller="Pay" asp-action="DailyReport">สรุปค่าใช้จ่ายรายวัน</a>
                             </li>
                         }
                         @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Admin)
@@ -102,7 +102,20 @@
                                     }
                                     <li><a id="settinghomelink" class="dropdown-item" asp-controller="Pay" asp-action="setting_home">ตั้งค่าบ้าน</a></li>
                                     <li><a id="settingdailylink" class="dropdown-item" asp-controller="Pay" asp-action="setting_daily">ค่าใช้จ่ายประจำวัน</a></li>
+                                    <li><a id="settingmonthlylink" class="dropdown-item" asp-controller="Pay" asp-action="setting_monthly">ค่าใช้จ่ายประจำเดือน</a></li>
                                 </ul>
+                            </li>
+                        }
+                        @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) != StatusUserAccess.UserAccess_Audit)
+                        {
+                            <li class="nav-item">
+                                <a id="adminreportdailylink" class="nav-link" asp-controller="Pay" asp-action="AdminReportDaily">สรุปการจ่ายลูกค้า</a>
+                            </li>
+                        }
+                        @if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString(ConstMessage.Session_UserAccess)) <= StatusUserAccess.UserAccess_Admin)
+                        {
+                            <li class="nav-item">
+                                <a id="monthlyreportlink" class="nav-link" asp-controller="Pay" asp-action="MonthlyReport">สรุปประจำเดือน</a>
                             </li>
                         }
                     </ul>

@@ -25,10 +25,12 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public virtual DbSet<CustomerLine> CustomerLine { get; set; }
         public virtual DbSet<DailyCost> DailyCost { get; set; }
         public virtual DbSet<House> House { get; set; }
+        public virtual DbSet<MonthlyCost> MonthlyCost { get; set; }
         public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<NotificationType> NotificationType { get; set; }
         public virtual DbSet<Request> Request { get; set; }
         public virtual DbSet<RequestType> RequestType { get; set; }
+        public virtual DbSet<Salary> Salary { get; set; }
         public virtual DbSet<SpecialRate> SpecialRate { get; set; }
         public virtual DbSet<StatusContract> StatusContract { get; set; }
         public virtual DbSet<StatusCustomer> StatusCustomer { get; set; }
@@ -94,6 +96,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
 
                 entity.Property(e => e.ApproverId).HasColumnName("ApproverID");
 
+                entity.Property(e => e.CloseDate).HasColumnType("date");
+
                 entity.Property(e => e.ContractId)
                     .HasColumnName("ContractID")
                     .HasMaxLength(50);
@@ -101,6 +105,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+
+                entity.Property(e => e.CustomerLineId).HasColumnName("CustomerLineID");
 
                 entity.Property(e => e.GuarantorId).HasColumnName("GuarantorID");
 
@@ -200,6 +206,27 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<MonthlyCost>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.BanquetRemark).HasMaxLength(500);
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.HouseId).HasColumnName("HouseID");
+
+                entity.Property(e => e.OtherRemark).HasMaxLength(500);
+
+                entity.Property(e => e.Remark).HasMaxLength(500);
+
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VehicleRemark).HasMaxLength(500);
+            });
+
             modelBuilder.Entity<Notification>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -254,6 +281,25 @@ namespace DailyLoan.Model.Entities.DailyLoan
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Salary>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.HouseId).HasColumnName("HouseID");
+
+                entity.Property(e => e.Remark).HasMaxLength(500);
+
+                entity.Property(e => e.Salary1).HasColumnName("Salary");
+
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
             modelBuilder.Entity<SpecialRate>(entity =>

@@ -31,6 +31,9 @@ namespace DailyLoan.Library
         public const string View_PAY_setting_home = "setting_home";
         public const string View_PAY_setting_daily = "setting_daily";
         public const string View_PAY_setting_system = "setting_system";
+        public const string View_PAY_setting_monthly = "setting_monthly";
+        public const string View_PAY_MonthlyReport = "MonthlyReport";
+        public const string View_PAY_AdminReportDaily = "AdminReportDaily";
         public const string View_PAY_Warn = "Warn";
 
         public const string Message_InValidID = "เลขประประชาชนไม่ถูกต้อง";
@@ -39,6 +42,7 @@ namespace DailyLoan.Library
         public const string Message_UploadFail = "อัพโหลดไฟล์ไม่สมบูรณ์";
         public const string Message_Successful = "สำเร็จ";
         public const string Message_SomethingWentWrong = "มีบางอย่างไม่ถูกต้อง";
+        public const string Message_ContractIsExist = "ลูกค้านี้มีสัญญาเปิดอยู่";
         public const string Message_UsernameIsExist = "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว";
         public const string Message_PasswordNotMatch = "รหัสผ่านไม่ตรงกัน";
 

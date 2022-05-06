@@ -44,12 +44,15 @@ namespace DailyLoan.Repository.Interfaces
         Task<bool> SaveDailyCost(DailyCost req,int uid);
         DailyCost GetDailyCost(int clid, DateTime date);
         Task<DailyReportResponse> GetMustReturn(int clid, DateTime date);
+        Task<DailyReportResponse> GetMustReturnDaily(int clid, DateTime date);
         Task<double> GetPayToCustomer(int clid, DateTime date);
         #endregion
         #region DailyReport
+        Task<bool> SaveDailyCostAgent(DailyCost req, int uid);
         Task<DailyReportResponse> GetDailyReport(int uid, DateTime date);
         #endregion
         #region Collector
+        Task<List<ManagementContract>> SearchContractCollect(int uid, string idcard, string firstname, string lastname, string address);
         Task<List<Transaction>> GetPayHistory(int cid);
         Task<bool> CollectCustomer(int uid, int cid, double amount, string remark);
 
@@ -65,5 +68,10 @@ namespace DailyLoan.Repository.Interfaces
         Task<bool> CutRequest(int cid, double amount, int uid, int type);
         bool isExistRequest(int cid, int type);
         #endregion
+
+        Task<MonthlyInput> GetMonthlyCost(int m, int y, int hid, int uid);
+        Task<bool> SaveMonthlyCost(MonthlyCost req);
+        Task<bool> SaveSalary(Salary req);
+        Task<MonthlyReport> GetMonthlyReport(DateTime start, DateTime end, int hid, int uid);
     }
 }

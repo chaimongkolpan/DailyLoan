@@ -26,5 +26,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public string Remark { get; set; }
         public double? ExContractPay { get; set; }
         public int? Type { get; set; }
+        public double? Installment { get; set; }
+        public DateTime? CloseDate { get; set; }
+        public int? CustomerLineId { get; set; }
     }
 }

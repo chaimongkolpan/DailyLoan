@@ -1,0 +1,421 @@
+﻿@using DailyLoan.Library.Status
+<div class="card-body bg-light p-3 rounded ">
+    <div class="input-group mb-3 input-group-sm">
+        <input type="date" timezone="en-us" id="todaydate" class="form-control" placeholder="วันที่">
+
+        @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+        {
+            <!-- -- ><label for="house" class="form-label">บ้าน</label><!-- -->
+            <select class="form-select form-select-sm" id="house" name="house">
+                @foreach (var item in ViewBag.House)
+                {
+                    <option value="@item.Id">@item.HouseName</option>
+                }
+            </select>
+            <!-- -- ><label for="customerline" class="form-label">สาย</label><!-- -->
+            <select class="form-select form-select-sm" id="customerline" name="customerline">
+            </select>
+        }
+        else if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Admin.ToString())
+        {
+            <!-- -- ><label for="customerline" class="form-label">สาย</label><!-- -->
+            <select class="form-select form-select-sm" id="customerline" name="customerline">
+                @if (ViewBag.CustomerLine.Count > 0)
+                {
+                    @foreach (var item in ViewBag.CustomerLine)
+                    {
+                        <option value="@item.Id">@item.CustomerLineName</option>
+                    }
+                }
+            </select>
+        }
+            else
+            {
+                <input type="hidden" value="@ViewBag.CustomerLine" id="customerline" />
+            }
+        <button type="button" class="btn btn-info btn-sm" onclick="search()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+            ค้นหา
+        </button>
+        <button type="button" class="btn btn-success btn-sm" onclick="showprint();" id="btnprint">
+            <i class="fa fa-print" aria-hidden="true"></i>
+            ปริ้น
+        </button>
+    </div>
+</div>
+
+<div class="card-body bg-light p-3 rounded ">
+    <div class="accordion" id="inputpane">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="background-color">
+                    <b>รายละเอียด</b>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <table style="width:150px;">
+                                        <tr>
+                                            <td style="background-color:green;color:white;text-align:center;border:2px solid black;">
+                                                เปิดใหม่
+                                            </td>
+                                            <td style="text-align:center;border:2px solid black;">
+                                                ปกติ
+                                            </td>
+                                            <td style="background-color:blue;color:white;text-align:center;border:2px solid black;">
+                                                ตัด
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">ชื่อผู้กู้</th>
+                                                <th scope="col">สถานที่</th>
+                                                <th scope="col">ชื่อผู้ค้ำ</th>
+                                                <th scope="col">ยอดที่ต้องเก็บ</th>
+                                                <th scope="col">ยอดที่เก็บได้</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbdata">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    <b>สรุป</b>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-6 pb-3">
+                                        <label for="input1">เงินบ้าน</label>
+                                        <input type="text" class="form-control form-control-sm" id="payout" placeholder="เงินบ้าน" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input2">เงินคงเหลือ</label>
+                                        <input type="text" class="form-control form-control-sm" id="receive" placeholder="เงินคงเหลือ" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input3">ค่าใช้จ่ายอื่นๆ</label>
+                                        <input type="text" class="form-control form-control-sm" id="other" placeholder="ค่าใช้จ่ายอื่นๆ" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input4">ค่าบำรุงรักษารถ</label>
+                                        <input type="text" class="form-control form-control-sm" id="bikemaintenance" placeholder="ค่าบำรุงรักษารถ" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input5">น้ำมัน</label>
+                                        <input type="text" class="form-control form-control-sm" id="gas" placeholder="น้ำมัน" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input6">เติมเงิน</label>
+                                        <input type="text" class="form-control form-control-sm" id="topup" placeholder="เติมเงิน" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input5">ตำรวจ</label>
+                                        <input type="text" class="form-control form-control-sm" id="policeall" placeholder="ตำรวจ" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input6">โดนจับ</label>
+                                        <input type="text" class="form-control form-control-sm" id="caught" placeholder="โดนจับ" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input7">ค่าเบี้ยเลี้ยง</label>
+                                        <input type="text" class="form-control form-control-sm" id="allowance" placeholder="ค่าเบี้ยเลี้ยง" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input8">ค่าหัว</label>
+                                        <input type="text" class="form-control form-control-sm" id="bounty" placeholder="ค่าหัว" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input7">จ่ายลูกค้า</label>
+                                        <input type="text" class="form-control form-control-sm" id="paytocustomer" placeholder="จ่ายลูกค้า" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input9">ยอดที่เก็บได้เพิ่มเติม</label>
+                                        <input type="text" class="form-control form-control-sm" id="otherincome" placeholder="ยอดที่เก็บได้เพิ่มเติม" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input9">ยอดที่ต้องเก็บ</label>
+                                        <input type="text" class="form-control form-control-sm" id="mustcollect" placeholder="ยอดที่ต้องเก็บ" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input10">ยอดที่เก็บได้</label>
+                                        <input type="text" class="form-control form-control-sm" id="collectall" placeholder="ยอดที่เก็บได้" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input11">ตัด</label>
+                                        <input type="text" class="form-control form-control-sm" id="cut" placeholder="จำนวน/คน" readonly>
+                                    </div>
+                                    <div class="col-6 pb-3">
+                                        <label for="input12">เปิดใหม่</label>
+                                        <input type="text" class="form-control form-control-sm" id="open" placeholder="จำนวน/คน" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    root = (root == '/' ? "" : root);
+    var useraccess = '@ViewBag.UserAccess';
+    var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
+    var admin = '@StatusUserAccess.UserAccess_Admin';
+    function dateStr(dat) {
+        return dat.getFullYear() + '-' + ('0' + (dat.getMonth() + 1)).slice(-2) +'-'+('0' + (dat.getDate())).slice(-2)
+    }
+    function dateData(str) {
+        var arr = str.split('-');
+        return new Date(parseInt(arr[0]), parseInt(arr[1])-1, parseInt(arr[2]))
+    }
+    function search() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("clid", $("#customerline").val());
+        formData.append("date", ($("#todaydate").val()));
+        req.open("POST", '/GetDailyCost');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4) {
+                $("#msg").text(req.responseText);
+                console.log(req.responseText);
+                //alert(req.responseText);
+            } else if (req.readyState == 4 && req.status != 200) {
+                let req1 = new XMLHttpRequest();
+                let formData1 = new FormData();
+                formData1.append("clid", $("#customerline").val());
+                formData1.append("date", ($("#todaydate").val()));
+                req1.open("POST", '/GetMustReturnDaily');
+                req1.send(formData1);
+                req1.onload = function () {
+                    if (req1.readyState != 4 || req1.status != 200) {
+                        $("#msg").text(req1.responseText);
+                        console.log(req1.responseText);
+                        //alert(req1.responseText);
+                    } else {
+                        if (req1.responseText != null && req1.responseText != 'null') {
+                            $("#gas").val('');
+                            $("#topup").val('');
+                            /*
+                            $("#police1").val('');
+                            $("#policeremark1").val('');
+                            $("#police2").val('');
+                            $("#policeremark2").val('');
+                            $("#police3").val('');
+                            */
+                            $("#policeall").val('');
+                            $("#caught").val('');
+                            $("#bikemaintenance").val('');
+                            $("#other").val('');
+
+                            $("#payout").val('');
+                            $("#receive").val('');
+                            $("#allowance").val('');
+                            $("#paytocustomer").val('');
+                            $("#otherincome").val('');
+                            /*
+                            $("#otherincomeremark").val('');
+                            */
+
+                            var data1 = JSON.parse(req1.responseText);
+                            console.log(data1);
+                            $("#mustreturn").val(data1.mustreturn);
+                            $("#allowance").val(data1.allowance);
+                            $("#bounty").val(data1.bounty);
+                            $("#sumexpense").val(data1.sumexpense);
+                            $("#paytocustomer").val(data1.paytocustomer);
+                            $("#mustcollect").val(data1.mustcollect);
+                            $("#collectall").val(data1.collectall);
+                            $("#collect").val(data1.collect);
+                            $("#cut").val(data1.cutamount + ' บาท / ' + data1.cutcount + ' คน');
+                            $("#open").val(data1.openamount + ' บาท / ' + data1.opencount + ' คน');
+                            ///////////////////////////////////////////////////
+                            $('#tbdata').empty();
+                            for (var i = 0; i < data1.transactions.length; i++) {
+                                var color = '';
+                                var bgcolor = '';
+                                var sty = '';
+                                if (data1.transactions[i].type == 0) {
+                                    sty = '';
+                                } else if (data1.transactions[i].type == 1) {
+                                    color = 'white';
+                                    bgcolor = 'green'
+                                    sty = 'style="background-color:' + bgcolor + ';color:' + color + ';"';
+                                } else {
+                                    color = 'white';
+                                    bgcolor = 'blue';
+                                    sty = 'style="background-color:' + bgcolor + ';color:' + color + ';"';
+                                }
+                                var ele = '<tr ' + sty + '>';
+                                ele += '<th scope="row">' + (parseInt(i) + 1) + '</th>';
+                                ele += '<td>' + data1.transactions[i].customername+'</td>';
+                                ele += '<td>' + data1.transactions[i].address+'</td>';
+                                ele += '<td>' + data1.transactions[i].guarantorname+'</td>';
+                                ele += '<td>' + data1.transactions[i].mustcollect+'</td>';
+                                ele += '<td>' + data1.transactions[i].collect + '</td></tr>';
+                                $('#tbdata').append(ele);
+                            }
+                            $('#inputpane').show();$('#btnprint').show();
+                        }
+                    }
+                }
+            } else {
+                if (req.responseText != null && req.responseText != 'null') {
+                    var data = JSON.parse(req.responseText);
+                    $("#gas").val(data.gas);
+                    $("#topup").val(data.topup);
+                    /*
+                    $("#police1").val(data.police1);
+                    $("#policeremark1").val(data.policeRemark1);
+                    $("#police2").val(data.police2);
+                    $("#policeremark2").val(data.policeRemark2);
+                    $("#police3").val(data.police3);
+                    $("#policeremark3").val(data.policeRemark3);
+                    */
+                    data.police1 = data.police1 != null ? data.police1 : 0;
+                    data.police2 = data.police2 != null ? data.police2 : 0;
+                    data.police3 = data.police3 != null ? data.police3 : 0;
+                    $("#policeall").val(data.police1 + data.police2 + data.police3);
+                    $("#caught").val(data.caught);
+                    
+                    $("#bikemaintenance").val(data.bikeMaintenance);
+                    $("#other").val(data.other);
+
+                    $("#payout").val(data.payOut);
+                    $("#receive").val(data.receive);
+                    $("#allowance").val(data.allowance);
+                    $("#otherincome").val(data.otherIncome);
+                    /*
+                    $("#otherincomeremark").val(data.otherIncomeRemark);
+                    */
+                    let req1 = new XMLHttpRequest();
+                    let formData1 = new FormData();
+                    formData1.append("clid", $("#customerline").val());
+                    formData1.append("date", ($("#todaydate").val()));
+                    req1.open("POST", '/GetMustReturnDaily');
+                    req1.send(formData1);
+                    req1.onload = function () {
+                        if (req1.readyState != 4 || req1.status != 200) {
+                            $("#msg").text(req1.responseText)
+                        } else {
+                            if (req1.responseText != null && req1.responseText != 'null') {
+                                var data1 = JSON.parse(req1.responseText);
+                                console.log(data1);
+                                $("#mustreturn").val(data1.mustreturn);
+                                $("#allowance").val(data1.allowance);
+                                $("#bounty").val(data1.bounty);
+                                $("#sumexpense").val(data1.sumexpense);
+                                $("#paytocustomer").val(data1.paytocustomer);
+                                $("#mustcollect").val(data1.mustcollect);
+                                $("#collectall").val(data1.collectall);
+                                $("#collect").val(data1.collect);
+                                $("#cut").val(data1.cutamount + ' บาท / ' + data1.cutcount + ' คน');
+                                $("#open").val(data1.openamount + ' บาท / ' + data1.opencount + ' คน');
+                                ////////////////////////////////////////////////////////
+                                $('#tbdata').empty();
+                                for (var i = 0; i < data1.transactions.length; i++) {
+                                    var color = '';
+                                    var bgcolor = '';
+                                    var sty = '';
+                                    if (data1.transactions[i].type == 0) {
+                                        sty = '';
+                                    } else if (data1.transactions[i].type == 1) {
+                                        color = 'white';
+                                        bgcolor = 'green'
+                                        sty = 'style="background-color:' + bgcolor + ';color:' + color + ';"';
+                                    } else {
+                                        color = 'white';
+                                        bgcolor = 'blue';
+                                        sty = 'style="background-color:' + bgcolor + ';color:' + color + ';"';
+                                    }
+                                    var ele = '<tr ' + sty + '>';
+                                    ele += '<th scope="row">' + (parseInt(i) + 1) + '</th>';
+                                    ele += '<td>' + data1.transactions[i].customername + '</td>';
+                                    ele += '<td>' + data1.transactions[i].address + '</td>';
+                                    ele += '<td>' + data1.transactions[i].guarantorname + '</td>';
+                                    ele += '<td>' + data1.transactions[i].mustcollect + '</td>';
+                                    ele += '<td>' + data1.transactions[i].collect + '</td></tr>';
+                                    $('#tbdata').append(ele);
+                                }
+                                $('#inputpane').show();$('#btnprint').show();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function showprint() {
+        window.print();
+    }
+    $(document).ready(function () {
+        $('#todaydate').val(dateStr(new Date()));
+        $('#inputpane').hide();
+        $('#btnprint').hide();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        if (useraccess == superadmin) {
+            $('#house').on('change', function () {
+                $('#customerline').empty();
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != undefined) {
+                            for (var it of data) {
+                                $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            });
+            if ($('#house').val() != 0 && $('#house').val() != 1) {
+                $('#customerline').empty();
+                $.ajax({
+                    type: "GET",
+                    url: root + "/GetCustomerLineAll/" + $("#house").val(),
+                    contentType: "application/json; charset=utf-8;",
+                    dataType: "json",
+                    success: function (data1) {
+                        if (data1 != undefined) {
+                            for (var it of data1) {
+                                $('#customerline').append('<option value="' + it['id'] + '">' + it['customerLineName'] + '</option>');
+                            }
+                        }
+                    },
+                    error: function (e) { console.log(e) }
+                });
+            }
+        }
+    });
+</script>

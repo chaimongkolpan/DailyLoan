@@ -35,5 +35,8 @@ namespace DailyLoan.Model.Entities.DailyLoan
         public DateTime? UpdateDate { get; set; }
         public double? OtherIncome { get; set; }
         public string OtherIncomeRemark { get; set; }
+        public int? Agent1 { get; set; }
+        public int? Agent2 { get; set; }
+        public double? MustCollect { get; set; }
     }
 }

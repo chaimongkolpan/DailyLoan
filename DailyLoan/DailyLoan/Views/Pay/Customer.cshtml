@@ -132,10 +132,12 @@
                                             <label for="addaddress">สถานที่</label>
                                             <input type="text" class="form-control form-control-sm" id="addaddress" placeholder="สถานที่">
                                         </div>
+                                        <!-- -- >
                                         <div class="col-md-6 pb-3">
                                             <label for="addshortaddress">สถานที่ย่อ</label>
                                             <input type="text" class="form-control form-control-sm" id="addshortaddress" placeholder="สถานที่">
                                         </div>
+                                        <!-- -->
                                     </div>
                                 </div>
                             </div>
@@ -270,10 +272,12 @@
                                             <label for="viewaddress">สถานที่</label>
                                             <input type="text" class="form-control form-control-sm" id="viewaddress" placeholder="สถานที่" readonly>
                                         </div>
+                                        <!-- -- >
                                         <div class="col-md-6 pb-3">
                                             <label for="viewshortaddress">สถานที่ย่อ</label>
                                             <input type="text" class="form-control form-control-sm" id="viewshortaddress" placeholder="สถานที่" readonly>
                                         </div>
+                                        <!-- -->
                                     </div>
                                 </div>
                             </div>
@@ -393,6 +397,7 @@
                                         <div class="row">
                                             <div class="col-md-6 pb-3">
                                                 <label for="customerline" class="form-label">สาย</label>
+                                                <input type="hidden" id="house">
                                                 <select class="form-select form-select-sm" id="customerline" name="customerline">
                                                     @if (ViewBag.CustomerLine.Count > 0)
                                                     {
@@ -418,10 +423,12 @@
                                             <label for="address">สถานที่</label>
                                             <input type="text" class="form-control form-control-sm" id="address" placeholder="สถานที่">
                                         </div>
+                                        <!-- -- >
                                         <div class="col-md-6 pb-3">
                                             <label for="shortaddress">สถานที่ย่อ</label>
                                             <input type="text" class="form-control form-control-sm" id="shortaddress" placeholder="สถานที่">
                                         </div>
+                                        <!-- -->
                                     </div>
                                 </div>
                             </div>
@@ -549,15 +556,16 @@
                                         <div class="row">
                                             <div class="col-md-6 pb-3">
                                                 <label for="customerline" class="form-label">สาย</label>
-                                                <select class="form-select form-select-sm" id="movecustomerline" name="movecustomerline">
-                                                    @if (ViewBag.CustomerLine.Count > 0)
-                                                    {
-                                                        @foreach (var item in ViewBag.CustomerLine)
+                                                <input type="hidden" id="movehouse">
+                                                    <select class="form-select form-select-sm" id="movecustomerline" name="movecustomerline">
+                                                        @if (ViewBag.CustomerLine.Count > 0)
                                                         {
-                                                            <option value="@item.Id">@item.CustomerLineName</option>
+                                                            @foreach (var item in ViewBag.CustomerLine)
+                                                            {
+                                                                <option value="@item.Id">@item.CustomerLineName</option>
+                                                            }
                                                         }
-                                                    }
-                                                </select>
+                                                    </select>
                                             </div>
                                         </div>
                                     </div>

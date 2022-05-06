@@ -2,6 +2,9 @@
 
 @switch (ViewBag.partialView)
 {
+    case "AdminReportDaily":
+        <partial name="AdminReportDaily.cshtml" />
+        break;
     case "Warn":
         <partial name="Warn.cshtml" />
         break;
@@ -13,6 +16,12 @@
         break;
     case "DailyReport":
         <partial name="DailyReport.cshtml" />
+        break;
+    case "MonthlyReport":
+        <partial name="MonthlyReport.cshtml" />
+        break;
+    case "setting_monthly":
+        <partial name="setting_monthly.cshtml" />
         break;
     case "History":
         <partial name="History.cshtml" />

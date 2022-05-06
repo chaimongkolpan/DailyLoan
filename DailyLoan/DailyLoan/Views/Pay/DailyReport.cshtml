@@ -102,6 +102,10 @@
                                     <input type="text" class="form-control form-control-sm" id="sumexpense" placeholder="รวมค่าใช้จ่าย" value="@ViewBag.PageData.sumexpense" readonly>
                                 </div>
                                 <div class="col-md-6 pb-3">
+                                    <label for="inputEmail4">ยอดเก็บได้เพิ่มเติม</label>
+                                    <input type="text" class="form-control form-control-sm" id="otherincometmp" placeholder="ยอดเก็บได้เพิ่มเติม" value="@ViewBag.PageDataCost.OtherIncome" readonly>
+                                </div>
+                                <div class="col-md-6 pb-3">
                                     <label for="inputEmail4">ยอดคงเหลือ</label>
                                     <input type="text" class="form-control form-control-sm" id="remainamount" placeholder="ยอดคงเหลือ" value="@ViewBag.PageData.mustreturn" readonly>
                                 </div>
@@ -179,14 +183,16 @@
                                 <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.Topup" id="topup" placeholder="เติมเงิน ">
                             </div>
                             <!-- -- >
-                            <div class="col-md-6 pb-3">
-                                <label for="paperink">หมึก+กระดาษ</label>
-                                <input type="text" class="form-control form-control-sm" id="paperink" placeholder="หมึก+กระดาษ">
-                            </div>
-                            <!-- -->
+    <div class="col-md-6 pb-3">
+        <label for="paperink">หมึก+กระดาษ</label>
+        <input type="text" class="form-control form-control-sm" id="paperink" placeholder="หมึก+กระดาษ">
+    </div>
+    <!-- -->
                             <div class="col-md-6 pb-3">
                                 <label for="bikemaintenance">ค่าบำรุงรักษารถ</label>
                                 <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.BikeMaintenance" id="bikemaintenance" placeholder="ค่าบำรุงรักษารถ">
+                            </div>
+                            <div class="col-md-6 pb-3">
                             </div>
                             <div class="col-md-6 pb-3">
                                 <label for="other">ค่าใช้จ่ายอื่นๆ</label>
@@ -195,6 +201,14 @@
                             <div class="col-md-6 pb-3">
                                 <label for="otherremark">หมายเหตุค่าใช้จ่ายอื่นๆ</label>
                                 <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.OtherDetail" id="otherremark" placeholder="หมายเหตุค่าใช้จ่ายอื่นๆ">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="inputEmail4">ยอดเก็บได้เพิ่มเติม</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.OtherIncome" id="otherincome" placeholder="ยอดเก็บได้เพิ่มเติม">
+                            </div>
+                            <div class="col-md-6 pb-3">
+                                <label for="otherremark">หมายเหตุยอดเก็บได้เพิ่มเติม</label>
+                                <input type="text" class="form-control form-control-sm" value="@ViewBag.PageDataCost.OtherIncomeRemark" id="otherincomeremark" placeholder="หมายเหตุยอดเก็บได้เพิ่มเติม">
                             </div>
                             <div class="col-md-12 pb-3">
                                 <label for="remark">รายละเอียดเพิ่มเติม</label>
@@ -246,15 +260,15 @@
         formData.append("Other", $("#other").val());
         formData.append("OtherDetail", $("#otherremark").val());
 
-        formData.append("PayOut", $("#payout").val());
-        formData.append("Receive", $("#receive").val());
-        formData.append("Allowance", $("#allowance").val());
+        //formData.append("PayOut", $("#payout").val());
+        //formData.append("Receive", $("#receive").val());
+        //formData.append("Allowance", $("#allowance").val());
 
         formData.append("OtherIncome", $("#otherincome").val());
         formData.append("OtherIncomeRemark", $("#otherincomeremark").val());
 
         formData.append("Remark", $("#remark").val());
-        req.open("POST", '/SaveDailyCost');
+        req.open("POST", '/SaveDailyCostAgent');
         req.send(formData);
         req.onload = function () {
             if (req.readyState != 4 || req.status != 200) {

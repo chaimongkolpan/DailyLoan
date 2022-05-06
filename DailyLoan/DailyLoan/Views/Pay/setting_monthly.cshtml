@@ -1,0 +1,305 @@
+﻿@using DailyLoan.Library.Status
+<div class="card-body bg-light p-3 rounded ">
+    <div style="display:inline-block;" class="input-group mb-3 input-group-sm justify-content-center">
+        <div class="row">
+            <div class="col-md-4 pb-3">
+                <label for="month" class="form-label">ข้อมูลประจำเดือน</label>
+                <select class="form-select form-select-sm" id="month" name="month">
+                    <option value="1">มกราคม(1)</option>
+                    <option value="2">กุมภาพันธ์(2)</option>
+                    <option value="3">มีนาคม(3)</option>
+                    <option value="4">เมษายน(4)</option>
+                    <option value="5">พฤษภาคม(5)</option>
+                    <option value="6">มิถุนายน(6)</option>
+                    <option value="7">กรกฎาคม(7)</option>
+                    <option value="8">สิงหาคม(8)</option>
+                    <option value="9">กันยายน(9)</option>
+                    <option value="10">ตุลาคม(10)</option>
+                    <option value="11">พฤศจิกายน(11)</option>
+                    <option value="12">ธันวาคม(12)</option>
+                </select>
+            </div>
+            <div class="col-md-4 pb-3">
+                <label for="year" class="form-label">ปี</label>
+                <select class="form-select form-select-sm" id="year" name="year">
+                </select>
+            </div>
+            @if (ViewBag.UserAccess == StatusUserAccess.UserAccess_Superadmin.ToString())
+            {
+                <div class="col-md-4 pb-3">
+                    <label for="house" class="form-label">บ้าน</label>
+                    <select class="form-select form-select-sm" id="house" name="house">
+                        @foreach (var item in ViewBag.House)
+                        {
+                            <option value="@item.Id">@item.HouseName</option>
+                        }
+                    </select>
+                </div>
+            }
+        </div>
+        <!-- -->
+        <button type="button" class="btn btn-info btn-sm" onclick="search()">
+            <i class="fa fa-search"></i>
+            ดูข้อมูล
+        </button>
+    </div>
+</div>
+<br>
+<form style="background-color:#F8F9FA;" id="inputpane">
+    <div class="card-body bg-light p-3 rounded ">
+        <div class="accordion" id="accMain">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headHouse">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHouse" aria-expanded="true" aria-controls="collapseHouse">
+                        ค่าใช้จ่ายต่างๆ
+                    </button>
+                </h2>
+                <div id="collapseHouse" class="accordion-collapse collapse show" aria-labelledby="headHouse">
+                    <div class="accordion-body">
+                        <div class="form-row">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 pb-3">
+                                        <label for="payout">ค่าเช่าบ้าน</label>
+                                        <input type="text" class="form-control form-control-sm" id="houserent" placeholder="ค่าเช่าบ้าน">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="receive">ค่าน้ำ</label>
+                                        <input type="text" class="form-control form-control-sm" id="water" value="-" placeholder="ค่าน้ำ">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="allowance">ค่าไฟ</label>
+                                        <input type="text" class="form-control form-control-sm" id="electric" placeholder="ค่าไฟ">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="receive">ค่าอินเทอร์เน็ต</label>
+                                        <input type="text" class="form-control form-control-sm" id="internet" placeholder="ค่าอินเทอร์เน็ต">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="allowance">ค่ากระดาษและหมึก</label>
+                                        <input type="text" class="form-control form-control-sm" id="paperink" placeholder="ค่ากระดาษและหมึก">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="allowance">ค่าของไหว้</label>
+                                        <input type="text" class="form-control form-control-sm" id="godfee" placeholder="ค่าของไหว้">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">ค่างานเลี้ยง</label>
+                                        <input type="text" class="form-control form-control-sm" id="banquet" placeholder="ค่างานเลี้ยง">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">หมายเหตุค่างานเลี้ยง</label>
+                                        <input type="text" class="form-control form-control-sm" id="banquetremark" placeholder="หมายเหตุค่างานเลี้ยง">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="inputEmail4">ค่าเช่ารถ / งวดรถ</label>
+                                        <input type="text" class="form-control form-control-sm" id="vehiclecost" placeholder="ค่าเช่ารถ / งวดรถ">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="allowance">หมายเหตุค่าเช่ารถ / งวดรถ</label>
+                                        <input type="text" class="form-control form-control-sm" id="vehicleremark" placeholder="หมายเหตุค่าเช่ารถ / งวดรถ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Salary move to monthly cost -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headSalary">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSalary" aria-expanded="false" aria-controls="collapseSalary">
+                        เงินเดือน
+                    </button>
+                </h2>
+                <div id="collapseSalary" class="accordion-collapse collapse" aria-labelledby="headSalary">
+                    <div class="accordion-body">
+                        <div class="form-row">
+                            <div id="userpane" class="container-fluid">
+                                <div class="row salaryunder">
+                                    <div class="col-md-6 pb-3">
+                                        <label for="salary1">ชื่อ</label>
+                                        <input type="text" class="form-control form-control-sm" id="" placeholder="ชื่อ" value="ทดสอบ1 เงินเดือน" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="salaryremark1">สิทธิ์</label>
+                                        <input type="text" class="form-control form-control-sm" id="" placeholder="สิทธิ์" value="คนเก็บ" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="salary2">ยอดรวมที่เก็บได้</label>
+                                        <input type="text" class="form-control form-control-sm" id="" placeholder="ยอดรวมที่เก็บได้" value="300000" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="salary2">จำนวนวันที่ทำงาน</label>
+                                        <input type="text" class="form-control form-control-sm" id="" placeholder="จำนวนวันที่ทำงาน" value="29" readonly>
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="salaryremark2">เงินเดือน</label>
+                                        <input type="text" class="form-control form-control-sm" id="" placeholder="เงินเดือน" value="9000">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="salary3">เบี้ยขยัน</label>
+                                        <input type="text" class="form-control form-control-sm" id="" placeholder="เบี้ยขยัน" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Salary -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headOther">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
+                        อื่นๆ
+                    </button>
+                </h2>
+                <div id="collapseOther" class="accordion-collapse collapse" aria-labelledby="headOther">
+                    <div class="accordion-body">
+                        <div class="form-row">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 pb-3">
+                                        <label for="other">ค่าใช้จ่ายอื่นๆ</label>
+                                        <input type="text" class="form-control form-control-sm" id="other" placeholder="ค่าใช้จ่ายอื่นๆ">
+                                    </div>
+                                    <div class="col-md-6 pb-3">
+                                        <label for="otherremark">หมายเหตุค่าใช้จ่ายอื่นๆ</label>
+                                        <input type="text" class="form-control form-control-sm" id="otherremark" placeholder="หมายเหตุค่าใช้จ่ายอื่นๆ">
+                                    </div>
+                                    <div class="col-md-12 pb-3">
+                                        <label for="remark">รายละเอียดเพิ่มเติม</label>
+                                        <input type="text" class="form-control form-control-sm" id="remark" placeholder="รายละเอียดเพิ่มเติม">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="justify-content-center text-center">
+        <button type="button" onclick="save();" class="btn btn-success" >บันทึก</button>
+    </div>
+</form>
+<script type="text/javascript">
+    var root = '@Url.Content("~/")';
+    var users = [];
+    root = (root == '/' ? "" : root);
+    var useraccess = '@ViewBag.UserAccess';
+    var superadmin = '@StatusUserAccess.UserAccess_Superadmin';
+    var admin = '@StatusUserAccess.UserAccess_Admin';
+    var agent = '@StatusUserAccess.UserAccess_Agent';
+    function search() {
+        $('#inputpane').show();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("hid", $("#house").val());
+        formData.append("m", ($("#month").val()));
+        formData.append("y", ($("#year").val()));
+        req.open("POST", '/GetMonthlyCost');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState == 4 && req.status == 200) {
+                var data = JSON.parse(req.responseText);
+                $("#houserent").val(data.houseRent);
+                $("#water").val(data.water);
+                $("#electric").val(data.electric);
+                $("#internet").val(data.internet);
+
+                $("#paperink").val(data.paperInk);
+                $("#godfee").val(data.godFee);
+
+                $("#banquet").val(data.banquet);
+                $("#banquetremark").val(data.banquetRemark);
+                $("#vehiclecost").val(data.vehicleCost);
+                $("#vehicleremark").val(data.vehicleRemark);
+
+                $("#other").val(data.other);
+                $("#otherremark").val(data.otherRemark);
+
+                $("#remark").val(data.remark);
+                $('#userpane').empty();
+                users = data.users;
+                for (var it of data.users) {
+                    var txt = '<div class="row salaryunder"><div class="col-md-6 pb-3"><label for="salary1">ชื่อ</label>';
+                    txt += '<input type="text" class="form-control form-control-sm" id="name'+it.userId+'" placeholder="ชื่อ" value="' + it.name + '" readonly></div>';
+                    txt += '<div class="col-md-6 pb-3"><label for="salaryremark1">สิทธิ์</label>';
+                    txt += '<input type="text" class="form-control form-control-sm" id="useraccess' + it.userId +'" placeholder="สิทธิ์" value="' + it.useraccessText + '" readonly></div>';
+                    if (it.useraccess == agent){
+                        txt += '<div class="col-md-6 pb-3"><label for="salary2">ยอดรวมที่เก็บได้</label>';
+                        txt += '<input type="text" class="form-control form-control-sm" id="total' + it.userId +'" placeholder="ยอดรวมที่เก็บได้" value="' + it.totalCollect + '" readonly></div>';
+                        txt += '<div class="col-md-6 pb-3"><label for="salary2">จำนวนวันที่ทำงาน</label>';
+                        txt += '<input type="text" class="form-control form-control-sm" id="wd' + it.userId +'" placeholder="จำนวนวันที่ทำงาน" value="' + it.workdays + '" readonly></div>';
+                    }
+                    txt += '<div class="col-md-6 pb-3"><label for="salaryremark2">เงินเดือน</label>';
+                    txt += '<input type="text" class="form-control form-control-sm" id="salary' + it.userId +'" placeholder="เงินเดือน" value="' + it.salary + '"></div>';
+                    txt += '<div class="col-md-6 pb-3"><label for="salary3">เบี้ยขยัน</label>';
+                    txt += '<input type="text" class="form-control form-control-sm" id="perform' + it.userId + '" placeholder="เบี้ยขยัน" value="' + it.performance + '"></div></div>';
+                    $('#userpane').append(txt);
+                }
+            } else {
+                $("#msg").text(req.responseText);
+            }
+        }
+    }
+    function save() {
+        let req = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append("HouseId", $("#house").val());
+        formData.append("Month", $("#month").val());
+        formData.append("Year", ($("#year").val()));
+
+        formData.append("HouseRent", $("#houserent").val());
+        formData.append("Water", $("#water").val());
+        formData.append("Electric", $("#electric").val());
+        formData.append("Internet", $("#internet").val());
+
+        formData.append("PaperInk", $("#paperink").val());
+        formData.append("GodFee", $("#godfee").val());
+
+        formData.append("Banquet", $("#banquet").val());
+        formData.append("BanquetRemark", $("#banquetremark").val());
+        formData.append("VehicleCost", $("#vehiclecost").val());
+        formData.append("VehicleRemark", $("#vehicleremark").val());
+
+        formData.append("Other", $("#other").val());
+        formData.append("OtherRemark", $("#otherremark").val());
+
+        formData.append("Remark", $("#remark").val());
+        for (var it of users) {
+            it.salary = $('#salary' + it.userId).val();
+            it.performance = $('#perform' + it.userId).val();
+        }
+        var jsonarr = JSON.stringify(users)
+        formData.append("jsonUser", jsonarr);
+        req.open("POST", '/SaveMonthlyCost');
+        req.send(formData);
+        req.onload = function () {
+            if (req.readyState != 4 || req.status != 200) {
+                alert(req.responseText);
+                //$("#msg").text(req.responseText);
+            } else {
+                alert(req.responseText);
+                location.reload();
+            }
+        }
+    }
+    $(document).ready(function () {
+        var dat = new Date();
+        $('#month').val(dat.getMonth() + 1);
+        $('#year').empty();
+        for (var i = dat.getFullYear() - 2; i < dat.getFullYear() + 3; i++) {
+            var txt = '<option value="' + i + '">' + i + '</option>';
+            $('#year').append(txt);
+        }
+        $('#year').val(dat.getFullYear());
+        $('#inputpane').hide();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    });
+</script>

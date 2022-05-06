@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using Newtonsoft.Json;
 
 namespace DailyLoan.Controllers
 {
@@ -31,7 +32,29 @@ namespace DailyLoan.Controllers
             _managementService = managementService;
             _payService = payService;
         }
-
+        public async Task<ActionResult> AdminReportDaily()
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (true) //if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    ViewBag.UserId = UserId;
+                    ViewBag.UserAccess = UserAccess;
+                    if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                        ViewBag.House = await _managementService.GetAllHouse();
+                    else if(Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Admin)
+                        ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
+                    else
+                        ViewBag.CustomerLine = _payService.GetCustomerLineIdByUserId(Convert.ToInt32(UserId));
+                    ViewBag.partialView = ConstMessage.View_PAY_AdminReportDaily;
+                    return View(ConstMessage.View_Index);
+                }
+                //else return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            }
+        }
         [HttpGet]
         [Route("GetAlert")]
         public async Task<ActionResult> GetAlert()
@@ -173,6 +196,14 @@ namespace DailyLoan.Controllers
         public async Task<ActionResult> GetMustReturn(DailyCostSearchRequest req)
         {
             var rtn = await _payService.GetMustReturn(req.clid, req.date);
+            return Ok(rtn);
+        }
+
+        [HttpPost]
+        [Route("GetMustReturnDaily")]
+        public async Task<ActionResult> GetMustReturnDaily(DailyCostSearchRequest req)
+        {
+            var rtn = await _payService.GetMustReturnDaily(req.clid, req.date);
             return Ok(rtn);
         }
         [HttpPost]
@@ -693,7 +724,7 @@ namespace DailyLoan.Controllers
                     }
                     else return BadRequest(ConstMessage.Message_SomethingWentWrong);
                 }
-                else return BadRequest(ConstMessage.Message_UsernameIsExist); 
+                else return BadRequest(ConstMessage.Message_ContractIsExist); 
             }
         }
         [HttpPost]
@@ -901,6 +932,83 @@ namespace DailyLoan.Controllers
         }
         #endregion
 
+        #region monthly
+
+        public async Task<ActionResult> MonthlyReport()
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    ViewBag.UserId = UserId;
+                    ViewBag.UserAccess = UserAccess;
+                    if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                        ViewBag.House = await _managementService.GetAllHouse();
+                    ViewBag.partialView = ConstMessage.View_PAY_MonthlyReport;
+                    return View(ConstMessage.View_Index);
+                }
+                else return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            }
+        }
+
+        public async Task<ActionResult> setting_monthly()
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (Convert.ToInt32(UserAccess) <= StatusUserAccess.UserAccess_Admin)
+                {
+                    ViewBag.UserId = UserId;
+                    ViewBag.UserAccess = UserAccess;
+                    if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
+                        ViewBag.House = await _managementService.GetAllHouse();
+                    ViewBag.partialView = ConstMessage.View_PAY_setting_monthly;
+                    return View(ConstMessage.View_Index);
+                }
+                else return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            }
+        }
+        [HttpPost]
+        [Route("GetMonthlyCost")]
+        public async Task<ActionResult> GetMonthlyCost(MonthlyRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var rtn = await _payService.GetMonthlyCost(req.m,req.y,req.hid, Convert.ToInt32(UserId));
+            return Ok(rtn);
+        }
+        [HttpPost]
+        [Route("GetMonthlyReport")]
+        public async Task<ActionResult> GetMonthlyReport(MonthlyReportRequest req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var rtn = await _payService.GetMonthlyReport(req.start, req.end, req.hid, Convert.ToInt32(UserId));
+            return Ok(rtn);
+        }
+
+        [HttpPost]
+        [Route("SaveMonthlyCost")]
+        public async Task<ActionResult> SaveMonthlyCost(MonthlyInput req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                req.Users = JsonConvert.DeserializeObject<List<UserSalary>>(req.jsonUser);
+                if (await _payService.SaveMonthlyCost(req, Convert.ToInt32(UserId)))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
+            }
+        }
+        #endregion
+
         #region Collector
         public async Task<ActionResult> Collector()
         {
@@ -909,15 +1017,11 @@ namespace DailyLoan.Controllers
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
             else
             {
-                List<ManagementContract> res = await _payService.GetAllContract(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                //List<ManagementContract> res = await _payService.GetAllContract(Convert.ToInt32(UserId), Convert.ToInt32(UserAccess));
+                List<ManagementContract> res = await _payService.SearchContractCollect(Convert.ToInt32(UserId), new ContractSearchRequest());
                 ViewBag.UserId = UserId;
                 ViewBag.UserAccess = UserAccess;
-                //if (Convert.ToInt32(UserAccess) == StatusUserAccess.UserAccess_Superadmin)
-                //    ViewBag.House = await _managementService.GetAllHouse();
-                //ViewBag.CustomerLine = await _managementService.GetAllCustomerLine(Convert.ToInt32(UserId));
-                ViewBag.PageData = res.Where(x => x.Status != ContractStatus.StatusContract_Closed
-                                                &&x.Status != ContractStatus.StatusContract_WaitConfirm
-                                                &&x.Status != ContractStatus.StatusContract_NotApprove ).ToList();
+                ViewBag.PageData = res;
                 ViewBag.partialView = ConstMessage.View_PAY_Collector;
                 return View(ConstMessage.View_Index);
             }
@@ -931,12 +1035,10 @@ namespace DailyLoan.Controllers
             if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
             else
             {
-                List<ManagementContract> res = await _payService.SearchContract(Convert.ToInt32(UserId), req);
+                List<ManagementContract> res = await _payService.SearchContractCollect(Convert.ToInt32(UserId), req);
                 ViewBag.UserId = UserId;
                 ViewBag.UserAccess = UserAccess;
-                ViewBag.PageData = res.Where(x => x.Status != ContractStatus.StatusContract_Closed
-                                                && x.Status != ContractStatus.StatusContract_WaitConfirm
-                                                && x.Status != ContractStatus.StatusContract_NotApprove).ToList(); ;
+                ViewBag.PageData = res;
                 ViewBag.partialView = ConstMessage.View_PAY_Collector;
                 return View(ConstMessage.View_Index);
             }
@@ -1094,6 +1196,22 @@ namespace DailyLoan.Controllers
                 ViewBag.PageDataCost = _payService.GetDailyCost(clid, req.date);
                 ViewBag.partialView = ConstMessage.View_PAY_DailyReport;
                 return View(ConstMessage.View_Index);
+            }
+        }
+        [HttpPost]
+        [Route("SaveDailyCostAgent")]
+        public async Task<ActionResult> SaveDailyCostAgent(DailyCost req)
+        {
+            var UserId = HttpContext.Session.GetString(ConstMessage.Session_UserId);
+            var UserAccess = HttpContext.Session.GetString(ConstMessage.Session_UserAccess);
+            if (String.IsNullOrEmpty(UserId) || UserId == "0") return RedirectToAction(ConstMessage.View_Index, ConstMessage.Controller_Home);
+            else
+            {
+                if (await _payService.SaveDailyCostAgent(req, Convert.ToInt32(UserId)))
+                {
+                    return Ok(ConstMessage.Message_Successful);
+                }
+                else return BadRequest(ConstMessage.Message_SomethingWentWrong);
             }
         }
         #endregion

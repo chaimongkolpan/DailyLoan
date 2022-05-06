@@ -104,6 +104,10 @@ namespace DailyLoan.Service
         }
         #endregion
         #region Collector
+        public async Task<List<ManagementContract>> SearchContractCollect(int uid, ContractSearchRequest req)
+        {
+            return await _PayRepo.SearchContractCollect(uid, req.Idcard, req.Firstname, req.Lastname, req.Address);
+        }
         public async Task<ManagementCollector> GetCollector(int cid)
         {
             ManagementContract tmp = _PayRepo.GetContract(cid);
@@ -199,6 +203,10 @@ namespace DailyLoan.Service
             rtn.date = date;
             return rtn;
         }
+        public async Task<bool> SaveDailyCostAgent(DailyCost req, int uid)
+        {
+            return await _PayRepo.SaveDailyCostAgent(req, uid);
+        }
         #endregion
         #region DailyCost
         public async Task<bool> SaveDailyCost(DailyCost req,int uid)
@@ -208,6 +216,10 @@ namespace DailyLoan.Service
         public async Task<DailyReportResponse> GetMustReturn(int clid, DateTime date)
         {
             return await _PayRepo.GetMustReturn(clid,date);
+        }
+        public async Task<DailyReportResponse> GetMustReturnDaily(int clid, DateTime date)
+        {
+            return await _PayRepo.GetMustReturnDaily(clid,date);
         }
         public async Task<double> GetPayToCustomer(int clid, DateTime date)
         {
@@ -234,6 +246,76 @@ namespace DailyLoan.Service
         public async Task<bool> DeleteNotification(int nid)
         {
             return await _PayRepo.DeleteNotification(nid);
+        }
+        #endregion
+
+        #region monthly
+        public async Task<MonthlyInput> GetMonthlyCost(int m, int y, int hid, int uid)
+        {
+            return await _PayRepo.GetMonthlyCost(m, y, hid, uid);
+        }
+        public async Task<MonthlyReport> GetMonthlyReport(DateTime start, DateTime end, int hid, int uid)
+        {
+            return await _PayRepo.GetMonthlyReport(start, end, hid, uid);
+        }
+        public async Task<bool> SaveMonthlyCost(MonthlyInput req, int uid)
+        {
+            MonthlyCost data = new MonthlyCost()
+            {
+                HouseId = req.HouseId,
+                Date = new DateTime(req.Year, req.Month,1),
+                Month = req.Month,
+                Year = req.Year,
+
+                HouseRent = req.HouseRent,
+                Water = req.Water,
+                Electric = req.Electric,
+                Internet = req.Internet,
+
+                PaperInk = req.PaperInk,
+                GodFee = req.GodFee,
+
+                Banquet = req.Banquet,
+                BanquetRemark = req.BanquetRemark,
+                VehicleCost = req.VehicleCost,
+                VehicleRemark = req.VehicleRemark,
+
+                Other = req.Other,
+                OtherRemark = req.OtherRemark,
+                Remark = req.Remark,
+                CreateBy = uid,
+                CreateDate = DateTime.Now,
+                UpdateBy = uid,
+                UpdateDate = DateTime.Now
+            };
+            bool isDone = await _PayRepo.SaveMonthlyCost(data);
+            if (isDone)
+            {
+                for(int i = 0; i < req.Users.Count; i++)
+                {
+                    Salary sa = new Salary()
+                    {
+                        HouseId = req.HouseId,
+                        Date = new DateTime(req.Year, req.Month, 1),
+                        Month = req.Month,
+                        Year = req.Year,
+                        UserId = req.Users[i].UserId,
+
+                        Salary1 = req.Users[i].Salary,
+                        Performance = req.Users[i].Performance,
+
+                        //Remark = req.Users[i].Remark,
+
+                        CreateBy = uid,
+                        CreateDate = DateTime.Now,
+                        UpdateBy = uid,
+                        UpdateDate = DateTime.Now
+                    };
+                    isDone = isDone && (await _PayRepo.SaveSalary(sa));
+                    if (!isDone) break;
+                }
+            }
+            return isDone;
         }
         #endregion
     }

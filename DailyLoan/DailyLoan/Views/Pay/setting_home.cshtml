@@ -49,10 +49,13 @@
                                                         <i class="fa fa-pen-square"></i>
                                                         แก้ไข
                                                     </button>
-                                                    <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
-                                                        <i class="fa fa-trash-alt"></i>
-                                                        ลบ
-                                                    </button>
+                                                    @if (items.Id != 1)
+                                                    {
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="modal" data-bs-target="#deletehouse">
+                                                            <i class="fa fa-trash-alt"></i>
+                                                            ลบ
+                                                        </button>
+                                                    }
                                                 </td>
                                             </tr>
                                                     j++;
